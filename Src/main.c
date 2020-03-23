@@ -50,6 +50,7 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+int zmienna;
 
 /* USER CODE END PV */
 
@@ -61,6 +62,20 @@ static void MX_I2C1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
+
+// funkcjia miga diodą blink_times -razy z czasem time
+void LED_blink(int blink_times, int time){
+
+	for(int i = 0; i < blink_times; i++)
+	{
+		//blue pill set-wyłączona, reset-włączona
+		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(time);
+		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+		HAL_Delay(time);
+	}
+	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+}
 
 /* USER CODE END PFP */
 
@@ -109,6 +124,11 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+	  LED_blink(10, 1000);
+	  LED_blink(100, 100);
+	  while(1){
+
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
