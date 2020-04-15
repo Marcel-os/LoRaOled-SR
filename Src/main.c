@@ -25,6 +25,7 @@
 /* USER CODE BEGIN Includes */
 
 #include "stdio.h"
+#include "SX1278.h"
 
 /* USER CODE END Includes */
 
@@ -81,6 +82,17 @@ int writeUART(float latitude, float longitude, float altitude, float velocity);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+SX1278_hw_t SX1278_hw;
+SX1278_t SX1278;
+
+int master;
+int ret;
+
+char buffer[64];
+
+int message;
+int message_length;
+
 /* USER CODE END 0 */
 
 /**
@@ -107,6 +119,7 @@ int main(void)
 
   /* USER CODE BEGIN SysInit */
 
+
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
@@ -117,15 +130,79 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
+	master = HAL_GPIO_ReadPin(FIRE_GPIO_Port, FIRE_Pin);
+	if (master == 1) {
+		printf("Mode: Master\r\n");
+		HAL_GPIO_WritePin(FIRE_GPIO_Port, FIRE_Pin, GPIO_PIN_RESET);
+	} else {
+		printf("Mode: Slave\r\n");
+		HAL_GPIO_WritePin(FIRE_GPIO_Port, FIRE_Pin, GPIO_PIN_SET);
+	}
+
+	//initialize LoRa module
+	SX1278_hw.dio0.port = DO_RF_GPIO_Port;
+	SX1278_hw.dio0.pin = DO_RF_Pin;
+	SX1278_hw.nss.port = CS_RF_GPIO_Port;
+	SX1278_hw.nss.pin = CS_RF_Pin;
+	SX1278_hw.reset.port = LED_GPIO_Port;
+	SX1278_hw.reset.pin = LED_Pin;
+	SX1278_hw.spi = &hspi1;
+
+	SX1278.hw = &SX1278_hw;
+
+	printf("Configuring LoRa module\r\n");
+	SX1278_begin(&SX1278, SX1278_433MHZ, SX1278_POWER_17DBM, SX1278_LORA_SF_8,
+			SX1278_LORA_BW_20_8KHZ, 10);
+	printf("Done configuring LoRaModule\r\n");
+
+	if (master == 1) {
+		ret = SX1278_LoRaEntryTx(&SX1278, 16, 2000);
+	} else {
+		ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
+	}
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  for(int j = 1000; j > 1; j-=10 ){
-		  LED_blink( 1000 / j, j);
-	  }
+		if (master == 1) {
+			printf("Master ...\r\n");
+			HAL_Delay(2500);
+			printf("Sending package...\r\n");
+
+			message_length = sprintf(buffer, "Hello %d", message);
+			ret = SX1278_LoRaEntryTx(&SX1278, message_length, 2000);
+			printf("Entry: %d\r\n", ret);
+
+			printf("Sending %s\r\n", buffer);
+			ret = SX1278_LoRaTxPacket(&SX1278, (uint8_t *) buffer, message_length,
+					2000);
+			message += 1;
+
+			printf("Transmission: %d\r\n", ret);
+			printf("Package sent...\r\n");
+
+		} else {
+			printf("Slave ...\r\n");
+			HAL_Delay(1000);
+			printf("Receiving package...\r\n");
+
+			ret = SX1278_LoRaRxPacket(&SX1278);
+			printf("Received: %d\r\n", ret);
+			if (ret > 0) {
+				SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+				printf("Content (%d): %s\r\n", ret, buffer);
+			}
+			printf("Package received ...\r\n");
+
+		}
+//	  for(int j = 1000; j > 1; j-=10 ){
+//		  LED_blink( 1000 / j, j);
+//		  printf("Test uart\r\n");
+//		  writeUART(51.123, 17.123, 360.123, 150.123);
+//	  }
 //	  LED_blink(10, 1000);
 //	  LED_blink(100, 100);
 
@@ -404,7 +481,7 @@ int _write(int file, char *ptr, int len){
 }
 
 int writeUART(float latitude, float longitude, float altitude, float velocity){
-    return printf("%f/%f/%f/%f", latitude, longitude, altitude, velocity);
+    return printf("%f/%f/%f/%f\r\n", latitude, longitude, altitude, velocity);
 }
 
 /* USER CODE END 4 */

@@ -37,11 +37,15 @@ LoRaOled.bin \
 
 
 # All Target
-all: LoRaOled.elf secondary-outputs
+all:
+	+@make --no-print-directory main-build && make --no-print-directory post-build
+
+# Main-build Target
+main-build: LoRaOled.elf secondary-outputs
 
 # Tool invocations
 LoRaOled.elf: $(OBJS) $(USER_OBJS) ../STM32F103C8_FLASH.ld
-	arm-none-eabi-gcc -u _printf_float -o "LoRaOled.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"../STM32F103C8_FLASH.ld" --specs=nosys.specs -Wl,-Map="LoRaOled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+	arm-none-eabi-gcc -o "LoRaOled.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m3 -T"../STM32F103C8_FLASH.ld" --specs=nosys.specs -Wl,-Map="LoRaOled.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -65,9 +69,13 @@ clean:
 	-$(RM) *
 	-@echo ' '
 
+post-build:
+	arm-none-eabi-objcopy.exe -O ihex "LoRaOled.elf" "LoRaOled.hex"
+	-@echo ' '
+
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
 
 .PHONY: all clean dependents
-.SECONDARY:
+.SECONDARY: post-build
 
 -include ../makefile.targets
