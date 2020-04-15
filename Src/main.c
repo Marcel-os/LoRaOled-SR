@@ -123,11 +123,12 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  LED_blink(10, 1000);
-	  LED_blink(100, 100);
-	  while(1){
-
+	  for(int j = 1000; j > 1; j-=10 ){
+		  LED_blink( 1000 / j, j);
 	  }
+//	  LED_blink(10, 1000);
+//	  LED_blink(100, 100);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
