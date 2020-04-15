@@ -387,24 +387,24 @@ static void MX_GPIO_Init(void)
 
 void LED_blink(int blink_times, int time){
 
-	for(int i = 0; i < blink_times; i++)
-	{
-		//blue pill set-wyłączona, reset-włączona
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-		HAL_Delay(time);
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-		HAL_Delay(time);
-	}
-	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+    for(int i = 0; i < blink_times; i++)
+    {
+        //blue pill set-wyłączona, reset-włączona
+        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+        HAL_Delay(time);
+        HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+        HAL_Delay(time);
+    }
+    HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
 }
 
 int _write(int file, char *ptr, int len){
-	HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 50);
-	return len;
+    HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 50);
+    return len;
 }
 
 int writeUART(float latitude, float longitude, float altitude, float velocity){
-	return printf("%f/%f/%f/%f", latitude, longitude, altitude, velocity);
+    return printf("%f/%f/%f/%f", latitude, longitude, altitude, velocity);
 }
 
 /* USER CODE END 4 */
