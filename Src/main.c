@@ -24,6 +24,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include "stdio.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,7 +52,6 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-int zmienna;
 
 /* USER CODE END PV */
 
@@ -63,19 +64,17 @@ static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 /* USER CODE BEGIN PFP */
 
-// funkcjia miga diodą blink_times -razy z czasem time
-void LED_blink(int blink_times, int time){
+//Funkcjia miga diodą blink_times -razy z czasem time
+void LED_blink(int blink_times, int time);
+// Przeciazenie funkcji printf, aby wysylala dane po UART
+int _write(int file, char *ptr, int len);
 
-	for(int i = 0; i < blink_times; i++)
-	{
-		//blue pill set-wyłączona, reset-włączona
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-		HAL_Delay(time);
-		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
-		HAL_Delay(time);
-	}
-	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
-}
+/*    Funckja przyjmuje jako parametry:     */
+/* szer.geo., dlug.geo., wysokosc, predkosc */
+/* korzysta z funkcji printf i wysyła dane  */
+/*  w formacie SSSS/DDDD/WWWW/PPPP zwraca   */
+/*  wartosc zwracana przez funkcje pritf    */
+int writeUART(float latitude, float longitude, float altitude, float velocity);
 
 /* USER CODE END PFP */
 
@@ -384,6 +383,28 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void LED_blink(int blink_times, int time){
+
+	for(int i = 0; i < blink_times; i++)
+	{
+		//blue pill set-wyłączona, reset-włączona
+		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+		HAL_Delay(time);
+		HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_RESET);
+		HAL_Delay(time);
+	}
+	HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
+}
+
+int _write(int file, char *ptr, int len){
+	HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 50);
+	return len;
+}
+
+int writeUART(float latitude, float longitude, float altitude, float velocity){
+	return printf("%f/%f/%f/%f", latitude, longitude, altitude, velocity);
+}
 
 /* USER CODE END 4 */
 
