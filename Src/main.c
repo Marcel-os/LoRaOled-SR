@@ -74,7 +74,7 @@ int _write(int file, char *ptr, int len);
 /* szer.geo., dlug.geo., wysokosc, predkosc */
 /* korzysta z funkcji printf i wysyła dane  */
 /*  w formacie SSSS/DDDD/WWWW/PPPP zwraca   */
-/*  wartosc zwracana przez funkcje pritf    */
+/*  wartosc zwracana przez funkcje pritf.    */
 int writeUART(float latitude, float longitude, float altitude, float velocity);
 
 /* USER CODE END PFP */
