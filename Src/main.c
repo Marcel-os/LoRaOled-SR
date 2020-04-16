@@ -468,7 +468,7 @@ int _write(int file, char *ptr, int len){
 }
 
 int writeUART(float latitude, float longitude, float altitude, float velocity){
-    return printf("%f/%f/%f/%f\r\n", latitude, longitude, altitude, velocity);
+    return printf("%f/%f/%f/%f\n\r", latitude, longitude, altitude, velocity);
 }
 
 /* USER CODE END 4 */
