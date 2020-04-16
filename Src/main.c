@@ -464,8 +464,7 @@ static void MX_GPIO_Init(void)
 
 void LED_blink(int blink_times, int time){
 
-    for(int i = 0; i < blink_times; i++)
-    {
+    for(int i = 0; i < blink_times; i++){
         //blue pill set-wyłączona, reset-włączona
         HAL_GPIO_WritePin(LED_GPIO_Port, LED_Pin, GPIO_PIN_SET);
         HAL_Delay(time);
