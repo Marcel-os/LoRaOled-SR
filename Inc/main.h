@@ -68,6 +68,8 @@ void Error_Handler(void);
 #define TX_USB_GPIO_Port GPIOA
 #define RX_USB_Pin GPIO_PIN_3
 #define RX_USB_GPIO_Port GPIOA
+#define RST_RF_Pin GPIO_PIN_0
+#define RST_RF_GPIO_Port GPIOB
 #define DO_RF_Pin GPIO_PIN_12
 #define DO_RF_GPIO_Port GPIOB
 #define CS_RF_Pin GPIO_PIN_15

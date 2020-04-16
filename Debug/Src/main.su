@@ -1,6 +1,7 @@
-main.c:220:6:SystemClock_Config	88	static
-main.c:102:5:main	48	static
-main.c:465:6:LED_blink	24	static
-main.c:477:5:_write	8	static
-main.c:482:5:writeUART	48	static
-main.c:492:6:Error_Handler	0	static
+main.c:202:6:SystemClock_Config	88	static
+main.c:447:6:LED_blink	24	static
+main.c:459:6:Beep	16	static
+main.c:465:5:_write	8	static
+main.c:470:5:writeUART	48	static
+main.c:104:5:main	48	static
+main.c:480:6:Error_Handler	0	static
