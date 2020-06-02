@@ -26,8 +26,7 @@
 
 #include "stdio.h"
 //#include "SX1278.h"
-#include "ssd1306.h"
-#include "fonts.h"
+#include "ssd1306_tests.h"
 
 /* USER CODE END Includes */
 
@@ -80,6 +79,14 @@ int _write(int file, char *ptr, int len);
 /*  w formacie SSSS/DDDD/WWWW/PPPP zwraca   */
 /*  wartosc zwracana przez funkcje pritf.    */
 int writeUART(float latitude, float longitude, float altitude, float velocity);
+
+void init() {
+    ssd1306_TestAll();
+}
+
+void loop() {
+	HAL_Delay(100);
+}
 
 /* USER CODE END PFP */
 
@@ -134,7 +141,7 @@ int main(void)
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
 
-	printf("Odbiornik/nadajnik  radia LoRa\r\n");
+	printf("Odbiornik/nadajnik radia LoRa\r\n");
 
 //	//initialize LoRa module
 //	SX1278_hw.dio0.port = DO_RF_GPIO_Port;
@@ -151,22 +158,14 @@ int main(void)
 //
 //	printf("Konfiguracja zakonczona\r\n");
 
-	SSD1306_Init();  // initialise
-
-	  /// lets print some string
-
-	    SSD1306_GotoXY (0,0);
-	    SSD1306_Puts ("HELLO", &Font_11x18, 1);
-	    SSD1306_GotoXY (10, 30);
-	    SSD1306_Puts ("  WORLD :)", &Font_11x18, 1);
-	    SSD1306_UpdateScreen(); //display
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-  while (1)
-  {
+	init();
+	while (1){
+	    loop();
 //	    ret = SX1278_LoRaEntryTx(&SX1278, 16, 2000);
 //	    printf("Nadawanie danych ...\r\n");
 //	    HAL_Delay(100);
