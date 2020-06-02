@@ -4789,16 +4789,16 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     SSD1306.CurrentX = x;
  8002298:	802f      	strh	r7, [r5, #0]
     ssd1306_SetCursor(2+60, 0);
-    ssd1306_WriteChar((char)latitude, Font_6x8, White);
+    ssd1306_WriteString((char)latitude, Font_6x8, White);
  800229a:	4658      	mov	r0, fp
  800229c:	f7fe fbf4 	bl	8000a88 <__aeabi_f2uiz>
  80022a0:	e894 0006 	ldmia.w	r4, {r1, r2}
     SSD1306.CurrentY = y;
  80022a4:	f04f 080c 	mov.w	r8, #12
-    ssd1306_WriteChar((char)latitude, Font_6x8, White);
+    ssd1306_WriteString((char)latitude, Font_6x8, White);
  80022a8:	2301      	movs	r3, #1
  80022aa:	b2c0      	uxtb	r0, r0
- 80022ac:	f7ff ff74 	bl	8002198 <ssd1306_WriteChar>
+ 80022ac:	f7ff ffc4 	bl	8002238 <ssd1306_WriteString>
     ssd1306_SetCursor(2, 4+8);
     ssd1306_WriteString("Longitude: ", Font_6x8, White);
  80022b0:	e894 0006 	ldmia.w	r4, {r1, r2}
@@ -4817,16 +4817,16 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     SSD1306.CurrentX = x;
  80022c8:	802b      	strh	r3, [r5, #0]
     ssd1306_SetCursor(2+66, 4+8);
-    ssd1306_WriteChar((char) longitude, Font_6x8, White);
+    ssd1306_WriteString((char) longitude, Font_6x8, White);
  80022ca:	4650      	mov	r0, sl
  80022cc:	f7fe fbdc 	bl	8000a88 <__aeabi_f2uiz>
  80022d0:	e894 0006 	ldmia.w	r4, {r1, r2}
     SSD1306.CurrentY = y;
  80022d4:	f04f 0818 	mov.w	r8, #24
-    ssd1306_WriteChar((char) longitude, Font_6x8, White);
+    ssd1306_WriteString((char) longitude, Font_6x8, White);
  80022d8:	2301      	movs	r3, #1
  80022da:	b2c0      	uxtb	r0, r0
- 80022dc:	f7ff ff5c 	bl	8002198 <ssd1306_WriteChar>
+ 80022dc:	f7ff ffac 	bl	8002238 <ssd1306_WriteString>
     ssd1306_SetCursor(2, 2*(4+8));
     ssd1306_WriteString("Altitude: ", Font_6x8, White);
  80022e0:	e894 0006 	ldmia.w	r4, {r1, r2}
@@ -4843,13 +4843,13 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     SSD1306.CurrentY = y;
  80022f4:	f8a5 8002 	strh.w	r8, [r5, #2]
     ssd1306_SetCursor(2+60, 2*(4+8));
-    ssd1306_WriteChar((char) altitude, Font_6x8, White);
+    ssd1306_WriteString((char) altitude, Font_6x8, White);
  80022f8:	4648      	mov	r0, r9
  80022fa:	f7fe fbc5 	bl	8000a88 <__aeabi_f2uiz>
  80022fe:	e894 0006 	ldmia.w	r4, {r1, r2}
  8002302:	2301      	movs	r3, #1
  8002304:	b2c0      	uxtb	r0, r0
- 8002306:	f7ff ff47 	bl	8002198 <ssd1306_WriteChar>
+ 8002306:	f7ff ff97 	bl	8002238 <ssd1306_WriteString>
     ssd1306_SetCursor(2, 3*(4+8));
     ssd1306_WriteString("Velocity: ", Font_6x8, White);
  800230a:	e894 0006 	ldmia.w	r4, {r1, r2}
@@ -4865,18 +4865,18 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     ssd1306_WriteString("Velocity: ", Font_6x8, White);
  8002318:	f7ff ff8e 	bl	8002238 <ssd1306_WriteString>
     ssd1306_SetCursor(2+60, 3*(4+8));
-    ssd1306_WriteChar((char) velocity, Font_6x8, White);
+    ssd1306_WriteString((char) velocity, Font_6x8, White);
  800231c:	9801      	ldr	r0, [sp, #4]
     SSD1306.CurrentX = x;
  800231e:	802f      	strh	r7, [r5, #0]
     SSD1306.CurrentY = y;
  8002320:	806e      	strh	r6, [r5, #2]
-    ssd1306_WriteChar((char) velocity, Font_6x8, White);
+    ssd1306_WriteString((char) velocity, Font_6x8, White);
  8002322:	f7fe fbb1 	bl	8000a88 <__aeabi_f2uiz>
  8002326:	e894 0006 	ldmia.w	r4, {r1, r2}
  800232a:	2301      	movs	r3, #1
  800232c:	b2c0      	uxtb	r0, r0
- 800232e:	f7ff ff33 	bl	8002198 <ssd1306_WriteChar>
+ 800232e:	f7ff ff83 	bl	8002238 <ssd1306_WriteString>
     ssd1306_UpdateScreen();
 }
  8002332:	b003      	add	sp, #12
