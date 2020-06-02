@@ -26,7 +26,7 @@
 
 #include "stdio.h"
 //#include "SX1278.h"
-#include "ssd1306_tests.h"
+#include "ssd1306.h"
 
 /* USER CODE END Includes */
 
@@ -79,10 +79,6 @@ int _write(int file, char *ptr, int len);
 /*  w formacie SSSS/DDDD/WWWW/PPPP zwraca   */
 /*  wartosc zwracana przez funkcje pritf.    */
 int writeUART(float latitude, float longitude, float altitude, float velocity);
-
-void init() {
-    ssd1306_TestAll();
-}
 
 void loop() {
 	HAL_Delay(100);
@@ -163,7 +159,6 @@ int main(void)
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	init();
 	while (1){
 	    loop();
 //	    ret = SX1278_LoRaEntryTx(&SX1278, 16, 2000);
@@ -189,6 +184,7 @@ int main(void)
 
 		printf("Test przesylu danych UART: \r\n");
 		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
+		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.123456);
 
 		printf("Test LED: \r\n");
 		LED_blink(10, 100);
