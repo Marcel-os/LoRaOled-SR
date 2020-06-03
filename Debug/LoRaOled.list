@@ -7,39 +7,39 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         00004fdc  08000110  08000110  00010110  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       000009c8  080050f0  080050f0  000150f0  2**3
+  2 .rodata       000009d0  080050f0  080050f0  000150f0  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .init_array   00000004  08005ab8  08005ab8  00015ab8  2**2
+  3 .init_array   00000004  08005ac0  08005ac0  00015ac0  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  4 .fini_array   00000004  08005abc  08005abc  00015abc  2**2
+  4 .fini_array   00000004  08005ac4  08005ac4  00015ac4  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  5 .data         000001e4  20000000  08005ac0  00020000  2**2
+  5 .data         000001e4  20000000  08005ac8  00020000  2**2
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .bss          000005a4  200001e4  08005ca4  000201e4  2**2
+  6 .bss          000005a4  200001e4  08005cac  000201e4  2**2
                   ALLOC
-  7 ._user_heap_stack 00000600  20000788  08005ca4  00020788  2**0
+  7 ._user_heap_stack 00000600  20000788  08005cac  00020788  2**0
                   ALLOC
   8 .ARM.attributes 00000029  00000000  00000000  000201e4  2**0
                   CONTENTS, READONLY
-  9 .debug_info   00010a64  00000000  00000000  0002020d  2**0
+  9 .debug_info   00010adf  00000000  00000000  0002020d  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_abbrev 00002886  00000000  00000000  00030c71  2**0
+ 10 .debug_abbrev 00002886  00000000  00000000  00030cec  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    0000840f  00000000  00000000  000334f7  2**0
+ 11 .debug_loc    0000842f  00000000  00000000  00033572  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_aranges 00000aa0  00000000  00000000  0003b908  2**3
+ 12 .debug_aranges 00000aa0  00000000  00000000  0003b9a8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000010d8  00000000  00000000  0003c3a8  2**3
+ 13 .debug_ranges 000010f0  00000000  00000000  0003c448  2**3
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_macro  00015017  00000000  00000000  0003d480  2**0
+ 14 .debug_macro  00015017  00000000  00000000  0003d538  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_line   0000afff  00000000  00000000  00052497  2**0
+ 15 .debug_line   0000aff6  00000000  00000000  0005254f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_str    000754ba  00000000  00000000  0005d496  2**0
+ 16 .debug_str    000754ba  00000000  00000000  0005d545  2**0
                   CONTENTS, READONLY, DEBUGGING
- 17 .comment      0000007b  00000000  00000000  000d2950  2**0
+ 17 .comment      0000007b  00000000  00000000  000d29ff  2**0
                   CONTENTS, READONLY
- 18 .debug_frame  00002e94  00000000  00000000  000d29cc  2**2
+ 18 .debug_frame  00002e94  00000000  00000000  000d2a7c  2**2
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -3246,7 +3246,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  80019b6:	e78b      	b.n	80018d0 <HAL_RCC_ClockConfig+0x3c>
  80019b8:	40022000 	.word	0x40022000
  80019bc:	40021000 	.word	0x40021000
- 80019c0:	080057da 	.word	0x080057da
+ 80019c0:	080057e2 	.word	0x080057e2
  80019c4:	20000010 	.word	0x20000010
  80019c8:	20000004 	.word	0x20000004
 
@@ -3263,7 +3263,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  80019dc:	40d8      	lsrs	r0, r3
  80019de:	4770      	bx	lr
  80019e0:	40021000 	.word	0x40021000
- 80019e4:	080057ea 	.word	0x080057ea
+ 80019e4:	080057f2 	.word	0x080057f2
  80019e8:	20000010 	.word	0x20000010
 
 080019ec <HAL_RCC_GetPCLK2Freq>:
@@ -3279,7 +3279,7 @@ if (((RCC_ClkInitStruct->ClockType) & RCC_CLOCKTYPE_PCLK1) == RCC_CLOCKTYPE_PCLK
  80019fc:	40d8      	lsrs	r0, r3
  80019fe:	4770      	bx	lr
  8001a00:	40021000 	.word	0x40021000
- 8001a04:	080057ea 	.word	0x080057ea
+ 8001a04:	080057f2 	.word	0x080057f2
  8001a08:	20000010 	.word	0x20000010
 
 08001a0c <HAL_RCCEx_PeriphCLKConfig>:
@@ -4360,7 +4360,7 @@ int writeUART(float latitude, float longitude, float altitude, float velocity){
   if (HAL_UART_Init(&huart2) != HAL_OK)
  8001ff4:	f7ff fe20 	bl	8001c38 <HAL_UART_Init>
   ssd1306_Init();
- 8001ff8:	f000 f992 	bl	8002320 <ssd1306_Init>
+ 8001ff8:	f000 f98a 	bl	8002310 <ssd1306_Init>
 	printf("Odbiornik/nadajnik radia LoRa\r\n");
  8001ffc:	4827      	ldr	r0, [pc, #156]	; (800209c <main+0x210>)
  8001ffe:	f001 f9b1 	bl	8003364 <puts>
@@ -4374,26 +4374,26 @@ int writeUART(float latitude, float longitude, float altitude, float velocity){
  800200c:	4827      	ldr	r0, [pc, #156]	; (80020ac <main+0x220>)
  800200e:	f001 f9a9 	bl	8003364 <puts>
 		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
- 8002012:	4633      	mov	r3, r6
- 8002014:	462a      	mov	r2, r5
- 8002016:	4621      	mov	r1, r4
- 8002018:	4825      	ldr	r0, [pc, #148]	; (80020b0 <main+0x224>)
+ 8002012:	4632      	mov	r2, r6
+ 8002014:	4629      	mov	r1, r5
+ 8002016:	4b26      	ldr	r3, [pc, #152]	; (80020b0 <main+0x224>)
+ 8002018:	4620      	mov	r0, r4
  800201a:	f7ff ff13 	bl	8001e44 <writeUART>
-		ssd1306_Print((float)51.12, (float)17.12, (float)360.12, (float)150.1);
+		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
  800201e:	4b25      	ldr	r3, [pc, #148]	; (80020b4 <main+0x228>)
- 8002020:	4a25      	ldr	r2, [pc, #148]	; (80020b8 <main+0x22c>)
- 8002022:	4926      	ldr	r1, [pc, #152]	; (80020bc <main+0x230>)
- 8002024:	4826      	ldr	r0, [pc, #152]	; (80020c0 <main+0x234>)
- 8002026:	f000 fa67 	bl	80024f8 <ssd1306_Print>
+ 8002020:	4632      	mov	r2, r6
+ 8002022:	4629      	mov	r1, r5
+ 8002024:	4620      	mov	r0, r4
+ 8002026:	f000 fa5f 	bl	80024e8 <ssd1306_Print>
 		printf("Test LED: \r\n");
- 800202a:	4826      	ldr	r0, [pc, #152]	; (80020c4 <main+0x238>)
+ 800202a:	4823      	ldr	r0, [pc, #140]	; (80020b8 <main+0x22c>)
  800202c:	f001 f99a 	bl	8003364 <puts>
 		LED_blink(10, 100);
  8002030:	2164      	movs	r1, #100	; 0x64
  8002032:	200a      	movs	r0, #10
  8002034:	f7ff fec2 	bl	8001dbc <LED_blink>
 		printf("Test buzzera: \r\n");
- 8002038:	4823      	ldr	r0, [pc, #140]	; (80020c8 <main+0x23c>)
+ 8002038:	4820      	ldr	r0, [pc, #128]	; (80020bc <main+0x230>)
  800203a:	f001 f993 	bl	8003364 <puts>
 		Beep(100);
  800203e:	2064      	movs	r0, #100	; 0x64
@@ -4429,861 +4429,863 @@ int writeUART(float latitude, float longitude, float altitude, float velocity){
  8002094:	2000073c 	.word	0x2000073c
  8002098:	40004400 	.word	0x40004400
  800209c:	08005100 	.word	0x08005100
- 80020a0:	43161f9b 	.word	0x43161f9b
- 80020a4:	43b40fcd 	.word	0x43b40fcd
- 80020a8:	4188fcd6 	.word	0x4188fcd6
+ 80020a0:	43b40fcd 	.word	0x43b40fcd
+ 80020a4:	4188fcd6 	.word	0x4188fcd6
+ 80020a8:	424c7e6b 	.word	0x424c7e6b
  80020ac:	0800511f 	.word	0x0800511f
- 80020b0:	424c7e6b 	.word	0x424c7e6b
- 80020b4:	4316199a 	.word	0x4316199a
- 80020b8:	43b40f5c 	.word	0x43b40f5c
- 80020bc:	4188f5c3 	.word	0x4188f5c3
- 80020c0:	424c7ae1 	.word	0x424c7ae1
- 80020c4:	0800513c 	.word	0x0800513c
- 80020c8:	08005148 	.word	0x08005148
- 80020cc:	00000000 	.word	0x00000000
+ 80020b0:	43161f9b 	.word	0x43161f9b
+ 80020b4:	43161eb8 	.word	0x43161eb8
+ 80020b8:	0800513c 	.word	0x0800513c
+ 80020bc:	08005148 	.word	0x08005148
 
-080020d0 <ftoa>:
+080020c0 <ftoa>:
 	0.0000000005,		// 9
 	0.00000000005		// 10
 };
 
 char * ftoa(double f, char * buf, int precision)
 {
- 80020d0:	e92d 4ff7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
- 80020d4:	461c      	mov	r4, r3
+ 80020c0:	e92d 4ff7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 80020c4:	461c      	mov	r4, r3
 	char * p1;
 	char c;
 	long intPart;
 
 	// check precision bounds
 	if (precision > MAX_PRECISION)
- 80020d6:	2c0a      	cmp	r4, #10
+ 80020c6:	2c0a      	cmp	r4, #10
 {
- 80020d8:	4692      	mov	sl, r2
- 80020da:	4607      	mov	r7, r0
- 80020dc:	460e      	mov	r6, r1
+ 80020c8:	4692      	mov	sl, r2
+ 80020ca:	4607      	mov	r7, r0
+ 80020cc:	460e      	mov	r6, r1
 		precision = MAX_PRECISION;
 
 	// sign stuff
 	if (f < 0)
- 80020de:	f04f 0200 	mov.w	r2, #0
- 80020e2:	f04f 0300 	mov.w	r3, #0
+ 80020ce:	f04f 0200 	mov.w	r2, #0
+ 80020d2:	f04f 0300 	mov.w	r3, #0
 	if (precision > MAX_PRECISION)
- 80020e6:	f300 80b1 	bgt.w	800224c <ftoa+0x17c>
+ 80020d6:	f300 80b1 	bgt.w	800223c <ftoa+0x17c>
 	if (f < 0)
- 80020ea:	f7fe fc67 	bl	80009bc <__aeabi_dcmplt>
- 80020ee:	2800      	cmp	r0, #0
- 80020f0:	d063      	beq.n	80021ba <ftoa+0xea>
+ 80020da:	f7fe fc6f 	bl	80009bc <__aeabi_dcmplt>
+ 80020de:	2800      	cmp	r0, #0
+ 80020e0:	d063      	beq.n	80021aa <ftoa+0xea>
 	{
 		f = -f;
 		*ptr++ = '-';
- 80020f2:	232d      	movs	r3, #45	; 0x2d
+ 80020e2:	232d      	movs	r3, #45	; 0x2d
 		f = -f;
- 80020f4:	f106 4600 	add.w	r6, r6, #2147483648	; 0x80000000
+ 80020e4:	f106 4600 	add.w	r6, r6, #2147483648	; 0x80000000
 		*ptr++ = '-';
- 80020f8:	f10a 0801 	add.w	r8, sl, #1
- 80020fc:	f88a 3000 	strb.w	r3, [sl]
+ 80020e8:	f10a 0801 	add.w	r8, sl, #1
+ 80020ec:	f88a 3000 	strb.w	r3, [sl]
 	}
 
 	if (precision < 0)  // negative precision == automatic precision guess
- 8002100:	2c00      	cmp	r4, #0
- 8002102:	da5c      	bge.n	80021be <ftoa+0xee>
+ 80020f0:	2c00      	cmp	r4, #0
+ 80020f2:	da5c      	bge.n	80021ae <ftoa+0xee>
 	{
 		if (f < 1.0) precision = 6;
+ 80020f4:	2200      	movs	r2, #0
+ 80020f6:	4b5a      	ldr	r3, [pc, #360]	; (8002260 <ftoa+0x1a0>)
+ 80020f8:	4638      	mov	r0, r7
+ 80020fa:	4631      	mov	r1, r6
+ 80020fc:	f7fe fc5e 	bl	80009bc <__aeabi_dcmplt>
+ 8002100:	2800      	cmp	r0, #0
+ 8002102:	d161      	bne.n	80021c8 <ftoa+0x108>
+		else if (f < 10.0) precision = 5;
  8002104:	2200      	movs	r2, #0
- 8002106:	4b5a      	ldr	r3, [pc, #360]	; (8002270 <ftoa+0x1a0>)
+ 8002106:	4b57      	ldr	r3, [pc, #348]	; (8002264 <ftoa+0x1a4>)
  8002108:	4638      	mov	r0, r7
  800210a:	4631      	mov	r1, r6
  800210c:	f7fe fc56 	bl	80009bc <__aeabi_dcmplt>
  8002110:	2800      	cmp	r0, #0
- 8002112:	d161      	bne.n	80021d8 <ftoa+0x108>
-		else if (f < 10.0) precision = 5;
+ 8002112:	d15b      	bne.n	80021cc <ftoa+0x10c>
+		else if (f < 100.0) precision = 4;
  8002114:	2200      	movs	r2, #0
- 8002116:	4b57      	ldr	r3, [pc, #348]	; (8002274 <ftoa+0x1a4>)
+ 8002116:	4b54      	ldr	r3, [pc, #336]	; (8002268 <ftoa+0x1a8>)
  8002118:	4638      	mov	r0, r7
  800211a:	4631      	mov	r1, r6
  800211c:	f7fe fc4e 	bl	80009bc <__aeabi_dcmplt>
  8002120:	2800      	cmp	r0, #0
- 8002122:	d15b      	bne.n	80021dc <ftoa+0x10c>
-		else if (f < 100.0) precision = 4;
+ 8002122:	d155      	bne.n	80021d0 <ftoa+0x110>
+		else if (f < 1000.0) precision = 3;
  8002124:	2200      	movs	r2, #0
- 8002126:	4b54      	ldr	r3, [pc, #336]	; (8002278 <ftoa+0x1a8>)
+ 8002126:	4b51      	ldr	r3, [pc, #324]	; (800226c <ftoa+0x1ac>)
  8002128:	4638      	mov	r0, r7
  800212a:	4631      	mov	r1, r6
  800212c:	f7fe fc46 	bl	80009bc <__aeabi_dcmplt>
  8002130:	2800      	cmp	r0, #0
- 8002132:	d155      	bne.n	80021e0 <ftoa+0x110>
-		else if (f < 1000.0) precision = 3;
- 8002134:	2200      	movs	r2, #0
- 8002136:	4b51      	ldr	r3, [pc, #324]	; (800227c <ftoa+0x1ac>)
- 8002138:	4638      	mov	r0, r7
- 800213a:	4631      	mov	r1, r6
- 800213c:	f7fe fc3e 	bl	80009bc <__aeabi_dcmplt>
- 8002140:	2800      	cmp	r0, #0
- 8002142:	d14f      	bne.n	80021e4 <ftoa+0x114>
+ 8002132:	d14f      	bne.n	80021d4 <ftoa+0x114>
 		else if (f < 10000.0) precision = 2;
- 8002144:	a346      	add	r3, pc, #280	; (adr r3, 8002260 <ftoa+0x190>)
- 8002146:	e9d3 2300 	ldrd	r2, r3, [r3]
- 800214a:	4638      	mov	r0, r7
- 800214c:	4631      	mov	r1, r6
- 800214e:	f7fe fc35 	bl	80009bc <__aeabi_dcmplt>
- 8002152:	2800      	cmp	r0, #0
- 8002154:	d148      	bne.n	80021e8 <ftoa+0x118>
+ 8002134:	a346      	add	r3, pc, #280	; (adr r3, 8002250 <ftoa+0x190>)
+ 8002136:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 800213a:	4638      	mov	r0, r7
+ 800213c:	4631      	mov	r1, r6
+ 800213e:	f7fe fc3d 	bl	80009bc <__aeabi_dcmplt>
+ 8002142:	2800      	cmp	r0, #0
+ 8002144:	d148      	bne.n	80021d8 <ftoa+0x118>
 		else if (f < 100000.0) precision = 1;
- 8002156:	a344      	add	r3, pc, #272	; (adr r3, 8002268 <ftoa+0x198>)
- 8002158:	e9d3 2300 	ldrd	r2, r3, [r3]
- 800215c:	4638      	mov	r0, r7
- 800215e:	4631      	mov	r1, r6
- 8002160:	f7fe fc2c 	bl	80009bc <__aeabi_dcmplt>
- 8002164:	2800      	cmp	r0, #0
- 8002166:	d141      	bne.n	80021ec <ftoa+0x11c>
+ 8002146:	a344      	add	r3, pc, #272	; (adr r3, 8002258 <ftoa+0x198>)
+ 8002148:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 800214c:	4638      	mov	r0, r7
+ 800214e:	4631      	mov	r1, r6
+ 8002150:	f7fe fc34 	bl	80009bc <__aeabi_dcmplt>
+ 8002154:	2800      	cmp	r0, #0
+ 8002156:	d141      	bne.n	80021dc <ftoa+0x11c>
 		else precision = 0;
- 8002168:	4604      	mov	r4, r0
+ 8002158:	4604      	mov	r4, r0
 	// round value according the precision
 	if (precision)
 		f += rounders[precision];
 
 	// integer part...
 	intPart = f;
- 800216a:	4638      	mov	r0, r7
- 800216c:	4631      	mov	r1, r6
- 800216e:	f7fe fc63 	bl	8000a38 <__aeabi_d2iz>
+ 800215a:	4638      	mov	r0, r7
+ 800215c:	4631      	mov	r1, r6
+ 800215e:	f7fe fc6b 	bl	8000a38 <__aeabi_d2iz>
 	f -= intPart;
 
 	if (!intPart)
- 8002172:	2800      	cmp	r0, #0
- 8002174:	d13c      	bne.n	80021f0 <ftoa+0x120>
+ 8002162:	2800      	cmp	r0, #0
+ 8002164:	d13c      	bne.n	80021e0 <ftoa+0x120>
 		*ptr++ = '0';
- 8002176:	2330      	movs	r3, #48	; 0x30
- 8002178:	f108 0501 	add.w	r5, r8, #1
- 800217c:	f888 3000 	strb.w	r3, [r8]
+ 8002166:	2330      	movs	r3, #48	; 0x30
+ 8002168:	f108 0501 	add.w	r5, r8, #1
+ 800216c:	f888 3000 	strb.w	r3, [r8]
 		// restore end pos
 		ptr = p1;
 	}
 
 	// decimal part
 	if (precision)
- 8002180:	b19c      	cbz	r4, 80021aa <ftoa+0xda>
+ 8002170:	b19c      	cbz	r4, 800219a <ftoa+0xda>
 	f -= intPart;
- 8002182:	f7fe f93f 	bl	8000404 <__aeabi_i2d>
- 8002186:	460b      	mov	r3, r1
- 8002188:	4602      	mov	r2, r0
- 800218a:	4631      	mov	r1, r6
- 800218c:	4638      	mov	r0, r7
- 800218e:	f7fd ffeb 	bl	8000168 <__aeabi_dsub>
+ 8002172:	f7fe f947 	bl	8000404 <__aeabi_i2d>
+ 8002176:	460b      	mov	r3, r1
+ 8002178:	4602      	mov	r2, r0
+ 800217a:	4631      	mov	r1, r6
+ 800217c:	4638      	mov	r0, r7
+ 800217e:	f7fd fff3 	bl	8000168 <__aeabi_dsub>
 	{
 		// place decimal point
 		*ptr++ = '.';
- 8002192:	232e      	movs	r3, #46	; 0x2e
- 8002194:	46ab      	mov	fp, r5
+ 8002182:	232e      	movs	r3, #46	; 0x2e
+ 8002184:	46ab      	mov	fp, r5
 
 		// convert
 		while (precision--)
 		{
 			f *= 10.0;
- 8002196:	2600      	movs	r6, #0
+ 8002186:	2600      	movs	r6, #0
 		*ptr++ = '.';
- 8002198:	702b      	strb	r3, [r5, #0]
+ 8002188:	702b      	strb	r3, [r5, #0]
 			f *= 10.0;
- 800219a:	4f36      	ldr	r7, [pc, #216]	; (8002274 <ftoa+0x1a4>)
- 800219c:	192b      	adds	r3, r5, r4
- 800219e:	9301      	str	r3, [sp, #4]
+ 800218a:	4f36      	ldr	r7, [pc, #216]	; (8002264 <ftoa+0x1a4>)
+ 800218c:	192b      	adds	r3, r5, r4
+ 800218e:	9301      	str	r3, [sp, #4]
 		while (precision--)
- 80021a0:	9b01      	ldr	r3, [sp, #4]
- 80021a2:	455b      	cmp	r3, fp
- 80021a4:	d13c      	bne.n	8002220 <ftoa+0x150>
- 80021a6:	3401      	adds	r4, #1
- 80021a8:	4425      	add	r5, r4
+ 8002190:	9b01      	ldr	r3, [sp, #4]
+ 8002192:	455b      	cmp	r3, fp
+ 8002194:	d13c      	bne.n	8002210 <ftoa+0x150>
+ 8002196:	3401      	adds	r4, #1
+ 8002198:	4425      	add	r5, r4
 			f -= c;
 		}
 	}
 
 	// terminating zero
 	*ptr = 0;
- 80021aa:	2300      	movs	r3, #0
+ 800219a:	2300      	movs	r3, #0
 
 	return buf;
 }
- 80021ac:	4650      	mov	r0, sl
+ 800219c:	4650      	mov	r0, sl
 	*ptr = 0;
- 80021ae:	702b      	strb	r3, [r5, #0]
+ 800219e:	702b      	strb	r3, [r5, #0]
 }
- 80021b0:	b003      	add	sp, #12
- 80021b2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 80021a0:	b003      	add	sp, #12
+ 80021a2:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
 		precision = MAX_PRECISION;
- 80021b6:	240a      	movs	r4, #10
- 80021b8:	e79b      	b.n	80020f2 <ftoa+0x22>
- 80021ba:	46d0      	mov	r8, sl
- 80021bc:	e7a0      	b.n	8002100 <ftoa+0x30>
+ 80021a6:	240a      	movs	r4, #10
+ 80021a8:	e79b      	b.n	80020e2 <ftoa+0x22>
+ 80021aa:	46d0      	mov	r8, sl
+ 80021ac:	e7a0      	b.n	80020f0 <ftoa+0x30>
 	if (precision)
- 80021be:	d0d4      	beq.n	800216a <ftoa+0x9a>
+ 80021ae:	d0d4      	beq.n	800215a <ftoa+0x9a>
 		f += rounders[precision];
- 80021c0:	4b2f      	ldr	r3, [pc, #188]	; (8002280 <ftoa+0x1b0>)
- 80021c2:	4638      	mov	r0, r7
- 80021c4:	eb03 03c4 	add.w	r3, r3, r4, lsl #3
- 80021c8:	4631      	mov	r1, r6
- 80021ca:	e9d3 2300 	ldrd	r2, r3, [r3]
- 80021ce:	f7fd ffcd 	bl	800016c <__adddf3>
- 80021d2:	4607      	mov	r7, r0
- 80021d4:	460e      	mov	r6, r1
- 80021d6:	e7c8      	b.n	800216a <ftoa+0x9a>
+ 80021b0:	4b2f      	ldr	r3, [pc, #188]	; (8002270 <ftoa+0x1b0>)
+ 80021b2:	4638      	mov	r0, r7
+ 80021b4:	eb03 03c4 	add.w	r3, r3, r4, lsl #3
+ 80021b8:	4631      	mov	r1, r6
+ 80021ba:	e9d3 2300 	ldrd	r2, r3, [r3]
+ 80021be:	f7fd ffd5 	bl	800016c <__adddf3>
+ 80021c2:	4607      	mov	r7, r0
+ 80021c4:	460e      	mov	r6, r1
+ 80021c6:	e7c8      	b.n	800215a <ftoa+0x9a>
 		if (f < 1.0) precision = 6;
- 80021d8:	2406      	movs	r4, #6
- 80021da:	e7f1      	b.n	80021c0 <ftoa+0xf0>
+ 80021c8:	2406      	movs	r4, #6
+ 80021ca:	e7f1      	b.n	80021b0 <ftoa+0xf0>
 		else if (f < 10.0) precision = 5;
- 80021dc:	2405      	movs	r4, #5
- 80021de:	e7ef      	b.n	80021c0 <ftoa+0xf0>
+ 80021cc:	2405      	movs	r4, #5
+ 80021ce:	e7ef      	b.n	80021b0 <ftoa+0xf0>
 		else if (f < 100.0) precision = 4;
- 80021e0:	2404      	movs	r4, #4
- 80021e2:	e7ed      	b.n	80021c0 <ftoa+0xf0>
+ 80021d0:	2404      	movs	r4, #4
+ 80021d2:	e7ed      	b.n	80021b0 <ftoa+0xf0>
 		else if (f < 1000.0) precision = 3;
- 80021e4:	2403      	movs	r4, #3
- 80021e6:	e7eb      	b.n	80021c0 <ftoa+0xf0>
+ 80021d4:	2403      	movs	r4, #3
+ 80021d6:	e7eb      	b.n	80021b0 <ftoa+0xf0>
 		else if (f < 10000.0) precision = 2;
- 80021e8:	2402      	movs	r4, #2
- 80021ea:	e7e9      	b.n	80021c0 <ftoa+0xf0>
+ 80021d8:	2402      	movs	r4, #2
+ 80021da:	e7e9      	b.n	80021b0 <ftoa+0xf0>
 		else if (f < 100000.0) precision = 1;
- 80021ec:	2401      	movs	r4, #1
- 80021ee:	e7e7      	b.n	80021c0 <ftoa+0xf0>
- 80021f0:	4603      	mov	r3, r0
- 80021f2:	4645      	mov	r5, r8
+ 80021dc:	2401      	movs	r4, #1
+ 80021de:	e7e7      	b.n	80021b0 <ftoa+0xf0>
+ 80021e0:	4603      	mov	r3, r0
+ 80021e2:	4645      	mov	r5, r8
 			*p++ = '0' + intPart % 10;
- 80021f4:	210a      	movs	r1, #10
- 80021f6:	fb93 f2f1 	sdiv	r2, r3, r1
- 80021fa:	fb01 3312 	mls	r3, r1, r2, r3
- 80021fe:	3330      	adds	r3, #48	; 0x30
- 8002200:	f805 3b01 	strb.w	r3, [r5], #1
+ 80021e4:	210a      	movs	r1, #10
+ 80021e6:	fb93 f2f1 	sdiv	r2, r3, r1
+ 80021ea:	fb01 3312 	mls	r3, r1, r2, r3
+ 80021ee:	3330      	adds	r3, #48	; 0x30
+ 80021f0:	f805 3b01 	strb.w	r3, [r5], #1
 		while (intPart)
- 8002204:	4613      	mov	r3, r2
- 8002206:	2a00      	cmp	r2, #0
- 8002208:	d1f5      	bne.n	80021f6 <ftoa+0x126>
+ 80021f4:	4613      	mov	r3, r2
+ 80021f6:	2a00      	cmp	r2, #0
+ 80021f8:	d1f5      	bne.n	80021e6 <ftoa+0x126>
 			*p++ = '0' + intPart % 10;
- 800220a:	462b      	mov	r3, r5
+ 80021fa:	462b      	mov	r3, r5
 		while (p > ptr)
- 800220c:	4598      	cmp	r8, r3
- 800220e:	d2b7      	bcs.n	8002180 <ftoa+0xb0>
+ 80021fc:	4598      	cmp	r8, r3
+ 80021fe:	d2b7      	bcs.n	8002170 <ftoa+0xb0>
 			c = *--p;
- 8002210:	f813 2d01 	ldrb.w	r2, [r3, #-1]!
+ 8002200:	f813 2d01 	ldrb.w	r2, [r3, #-1]!
 			*p = *ptr;
- 8002214:	f898 1000 	ldrb.w	r1, [r8]
- 8002218:	7019      	strb	r1, [r3, #0]
+ 8002204:	f898 1000 	ldrb.w	r1, [r8]
+ 8002208:	7019      	strb	r1, [r3, #0]
 			*ptr++ = c;
- 800221a:	f808 2b01 	strb.w	r2, [r8], #1
- 800221e:	e7f5      	b.n	800220c <ftoa+0x13c>
+ 800220a:	f808 2b01 	strb.w	r2, [r8], #1
+ 800220e:	e7f5      	b.n	80021fc <ftoa+0x13c>
 			f *= 10.0;
- 8002220:	4632      	mov	r2, r6
- 8002222:	463b      	mov	r3, r7
- 8002224:	f7fe f958 	bl	80004d8 <__aeabi_dmul>
- 8002228:	4689      	mov	r9, r1
- 800222a:	4680      	mov	r8, r0
+ 8002210:	4632      	mov	r2, r6
+ 8002212:	463b      	mov	r3, r7
+ 8002214:	f7fe f960 	bl	80004d8 <__aeabi_dmul>
+ 8002218:	4689      	mov	r9, r1
+ 800221a:	4680      	mov	r8, r0
 			c = f;
- 800222c:	f7fe fc2c 	bl	8000a88 <__aeabi_d2uiz>
- 8002230:	b2c0      	uxtb	r0, r0
+ 800221c:	f7fe fc34 	bl	8000a88 <__aeabi_d2uiz>
+ 8002220:	b2c0      	uxtb	r0, r0
 			*ptr++ = '0' + c;
- 8002232:	f100 0330 	add.w	r3, r0, #48	; 0x30
- 8002236:	f80b 3f01 	strb.w	r3, [fp, #1]!
+ 8002222:	f100 0330 	add.w	r3, r0, #48	; 0x30
+ 8002226:	f80b 3f01 	strb.w	r3, [fp, #1]!
 			f -= c;
- 800223a:	f7fe f8e3 	bl	8000404 <__aeabi_i2d>
- 800223e:	4602      	mov	r2, r0
- 8002240:	460b      	mov	r3, r1
- 8002242:	4640      	mov	r0, r8
- 8002244:	4649      	mov	r1, r9
- 8002246:	f7fd ff8f 	bl	8000168 <__aeabi_dsub>
- 800224a:	e7a9      	b.n	80021a0 <ftoa+0xd0>
+ 800222a:	f7fe f8eb 	bl	8000404 <__aeabi_i2d>
+ 800222e:	4602      	mov	r2, r0
+ 8002230:	460b      	mov	r3, r1
+ 8002232:	4640      	mov	r0, r8
+ 8002234:	4649      	mov	r1, r9
+ 8002236:	f7fd ff97 	bl	8000168 <__aeabi_dsub>
+ 800223a:	e7a9      	b.n	8002190 <ftoa+0xd0>
 	if (f < 0)
- 800224c:	f7fe fbb6 	bl	80009bc <__aeabi_dcmplt>
- 8002250:	2800      	cmp	r0, #0
- 8002252:	d1b0      	bne.n	80021b6 <ftoa+0xe6>
- 8002254:	46d0      	mov	r8, sl
+ 800223c:	f7fe fbbe 	bl	80009bc <__aeabi_dcmplt>
+ 8002240:	2800      	cmp	r0, #0
+ 8002242:	d1b0      	bne.n	80021a6 <ftoa+0xe6>
+ 8002244:	46d0      	mov	r8, sl
 		precision = MAX_PRECISION;
- 8002256:	240a      	movs	r4, #10
- 8002258:	e7b2      	b.n	80021c0 <ftoa+0xf0>
- 800225a:	bf00      	nop
- 800225c:	f3af 8000 	nop.w
- 8002260:	00000000 	.word	0x00000000
- 8002264:	40c38800 	.word	0x40c38800
- 8002268:	00000000 	.word	0x00000000
- 800226c:	40f86a00 	.word	0x40f86a00
- 8002270:	3ff00000 	.word	0x3ff00000
- 8002274:	40240000 	.word	0x40240000
- 8002278:	40590000 	.word	0x40590000
- 800227c:	408f4000 	.word	0x408f4000
- 8002280:	08005168 	.word	0x08005168
+ 8002246:	240a      	movs	r4, #10
+ 8002248:	e7b2      	b.n	80021b0 <ftoa+0xf0>
+ 800224a:	bf00      	nop
+ 800224c:	f3af 8000 	nop.w
+ 8002250:	00000000 	.word	0x00000000
+ 8002254:	40c38800 	.word	0x40c38800
+ 8002258:	00000000 	.word	0x00000000
+ 800225c:	40f86a00 	.word	0x40f86a00
+ 8002260:	3ff00000 	.word	0x3ff00000
+ 8002264:	40240000 	.word	0x40240000
+ 8002268:	40590000 	.word	0x40590000
+ 800226c:	408f4000 	.word	0x408f4000
+ 8002270:	08005168 	.word	0x08005168
 
-08002284 <ssd1306_WriteCommand>:
+08002274 <ssd1306_WriteCommand>:
 void ssd1306_Reset(void) {
 	/* for I2C - do nothing */
 }
 
 // Send a byte to the command register
 void ssd1306_WriteCommand(uint8_t byte) {
- 8002284:	b57f      	push	{r0, r1, r2, r3, r4, r5, r6, lr}
+ 8002274:	b57f      	push	{r0, r1, r2, r3, r4, r5, r6, lr}
 	HAL_I2C_Mem_Write(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x00, 1, &byte, 1, HAL_MAX_DELAY);
- 8002286:	2301      	movs	r3, #1
- 8002288:	f04f 31ff 	mov.w	r1, #4294967295	; 0xffffffff
+ 8002276:	2301      	movs	r3, #1
+ 8002278:	f04f 31ff 	mov.w	r1, #4294967295	; 0xffffffff
 void ssd1306_WriteCommand(uint8_t byte) {
- 800228c:	aa06      	add	r2, sp, #24
- 800228e:	f802 0d01 	strb.w	r0, [r2, #-1]!
+ 800227c:	aa06      	add	r2, sp, #24
+ 800227e:	f802 0d01 	strb.w	r0, [r2, #-1]!
 	HAL_I2C_Mem_Write(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x00, 1, &byte, 1, HAL_MAX_DELAY);
- 8002292:	9200      	str	r2, [sp, #0]
- 8002294:	e9cd 3101 	strd	r3, r1, [sp, #4]
- 8002298:	2200      	movs	r2, #0
- 800229a:	2178      	movs	r1, #120	; 0x78
- 800229c:	4802      	ldr	r0, [pc, #8]	; (80022a8 <ssd1306_WriteCommand+0x24>)
- 800229e:	f7ff f891 	bl	80013c4 <HAL_I2C_Mem_Write>
+ 8002282:	9200      	str	r2, [sp, #0]
+ 8002284:	e9cd 3101 	strd	r3, r1, [sp, #4]
+ 8002288:	2200      	movs	r2, #0
+ 800228a:	2178      	movs	r1, #120	; 0x78
+ 800228c:	4802      	ldr	r0, [pc, #8]	; (8002298 <ssd1306_WriteCommand+0x24>)
+ 800228e:	f7ff f899 	bl	80013c4 <HAL_I2C_Mem_Write>
 }
- 80022a2:	b007      	add	sp, #28
- 80022a4:	f85d fb04 	ldr.w	pc, [sp], #4
- 80022a8:	2000061c 	.word	0x2000061c
+ 8002292:	b007      	add	sp, #28
+ 8002294:	f85d fb04 	ldr.w	pc, [sp], #4
+ 8002298:	2000061c 	.word	0x2000061c
 
-080022ac <ssd1306_WriteData>:
+0800229c <ssd1306_WriteData>:
 
 // Send data
 void ssd1306_WriteData(uint8_t* buffer, size_t buff_size) {
- 80022ac:	b51f      	push	{r0, r1, r2, r3, r4, lr}
+ 800229c:	b51f      	push	{r0, r1, r2, r3, r4, lr}
 	HAL_I2C_Mem_Write(&SSD1306_I2C_PORT, SSD1306_I2C_ADDR, 0x40, 1, buffer, buff_size, HAL_MAX_DELAY);
- 80022ae:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
- 80022b2:	b289      	uxth	r1, r1
- 80022b4:	e9cd 0100 	strd	r0, r1, [sp]
- 80022b8:	9302      	str	r3, [sp, #8]
- 80022ba:	2240      	movs	r2, #64	; 0x40
- 80022bc:	2301      	movs	r3, #1
- 80022be:	2178      	movs	r1, #120	; 0x78
- 80022c0:	4802      	ldr	r0, [pc, #8]	; (80022cc <ssd1306_WriteData+0x20>)
- 80022c2:	f7ff f87f 	bl	80013c4 <HAL_I2C_Mem_Write>
+ 800229e:	f04f 33ff 	mov.w	r3, #4294967295	; 0xffffffff
+ 80022a2:	b289      	uxth	r1, r1
+ 80022a4:	e9cd 0100 	strd	r0, r1, [sp]
+ 80022a8:	9302      	str	r3, [sp, #8]
+ 80022aa:	2240      	movs	r2, #64	; 0x40
+ 80022ac:	2301      	movs	r3, #1
+ 80022ae:	2178      	movs	r1, #120	; 0x78
+ 80022b0:	4802      	ldr	r0, [pc, #8]	; (80022bc <ssd1306_WriteData+0x20>)
+ 80022b2:	f7ff f887 	bl	80013c4 <HAL_I2C_Mem_Write>
 }
- 80022c6:	b005      	add	sp, #20
- 80022c8:	f85d fb04 	ldr.w	pc, [sp], #4
- 80022cc:	2000061c 	.word	0x2000061c
+ 80022b6:	b005      	add	sp, #20
+ 80022b8:	f85d fb04 	ldr.w	pc, [sp], #4
+ 80022bc:	2000061c 	.word	0x2000061c
 
-080022d0 <ssd1306_Fill>:
+080022c0 <ssd1306_Fill>:
 // Fill the whole screen with the given color
 void ssd1306_Fill(SSD1306_COLOR color) {
     /* Set memory */
     uint32_t i;
 
     for(i = 0; i < sizeof(SSD1306_Buffer); i++) {
- 80022d0:	2300      	movs	r3, #0
+ 80022c0:	2300      	movs	r3, #0
         SSD1306_Buffer[i] = (color == Black) ? 0x00 : 0xFF;
- 80022d2:	4905      	ldr	r1, [pc, #20]	; (80022e8 <ssd1306_Fill+0x18>)
- 80022d4:	1c02      	adds	r2, r0, #0
- 80022d6:	bf18      	it	ne
- 80022d8:	2201      	movne	r2, #1
- 80022da:	4252      	negs	r2, r2
- 80022dc:	545a      	strb	r2, [r3, r1]
+ 80022c2:	4905      	ldr	r1, [pc, #20]	; (80022d8 <ssd1306_Fill+0x18>)
+ 80022c4:	1c02      	adds	r2, r0, #0
+ 80022c6:	bf18      	it	ne
+ 80022c8:	2201      	movne	r2, #1
+ 80022ca:	4252      	negs	r2, r2
+ 80022cc:	545a      	strb	r2, [r3, r1]
     for(i = 0; i < sizeof(SSD1306_Buffer); i++) {
- 80022de:	3301      	adds	r3, #1
- 80022e0:	f5b3 6f80 	cmp.w	r3, #1024	; 0x400
- 80022e4:	d1f6      	bne.n	80022d4 <ssd1306_Fill+0x4>
+ 80022ce:	3301      	adds	r3, #1
+ 80022d0:	f5b3 6f80 	cmp.w	r3, #1024	; 0x400
+ 80022d4:	d1f6      	bne.n	80022c4 <ssd1306_Fill+0x4>
     }
 }
- 80022e6:	4770      	bx	lr
- 80022e8:	20000206 	.word	0x20000206
+ 80022d6:	4770      	bx	lr
+ 80022d8:	20000206 	.word	0x20000206
 
-080022ec <ssd1306_UpdateScreen>:
+080022dc <ssd1306_UpdateScreen>:
 
 // Write the screenbuffer with changed to the screen
 void ssd1306_UpdateScreen(void) {
- 80022ec:	b538      	push	{r3, r4, r5, lr}
- 80022ee:	2400      	movs	r4, #0
+ 80022dc:	b538      	push	{r3, r4, r5, lr}
+ 80022de:	2400      	movs	r4, #0
     //  * 128px  ==  16 pages
     for(uint8_t i = 0; i < SSD1306_HEIGHT/8; i++) {
         ssd1306_WriteCommand(0xB0 + i); // Set the current RAM page address.
         ssd1306_WriteCommand(0x00);
         ssd1306_WriteCommand(0x10);
         ssd1306_WriteData(&SSD1306_Buffer[SSD1306_WIDTH*i],SSD1306_WIDTH);
- 80022f0:	4d0a      	ldr	r5, [pc, #40]	; (800231c <ssd1306_UpdateScreen+0x30>)
+ 80022e0:	4d0a      	ldr	r5, [pc, #40]	; (800230c <ssd1306_UpdateScreen+0x30>)
         ssd1306_WriteCommand(0xB0 + i); // Set the current RAM page address.
- 80022f2:	f1a4 0050 	sub.w	r0, r4, #80	; 0x50
- 80022f6:	b2c0      	uxtb	r0, r0
- 80022f8:	f7ff ffc4 	bl	8002284 <ssd1306_WriteCommand>
+ 80022e2:	f1a4 0050 	sub.w	r0, r4, #80	; 0x50
+ 80022e6:	b2c0      	uxtb	r0, r0
+ 80022e8:	f7ff ffc4 	bl	8002274 <ssd1306_WriteCommand>
         ssd1306_WriteCommand(0x00);
- 80022fc:	2000      	movs	r0, #0
- 80022fe:	f7ff ffc1 	bl	8002284 <ssd1306_WriteCommand>
+ 80022ec:	2000      	movs	r0, #0
+ 80022ee:	f7ff ffc1 	bl	8002274 <ssd1306_WriteCommand>
         ssd1306_WriteCommand(0x10);
- 8002302:	2010      	movs	r0, #16
- 8002304:	f7ff ffbe 	bl	8002284 <ssd1306_WriteCommand>
+ 80022f2:	2010      	movs	r0, #16
+ 80022f4:	f7ff ffbe 	bl	8002274 <ssd1306_WriteCommand>
         ssd1306_WriteData(&SSD1306_Buffer[SSD1306_WIDTH*i],SSD1306_WIDTH);
- 8002308:	eb05 10c4 	add.w	r0, r5, r4, lsl #7
- 800230c:	2180      	movs	r1, #128	; 0x80
- 800230e:	3401      	adds	r4, #1
- 8002310:	f7ff ffcc 	bl	80022ac <ssd1306_WriteData>
+ 80022f8:	eb05 10c4 	add.w	r0, r5, r4, lsl #7
+ 80022fc:	2180      	movs	r1, #128	; 0x80
+ 80022fe:	3401      	adds	r4, #1
+ 8002300:	f7ff ffcc 	bl	800229c <ssd1306_WriteData>
     for(uint8_t i = 0; i < SSD1306_HEIGHT/8; i++) {
- 8002314:	2c08      	cmp	r4, #8
- 8002316:	d1ec      	bne.n	80022f2 <ssd1306_UpdateScreen+0x6>
+ 8002304:	2c08      	cmp	r4, #8
+ 8002306:	d1ec      	bne.n	80022e2 <ssd1306_UpdateScreen+0x6>
     }
 }
- 8002318:	bd38      	pop	{r3, r4, r5, pc}
- 800231a:	bf00      	nop
- 800231c:	20000206 	.word	0x20000206
+ 8002308:	bd38      	pop	{r3, r4, r5, pc}
+ 800230a:	bf00      	nop
+ 800230c:	20000206 	.word	0x20000206
 
-08002320 <ssd1306_Init>:
+08002310 <ssd1306_Init>:
 void ssd1306_Init(void) {
- 8002320:	b508      	push	{r3, lr}
+ 8002310:	b508      	push	{r3, lr}
     HAL_Delay(100);
- 8002322:	2064      	movs	r0, #100	; 0x64
- 8002324:	f7fe fc18 	bl	8000b58 <HAL_Delay>
+ 8002312:	2064      	movs	r0, #100	; 0x64
+ 8002314:	f7fe fc20 	bl	8000b58 <HAL_Delay>
     ssd1306_WriteCommand(0xAE); //display off
- 8002328:	20ae      	movs	r0, #174	; 0xae
- 800232a:	f7ff ffab 	bl	8002284 <ssd1306_WriteCommand>
+ 8002318:	20ae      	movs	r0, #174	; 0xae
+ 800231a:	f7ff ffab 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x20); //Set Memory Addressing Mode   
- 800232e:	2020      	movs	r0, #32
- 8002330:	f7ff ffa8 	bl	8002284 <ssd1306_WriteCommand>
+ 800231e:	2020      	movs	r0, #32
+ 8002320:	f7ff ffa8 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x00); // 00b,Horizontal Addressing Mode; 01b,Vertical Addressing Mode;
- 8002334:	2000      	movs	r0, #0
- 8002336:	f7ff ffa5 	bl	8002284 <ssd1306_WriteCommand>
+ 8002324:	2000      	movs	r0, #0
+ 8002326:	f7ff ffa5 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xB0); //Set Page Start Address for Page Addressing Mode,0-7
- 800233a:	20b0      	movs	r0, #176	; 0xb0
- 800233c:	f7ff ffa2 	bl	8002284 <ssd1306_WriteCommand>
+ 800232a:	20b0      	movs	r0, #176	; 0xb0
+ 800232c:	f7ff ffa2 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xC8); //Set COM Output Scan Direction
- 8002340:	20c8      	movs	r0, #200	; 0xc8
- 8002342:	f7ff ff9f 	bl	8002284 <ssd1306_WriteCommand>
+ 8002330:	20c8      	movs	r0, #200	; 0xc8
+ 8002332:	f7ff ff9f 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x00); //---set low column address
- 8002346:	2000      	movs	r0, #0
- 8002348:	f7ff ff9c 	bl	8002284 <ssd1306_WriteCommand>
+ 8002336:	2000      	movs	r0, #0
+ 8002338:	f7ff ff9c 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x10); //---set high column address
- 800234c:	2010      	movs	r0, #16
- 800234e:	f7ff ff99 	bl	8002284 <ssd1306_WriteCommand>
+ 800233c:	2010      	movs	r0, #16
+ 800233e:	f7ff ff99 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x40); //--set start line address - CHECK
- 8002352:	2040      	movs	r0, #64	; 0x40
- 8002354:	f7ff ff96 	bl	8002284 <ssd1306_WriteCommand>
+ 8002342:	2040      	movs	r0, #64	; 0x40
+ 8002344:	f7ff ff96 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x81); //--set contrast control register - CHECK
- 8002358:	2081      	movs	r0, #129	; 0x81
- 800235a:	f7ff ff93 	bl	8002284 <ssd1306_WriteCommand>
+ 8002348:	2081      	movs	r0, #129	; 0x81
+ 800234a:	f7ff ff93 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xFF);
- 800235e:	20ff      	movs	r0, #255	; 0xff
- 8002360:	f7ff ff90 	bl	8002284 <ssd1306_WriteCommand>
+ 800234e:	20ff      	movs	r0, #255	; 0xff
+ 8002350:	f7ff ff90 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xA1); //--set segment re-map 0 to 127 - CHECK
- 8002364:	20a1      	movs	r0, #161	; 0xa1
- 8002366:	f7ff ff8d 	bl	8002284 <ssd1306_WriteCommand>
+ 8002354:	20a1      	movs	r0, #161	; 0xa1
+ 8002356:	f7ff ff8d 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xA6); //--set normal color
- 800236a:	20a6      	movs	r0, #166	; 0xa6
- 800236c:	f7ff ff8a 	bl	8002284 <ssd1306_WriteCommand>
+ 800235a:	20a6      	movs	r0, #166	; 0xa6
+ 800235c:	f7ff ff8a 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xA8); //--set multiplex ratio(1 to 64) - CHECK
- 8002370:	20a8      	movs	r0, #168	; 0xa8
- 8002372:	f7ff ff87 	bl	8002284 <ssd1306_WriteCommand>
+ 8002360:	20a8      	movs	r0, #168	; 0xa8
+ 8002362:	f7ff ff87 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x3F); //
- 8002376:	203f      	movs	r0, #63	; 0x3f
- 8002378:	f7ff ff84 	bl	8002284 <ssd1306_WriteCommand>
+ 8002366:	203f      	movs	r0, #63	; 0x3f
+ 8002368:	f7ff ff84 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xA4); //0xa4,Output follows RAM content;0xa5,Output ignores RAM content
- 800237c:	20a4      	movs	r0, #164	; 0xa4
- 800237e:	f7ff ff81 	bl	8002284 <ssd1306_WriteCommand>
+ 800236c:	20a4      	movs	r0, #164	; 0xa4
+ 800236e:	f7ff ff81 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xD3); //-set display offset - CHECK
- 8002382:	20d3      	movs	r0, #211	; 0xd3
- 8002384:	f7ff ff7e 	bl	8002284 <ssd1306_WriteCommand>
+ 8002372:	20d3      	movs	r0, #211	; 0xd3
+ 8002374:	f7ff ff7e 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x00); //-not offset
- 8002388:	2000      	movs	r0, #0
- 800238a:	f7ff ff7b 	bl	8002284 <ssd1306_WriteCommand>
+ 8002378:	2000      	movs	r0, #0
+ 800237a:	f7ff ff7b 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xD5); //--set display clock divide ratio/oscillator frequency
- 800238e:	20d5      	movs	r0, #213	; 0xd5
- 8002390:	f7ff ff78 	bl	8002284 <ssd1306_WriteCommand>
+ 800237e:	20d5      	movs	r0, #213	; 0xd5
+ 8002380:	f7ff ff78 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xF0); //--set divide ratio
- 8002394:	20f0      	movs	r0, #240	; 0xf0
- 8002396:	f7ff ff75 	bl	8002284 <ssd1306_WriteCommand>
+ 8002384:	20f0      	movs	r0, #240	; 0xf0
+ 8002386:	f7ff ff75 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xD9); //--set pre-charge period
- 800239a:	20d9      	movs	r0, #217	; 0xd9
- 800239c:	f7ff ff72 	bl	8002284 <ssd1306_WriteCommand>
+ 800238a:	20d9      	movs	r0, #217	; 0xd9
+ 800238c:	f7ff ff72 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x22); //
- 80023a0:	2022      	movs	r0, #34	; 0x22
- 80023a2:	f7ff ff6f 	bl	8002284 <ssd1306_WriteCommand>
+ 8002390:	2022      	movs	r0, #34	; 0x22
+ 8002392:	f7ff ff6f 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xDA); //--set com pins hardware configuration - CHECK
- 80023a6:	20da      	movs	r0, #218	; 0xda
- 80023a8:	f7ff ff6c 	bl	8002284 <ssd1306_WriteCommand>
+ 8002396:	20da      	movs	r0, #218	; 0xda
+ 8002398:	f7ff ff6c 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x12);
- 80023ac:	2012      	movs	r0, #18
- 80023ae:	f7ff ff69 	bl	8002284 <ssd1306_WriteCommand>
+ 800239c:	2012      	movs	r0, #18
+ 800239e:	f7ff ff69 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xDB); //--set vcomh
- 80023b2:	20db      	movs	r0, #219	; 0xdb
- 80023b4:	f7ff ff66 	bl	8002284 <ssd1306_WriteCommand>
+ 80023a2:	20db      	movs	r0, #219	; 0xdb
+ 80023a4:	f7ff ff66 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x20); //0x20,0.77xVcc
- 80023b8:	2020      	movs	r0, #32
- 80023ba:	f7ff ff63 	bl	8002284 <ssd1306_WriteCommand>
+ 80023a8:	2020      	movs	r0, #32
+ 80023aa:	f7ff ff63 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x8D); //--set DC-DC enable
- 80023be:	208d      	movs	r0, #141	; 0x8d
- 80023c0:	f7ff ff60 	bl	8002284 <ssd1306_WriteCommand>
+ 80023ae:	208d      	movs	r0, #141	; 0x8d
+ 80023b0:	f7ff ff60 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0x14); //
- 80023c4:	2014      	movs	r0, #20
- 80023c6:	f7ff ff5d 	bl	8002284 <ssd1306_WriteCommand>
+ 80023b4:	2014      	movs	r0, #20
+ 80023b6:	f7ff ff5d 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_WriteCommand(0xAF); //--turn on SSD1306 panel
- 80023ca:	20af      	movs	r0, #175	; 0xaf
- 80023cc:	f7ff ff5a 	bl	8002284 <ssd1306_WriteCommand>
+ 80023ba:	20af      	movs	r0, #175	; 0xaf
+ 80023bc:	f7ff ff5a 	bl	8002274 <ssd1306_WriteCommand>
     ssd1306_Fill(Black);
- 80023d0:	2000      	movs	r0, #0
- 80023d2:	f7ff ff7d 	bl	80022d0 <ssd1306_Fill>
+ 80023c0:	2000      	movs	r0, #0
+ 80023c2:	f7ff ff7d 	bl	80022c0 <ssd1306_Fill>
     ssd1306_UpdateScreen();
- 80023d6:	f7ff ff89 	bl	80022ec <ssd1306_UpdateScreen>
+ 80023c6:	f7ff ff89 	bl	80022dc <ssd1306_UpdateScreen>
     SSD1306.CurrentX = 0;
- 80023da:	2200      	movs	r2, #0
- 80023dc:	4b02      	ldr	r3, [pc, #8]	; (80023e8 <ssd1306_Init+0xc8>)
- 80023de:	801a      	strh	r2, [r3, #0]
+ 80023ca:	2200      	movs	r2, #0
+ 80023cc:	4b02      	ldr	r3, [pc, #8]	; (80023d8 <ssd1306_Init+0xc8>)
+ 80023ce:	801a      	strh	r2, [r3, #0]
     SSD1306.CurrentY = 0;
- 80023e0:	805a      	strh	r2, [r3, #2]
+ 80023d0:	805a      	strh	r2, [r3, #2]
     SSD1306.Initialized = 1;
- 80023e2:	2201      	movs	r2, #1
- 80023e4:	715a      	strb	r2, [r3, #5]
+ 80023d2:	2201      	movs	r2, #1
+ 80023d4:	715a      	strb	r2, [r3, #5]
 }
- 80023e6:	bd08      	pop	{r3, pc}
- 80023e8:	20000200 	.word	0x20000200
+ 80023d6:	bd08      	pop	{r3, pc}
+ 80023d8:	20000200 	.word	0x20000200
 
-080023ec <ssd1306_DrawPixel>:
+080023dc <ssd1306_DrawPixel>:
 //    Draw one pixel in the screenbuffer
 //    X => X Coordinate
 //    Y => Y Coordinate
 //    color => Pixel color
 void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color) {
     if(x >= SSD1306_WIDTH || y >= SSD1306_HEIGHT) {
- 80023ec:	0603      	lsls	r3, r0, #24
+ 80023dc:	0603      	lsls	r3, r0, #24
 void ssd1306_DrawPixel(uint8_t x, uint8_t y, SSD1306_COLOR color) {
- 80023ee:	b530      	push	{r4, r5, lr}
+ 80023de:	b530      	push	{r4, r5, lr}
     if(x >= SSD1306_WIDTH || y >= SSD1306_HEIGHT) {
- 80023f0:	d416      	bmi.n	8002420 <ssd1306_DrawPixel+0x34>
- 80023f2:	293f      	cmp	r1, #63	; 0x3f
- 80023f4:	d814      	bhi.n	8002420 <ssd1306_DrawPixel+0x34>
+ 80023e0:	d416      	bmi.n	8002410 <ssd1306_DrawPixel+0x34>
+ 80023e2:	293f      	cmp	r1, #63	; 0x3f
+ 80023e4:	d814      	bhi.n	8002410 <ssd1306_DrawPixel+0x34>
         // Don't write outside the buffer
         return;
     }
     
     // Check if pixel should be inverted
     if(SSD1306.Inverted) {
- 80023f6:	4b0b      	ldr	r3, [pc, #44]	; (8002424 <ssd1306_DrawPixel+0x38>)
- 80023f8:	791b      	ldrb	r3, [r3, #4]
- 80023fa:	b113      	cbz	r3, 8002402 <ssd1306_DrawPixel+0x16>
+ 80023e6:	4b0b      	ldr	r3, [pc, #44]	; (8002414 <ssd1306_DrawPixel+0x38>)
+ 80023e8:	791b      	ldrb	r3, [r3, #4]
+ 80023ea:	b113      	cbz	r3, 80023f2 <ssd1306_DrawPixel+0x16>
         color = (SSD1306_COLOR)!color;
- 80023fc:	fab2 f282 	clz	r2, r2
- 8002400:	0952      	lsrs	r2, r2, #5
- 8002402:	08cb      	lsrs	r3, r1, #3
- 8002404:	f001 0407 	and.w	r4, r1, #7
- 8002408:	2101      	movs	r1, #1
- 800240a:	4d07      	ldr	r5, [pc, #28]	; (8002428 <ssd1306_DrawPixel+0x3c>)
- 800240c:	eb00 10c3 	add.w	r0, r0, r3, lsl #7
- 8002410:	562b      	ldrsb	r3, [r5, r0]
- 8002412:	40a1      	lsls	r1, r4
- 8002414:	b249      	sxtb	r1, r1
+ 80023ec:	fab2 f282 	clz	r2, r2
+ 80023f0:	0952      	lsrs	r2, r2, #5
+ 80023f2:	08cb      	lsrs	r3, r1, #3
+ 80023f4:	f001 0407 	and.w	r4, r1, #7
+ 80023f8:	2101      	movs	r1, #1
+ 80023fa:	4d07      	ldr	r5, [pc, #28]	; (8002418 <ssd1306_DrawPixel+0x3c>)
+ 80023fc:	eb00 10c3 	add.w	r0, r0, r3, lsl #7
+ 8002400:	562b      	ldrsb	r3, [r5, r0]
+ 8002402:	40a1      	lsls	r1, r4
+ 8002404:	b249      	sxtb	r1, r1
     }
     
     // Draw in the right color
     if(color == White) {
- 8002416:	2a01      	cmp	r2, #1
+ 8002406:	2a01      	cmp	r2, #1
         SSD1306_Buffer[x + (y / 8) * SSD1306_WIDTH] |= 1 << (y % 8);
- 8002418:	bf0c      	ite	eq
- 800241a:	430b      	orreq	r3, r1
+ 8002408:	bf0c      	ite	eq
+ 800240a:	430b      	orreq	r3, r1
     } else { 
         SSD1306_Buffer[x + (y / 8) * SSD1306_WIDTH] &= ~(1 << (y % 8));
- 800241c:	438b      	bicne	r3, r1
- 800241e:	542b      	strb	r3, [r5, r0]
+ 800240c:	438b      	bicne	r3, r1
+ 800240e:	542b      	strb	r3, [r5, r0]
     }
 }
- 8002420:	bd30      	pop	{r4, r5, pc}
- 8002422:	bf00      	nop
- 8002424:	20000200 	.word	0x20000200
- 8002428:	20000206 	.word	0x20000206
+ 8002410:	bd30      	pop	{r4, r5, pc}
+ 8002412:	bf00      	nop
+ 8002414:	20000200 	.word	0x20000200
+ 8002418:	20000206 	.word	0x20000206
 
-0800242c <ssd1306_WriteChar>:
+0800241c <ssd1306_WriteChar>:
 
 // Draw 1 char to the screen buffer
 // ch       => char om weg te schrijven
 // Font     => Font waarmee we gaan schrijven
 // color    => Black or White
 char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color) {
- 800242c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
- 8002430:	4604      	mov	r4, r0
- 8002432:	b087      	sub	sp, #28
- 8002434:	a806      	add	r0, sp, #24
- 8002436:	e900 0006 	stmdb	r0, {r1, r2}
+ 800241c:	e92d 4ff0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, lr}
+ 8002420:	4604      	mov	r4, r0
+ 8002422:	b087      	sub	sp, #28
+ 8002424:	a806      	add	r0, sp, #24
+ 8002426:	e900 0006 	stmdb	r0, {r1, r2}
     uint32_t i, b, j;
     
     // Check if character is valid
     if (ch < 32 || ch > 126)
- 800243a:	f1a4 0220 	sub.w	r2, r4, #32
+ 800242a:	f1a4 0220 	sub.w	r2, r4, #32
 char ssd1306_WriteChar(char ch, FontDef Font, SSD1306_COLOR color) {
- 800243e:	469b      	mov	fp, r3
+ 800242e:	469b      	mov	fp, r3
     if (ch < 32 || ch > 126)
- 8002440:	b2d3      	uxtb	r3, r2
- 8002442:	2b5e      	cmp	r3, #94	; 0x5e
- 8002444:	d83e      	bhi.n	80024c4 <ssd1306_WriteChar+0x98>
+ 8002430:	b2d3      	uxtb	r3, r2
+ 8002432:	2b5e      	cmp	r3, #94	; 0x5e
+ 8002434:	d83e      	bhi.n	80024b4 <ssd1306_WriteChar+0x98>
         return 0;
     
     // Check remaining space on current line
     if (SSD1306_WIDTH < (SSD1306.CurrentX + Font.FontWidth) ||
- 8002446:	4b20      	ldr	r3, [pc, #128]	; (80024c8 <ssd1306_WriteChar+0x9c>)
- 8002448:	f89d 9010 	ldrb.w	r9, [sp, #16]
- 800244c:	881d      	ldrh	r5, [r3, #0]
- 800244e:	9301      	str	r3, [sp, #4]
- 8002450:	eb05 0109 	add.w	r1, r5, r9
- 8002454:	2980      	cmp	r1, #128	; 0x80
- 8002456:	dc35      	bgt.n	80024c4 <ssd1306_WriteChar+0x98>
+ 8002436:	4b20      	ldr	r3, [pc, #128]	; (80024b8 <ssd1306_WriteChar+0x9c>)
+ 8002438:	f89d 9010 	ldrb.w	r9, [sp, #16]
+ 800243c:	881d      	ldrh	r5, [r3, #0]
+ 800243e:	9301      	str	r3, [sp, #4]
+ 8002440:	eb05 0109 	add.w	r1, r5, r9
+ 8002444:	2980      	cmp	r1, #128	; 0x80
+ 8002446:	dc35      	bgt.n	80024b4 <ssd1306_WriteChar+0x98>
         SSD1306_HEIGHT < (SSD1306.CurrentY + Font.FontHeight))
- 8002458:	885b      	ldrh	r3, [r3, #2]
- 800245a:	f89d a011 	ldrb.w	sl, [sp, #17]
- 800245e:	9300      	str	r3, [sp, #0]
- 8002460:	eb03 010a 	add.w	r1, r3, sl
+ 8002448:	885b      	ldrh	r3, [r3, #2]
+ 800244a:	f89d a011 	ldrb.w	sl, [sp, #17]
+ 800244e:	9300      	str	r3, [sp, #0]
+ 8002450:	eb03 010a 	add.w	r1, r3, sl
     if (SSD1306_WIDTH < (SSD1306.CurrentX + Font.FontWidth) ||
- 8002464:	2940      	cmp	r1, #64	; 0x40
- 8002466:	dc2d      	bgt.n	80024c4 <ssd1306_WriteChar+0x98>
+ 8002454:	2940      	cmp	r1, #64	; 0x40
+ 8002456:	dc2d      	bgt.n	80024b4 <ssd1306_WriteChar+0x98>
         // Not enough space on current line
         return 0;
     }
     
     // Use the font to write
     for(i = 0; i < Font.FontHeight; i++) {
- 8002468:	2600      	movs	r6, #0
+ 8002458:	2600      	movs	r6, #0
         b = Font.data[(ch - 32) * Font.FontHeight + i];
- 800246a:	fb0a f302 	mul.w	r3, sl, r2
- 800246e:	9302      	str	r3, [sp, #8]
+ 800245a:	fb0a f302 	mul.w	r3, sl, r2
+ 800245e:	9302      	str	r3, [sp, #8]
     for(i = 0; i < Font.FontHeight; i++) {
- 8002470:	45b2      	cmp	sl, r6
- 8002472:	d806      	bhi.n	8002482 <ssd1306_WriteChar+0x56>
+ 8002460:	45b2      	cmp	sl, r6
+ 8002462:	d806      	bhi.n	8002472 <ssd1306_WriteChar+0x56>
             }
         }
     }
     
     // The current space is now taken
     SSD1306.CurrentX += Font.FontWidth;
- 8002474:	9b01      	ldr	r3, [sp, #4]
- 8002476:	444d      	add	r5, r9
- 8002478:	801d      	strh	r5, [r3, #0]
+ 8002464:	9b01      	ldr	r3, [sp, #4]
+ 8002466:	444d      	add	r5, r9
+ 8002468:	801d      	strh	r5, [r3, #0]
     
     // Return written char for validation
     return ch;
 }
- 800247a:	4620      	mov	r0, r4
- 800247c:	b007      	add	sp, #28
- 800247e:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
+ 800246a:	4620      	mov	r0, r4
+ 800246c:	b007      	add	sp, #28
+ 800246e:	e8bd 8ff0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, r9, sl, fp, pc}
         for(j = 0; j < Font.FontWidth; j++) {
- 8002482:	2700      	movs	r7, #0
+ 8002472:	2700      	movs	r7, #0
         b = Font.data[(ch - 32) * Font.FontHeight + i];
- 8002484:	9b02      	ldr	r3, [sp, #8]
- 8002486:	9905      	ldr	r1, [sp, #20]
- 8002488:	199a      	adds	r2, r3, r6
- 800248a:	f831 3012 	ldrh.w	r3, [r1, r2, lsl #1]
- 800248e:	9303      	str	r3, [sp, #12]
- 8002490:	9b00      	ldr	r3, [sp, #0]
- 8002492:	eb06 0803 	add.w	r8, r6, r3
- 8002496:	fa5f f888 	uxtb.w	r8, r8
+ 8002474:	9b02      	ldr	r3, [sp, #8]
+ 8002476:	9905      	ldr	r1, [sp, #20]
+ 8002478:	199a      	adds	r2, r3, r6
+ 800247a:	f831 3012 	ldrh.w	r3, [r1, r2, lsl #1]
+ 800247e:	9303      	str	r3, [sp, #12]
+ 8002480:	9b00      	ldr	r3, [sp, #0]
+ 8002482:	eb06 0803 	add.w	r8, r6, r3
+ 8002486:	fa5f f888 	uxtb.w	r8, r8
         for(j = 0; j < Font.FontWidth; j++) {
- 800249a:	45b9      	cmp	r9, r7
- 800249c:	d801      	bhi.n	80024a2 <ssd1306_WriteChar+0x76>
+ 800248a:	45b9      	cmp	r9, r7
+ 800248c:	d801      	bhi.n	8002492 <ssd1306_WriteChar+0x76>
     for(i = 0; i < Font.FontHeight; i++) {
- 800249e:	3601      	adds	r6, #1
- 80024a0:	e7e6      	b.n	8002470 <ssd1306_WriteChar+0x44>
+ 800248e:	3601      	adds	r6, #1
+ 8002490:	e7e6      	b.n	8002460 <ssd1306_WriteChar+0x44>
             if((b << j) & 0x8000)  {
- 80024a2:	9b03      	ldr	r3, [sp, #12]
- 80024a4:	1978      	adds	r0, r7, r5
- 80024a6:	fa03 f207 	lsl.w	r2, r3, r7
- 80024aa:	0413      	lsls	r3, r2, #16
+ 8002492:	9b03      	ldr	r3, [sp, #12]
+ 8002494:	1978      	adds	r0, r7, r5
+ 8002496:	fa03 f207 	lsl.w	r2, r3, r7
+ 800249a:	0413      	lsls	r3, r2, #16
                 ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR)!color);
- 80024ac:	bf58      	it	pl
- 80024ae:	fabb f28b 	clzpl	r2, fp
- 80024b2:	b2c0      	uxtb	r0, r0
+ 800249c:	bf58      	it	pl
+ 800249e:	fabb f28b 	clzpl	r2, fp
+ 80024a2:	b2c0      	uxtb	r0, r0
                 ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR) color);
- 80024b4:	bf4c      	ite	mi
- 80024b6:	465a      	movmi	r2, fp
+ 80024a4:	bf4c      	ite	mi
+ 80024a6:	465a      	movmi	r2, fp
                 ssd1306_DrawPixel(SSD1306.CurrentX + j, (SSD1306.CurrentY + i), (SSD1306_COLOR)!color);
- 80024b8:	0952      	lsrpl	r2, r2, #5
- 80024ba:	4641      	mov	r1, r8
- 80024bc:	f7ff ff96 	bl	80023ec <ssd1306_DrawPixel>
+ 80024a8:	0952      	lsrpl	r2, r2, #5
+ 80024aa:	4641      	mov	r1, r8
+ 80024ac:	f7ff ff96 	bl	80023dc <ssd1306_DrawPixel>
         for(j = 0; j < Font.FontWidth; j++) {
- 80024c0:	3701      	adds	r7, #1
- 80024c2:	e7ea      	b.n	800249a <ssd1306_WriteChar+0x6e>
+ 80024b0:	3701      	adds	r7, #1
+ 80024b2:	e7ea      	b.n	800248a <ssd1306_WriteChar+0x6e>
         return 0;
- 80024c4:	2400      	movs	r4, #0
- 80024c6:	e7d8      	b.n	800247a <ssd1306_WriteChar+0x4e>
- 80024c8:	20000200 	.word	0x20000200
+ 80024b4:	2400      	movs	r4, #0
+ 80024b6:	e7d8      	b.n	800246a <ssd1306_WriteChar+0x4e>
+ 80024b8:	20000200 	.word	0x20000200
 
-080024cc <ssd1306_WriteString>:
+080024bc <ssd1306_WriteString>:
 
 // Write full string to screenbuffer
 char ssd1306_WriteString(char* str, FontDef Font, SSD1306_COLOR color) {
- 80024cc:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
- 80024ce:	466d      	mov	r5, sp
- 80024d0:	461f      	mov	r7, r3
- 80024d2:	e885 0006 	stmia.w	r5, {r1, r2}
- 80024d6:	1e46      	subs	r6, r0, #1
+ 80024bc:	b5f7      	push	{r0, r1, r2, r4, r5, r6, r7, lr}
+ 80024be:	466d      	mov	r5, sp
+ 80024c0:	461f      	mov	r7, r3
+ 80024c2:	e885 0006 	stmia.w	r5, {r1, r2}
+ 80024c6:	1e46      	subs	r6, r0, #1
     // Write until null-byte
     while (*str) {
- 80024d8:	f816 4f01 	ldrb.w	r4, [r6, #1]!
- 80024dc:	b144      	cbz	r4, 80024f0 <ssd1306_WriteString+0x24>
+ 80024c8:	f816 4f01 	ldrb.w	r4, [r6, #1]!
+ 80024cc:	b144      	cbz	r4, 80024e0 <ssd1306_WriteString+0x24>
         if (ssd1306_WriteChar(*str, Font, color) != *str) {
- 80024de:	e895 0006 	ldmia.w	r5, {r1, r2}
- 80024e2:	4620      	mov	r0, r4
- 80024e4:	463b      	mov	r3, r7
- 80024e6:	f7ff ffa1 	bl	800242c <ssd1306_WriteChar>
- 80024ea:	7834      	ldrb	r4, [r6, #0]
- 80024ec:	42a0      	cmp	r0, r4
- 80024ee:	d0f3      	beq.n	80024d8 <ssd1306_WriteString+0xc>
+ 80024ce:	e895 0006 	ldmia.w	r5, {r1, r2}
+ 80024d2:	4620      	mov	r0, r4
+ 80024d4:	463b      	mov	r3, r7
+ 80024d6:	f7ff ffa1 	bl	800241c <ssd1306_WriteChar>
+ 80024da:	7834      	ldrb	r4, [r6, #0]
+ 80024dc:	42a0      	cmp	r0, r4
+ 80024de:	d0f3      	beq.n	80024c8 <ssd1306_WriteString+0xc>
         str++;
     }
     
     // Everything ok
     return *str;
 }
- 80024f0:	4620      	mov	r0, r4
- 80024f2:	b003      	add	sp, #12
- 80024f4:	bdf0      	pop	{r4, r5, r6, r7, pc}
+ 80024e0:	4620      	mov	r0, r4
+ 80024e2:	b003      	add	sp, #12
+ 80024e4:	bdf0      	pop	{r4, r5, r6, r7, pc}
 	...
 
-080024f8 <ssd1306_Print>:
+080024e8 <ssd1306_Print>:
   ssd1306_Line(x1,y2,x1,y1,color);
 
   return;
 }
 
 void ssd1306_Print(float latitude, float longitude, float altitude, float velocity){
- 80024f8:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
- 80024fc:	460e      	mov	r6, r1
- 80024fe:	4615      	mov	r5, r2
- 8002500:	461c      	mov	r4, r3
- 8002502:	b08c      	sub	sp, #48	; 0x30
+ 80024e8:	e92d 41f0 	stmdb	sp!, {r4, r5, r6, r7, r8, lr}
+ 80024ec:	460e      	mov	r6, r1
+ 80024ee:	4615      	mov	r5, r2
+ 80024f0:	461c      	mov	r4, r3
+ 80024f2:	b08c      	sub	sp, #48	; 0x30
 	char lati[10], longi[10], alti[10], velo[10];
 	ftoa((double)latitude, lati, 6);
- 8002504:	f7fd ff90 	bl	8000428 <__aeabi_f2d>
- 8002508:	466a      	mov	r2, sp
- 800250a:	2306      	movs	r3, #6
- 800250c:	f7ff fde0 	bl	80020d0 <ftoa>
-    SSD1306.CurrentY = y;
- 8002510:	f04f 0800 	mov.w	r8, #0
+ 80024f4:	f7fd ff98 	bl	8000428 <__aeabi_f2d>
+ 80024f8:	466a      	mov	r2, sp
+ 80024fa:	2306      	movs	r3, #6
+ 80024fc:	f7ff fde0 	bl	80020c0 <ftoa>
 	ftoa((double)longitude, longi, 6);
- 8002514:	4630      	mov	r0, r6
-    SSD1306.CurrentX = x;
- 8002516:	2602      	movs	r6, #2
-	ftoa((double)longitude, longi, 6);
- 8002518:	f7fd ff86 	bl	8000428 <__aeabi_f2d>
- 800251c:	aa03      	add	r2, sp, #12
- 800251e:	2306      	movs	r3, #6
- 8002520:	f7ff fdd6 	bl	80020d0 <ftoa>
+ 8002500:	4630      	mov	r0, r6
+ 8002502:	f7fd ff91 	bl	8000428 <__aeabi_f2d>
+ 8002506:	aa03      	add	r2, sp, #12
+ 8002508:	2306      	movs	r3, #6
+ 800250a:	f7ff fdd9 	bl	80020c0 <ftoa>
 	ftoa((double)altitude, alti, 6);
- 8002524:	4628      	mov	r0, r5
- 8002526:	f7fd ff7f 	bl	8000428 <__aeabi_f2d>
- 800252a:	aa06      	add	r2, sp, #24
- 800252c:	2306      	movs	r3, #6
- 800252e:	f7ff fdcf 	bl	80020d0 <ftoa>
-	ftoa((double)velocity, velo, 6);
- 8002532:	4620      	mov	r0, r4
- 8002534:	f7fd ff78 	bl	8000428 <__aeabi_f2d>
+ 800250e:	4628      	mov	r0, r5
+ 8002510:	f7fd ff8a 	bl	8000428 <__aeabi_f2d>
+ 8002514:	aa06      	add	r2, sp, #24
+ 8002516:	2306      	movs	r3, #6
+ 8002518:	f7ff fdd2 	bl	80020c0 <ftoa>
+	ftoa((double)velocity, velo, 2);
+ 800251c:	4620      	mov	r0, r4
+ 800251e:	f7fd ff83 	bl	8000428 <__aeabi_f2d>
+ 8002522:	aa09      	add	r2, sp, #36	; 0x24
+ 8002524:	2302      	movs	r3, #2
+ 8002526:	f7ff fdcb 	bl	80020c0 <ftoa>
     ssd1306_Fill(Black);
-    ssd1306_SetCursor(2, 0);
-    ssd1306_WriteString("Latitude:", Font_6x8, White);
- 8002538:	4c2f      	ldr	r4, [pc, #188]	; (80025f8 <ssd1306_Print+0x100>)
-	ftoa((double)velocity, velo, 6);
- 800253a:	aa09      	add	r2, sp, #36	; 0x24
- 800253c:	2306      	movs	r3, #6
+ 800252a:	2000      	movs	r0, #0
+ 800252c:	f7ff fec8 	bl	80022c0 <ssd1306_Fill>
     SSD1306.CurrentX = x;
- 800253e:	4d2f      	ldr	r5, [pc, #188]	; (80025fc <ssd1306_Print+0x104>)
-	ftoa((double)velocity, velo, 6);
- 8002540:	f7ff fdc6 	bl	80020d0 <ftoa>
-    ssd1306_Fill(Black);
- 8002544:	2000      	movs	r0, #0
- 8002546:	f7ff fec3 	bl	80022d0 <ssd1306_Fill>
-    ssd1306_WriteString("Latitude:", Font_6x8, White);
- 800254a:	e894 0006 	ldmia.w	r4, {r1, r2}
-    SSD1306.CurrentX = x;
- 800254e:	2738      	movs	r7, #56	; 0x38
-    ssd1306_WriteString("Latitude:", Font_6x8, White);
- 8002550:	2301      	movs	r3, #1
- 8002552:	482b      	ldr	r0, [pc, #172]	; (8002600 <ssd1306_Print+0x108>)
-    SSD1306.CurrentX = x;
- 8002554:	802e      	strh	r6, [r5, #0]
+ 8002530:	2334      	movs	r3, #52	; 0x34
+ 8002532:	4d30      	ldr	r5, [pc, #192]	; (80025f4 <ssd1306_Print+0x10c>)
+ 8002534:	2602      	movs	r6, #2
+ 8002536:	802b      	strh	r3, [r5, #0]
     SSD1306.CurrentY = y;
- 8002556:	f8a5 8002 	strh.w	r8, [r5, #2]
-    ssd1306_WriteString("Latitude:", Font_6x8, White);
- 800255a:	f7ff ffb7 	bl	80024cc <ssd1306_WriteString>
-    ssd1306_SetCursor(2+54, 0);
-    ssd1306_WriteChar(*lati, Font_6x8, White);
- 800255e:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8002538:	2300      	movs	r3, #0
+ 800253a:	f04f 080c 	mov.w	r8, #12
+    ssd1306_SetCursor(52, 0);
+    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+ 800253e:	4c2e      	ldr	r4, [pc, #184]	; (80025f8 <ssd1306_Print+0x110>)
     SSD1306.CurrentY = y;
- 8002562:	f8a5 8002 	strh.w	r8, [r5, #2]
- 8002566:	f04f 080c 	mov.w	r8, #12
-    ssd1306_WriteChar(*lati, Font_6x8, White);
- 800256a:	2301      	movs	r3, #1
- 800256c:	f89d 0000 	ldrb.w	r0, [sp]
-    SSD1306.CurrentX = x;
- 8002570:	802f      	strh	r7, [r5, #0]
-    ssd1306_WriteChar(*lati, Font_6x8, White);
- 8002572:	f7ff ff5b 	bl	800242c <ssd1306_WriteChar>
+ 8002540:	806b      	strh	r3, [r5, #2]
+    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+ 8002542:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 8002546:	2301      	movs	r3, #1
+ 8002548:	482c      	ldr	r0, [pc, #176]	; (80025fc <ssd1306_Print+0x114>)
+ 800254a:	f7ff ffb7 	bl	80024bc <ssd1306_WriteString>
     ssd1306_SetCursor(2, 4+8);
-    ssd1306_WriteString("Longitude:", Font_6x8, White);
- 8002576:	e894 0006 	ldmia.w	r4, {r1, r2}
- 800257a:	2301      	movs	r3, #1
- 800257c:	4821      	ldr	r0, [pc, #132]	; (8002604 <ssd1306_Print+0x10c>)
+    ssd1306_WriteString("Latitude:", Font_6x8, White);
+ 800254e:	e894 0006 	ldmia.w	r4, {r1, r2}
     SSD1306.CurrentX = x;
- 800257e:	802e      	strh	r6, [r5, #0]
+ 8002552:	2738      	movs	r7, #56	; 0x38
+    ssd1306_WriteString("Latitude:", Font_6x8, White);
+ 8002554:	2301      	movs	r3, #1
+ 8002556:	482a      	ldr	r0, [pc, #168]	; (8002600 <ssd1306_Print+0x118>)
+    SSD1306.CurrentX = x;
+ 8002558:	802e      	strh	r6, [r5, #0]
     SSD1306.CurrentY = y;
- 8002580:	f8a5 8002 	strh.w	r8, [r5, #2]
-    ssd1306_WriteString("Longitude:", Font_6x8, White);
- 8002584:	f7ff ffa2 	bl	80024cc <ssd1306_WriteString>
-    ssd1306_SetCursor(2+60, 4+8);
-    ssd1306_WriteChar(*longi, Font_6x8, White);
- 8002588:	e894 0006 	ldmia.w	r4, {r1, r2}
-    SSD1306.CurrentX = x;
- 800258c:	233e      	movs	r3, #62	; 0x3e
+ 800255a:	f8a5 8002 	strh.w	r8, [r5, #2]
+    ssd1306_WriteString("Latitude:", Font_6x8, White);
+ 800255e:	f7ff ffad 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2+54, 4+8);
+    ssd1306_WriteString((char*)lati, Font_6x8, White);
+ 8002562:	e894 0006 	ldmia.w	r4, {r1, r2}
     SSD1306.CurrentY = y;
- 800258e:	f8a5 8002 	strh.w	r8, [r5, #2]
- 8002592:	f04f 0818 	mov.w	r8, #24
+ 8002566:	f8a5 8002 	strh.w	r8, [r5, #2]
+ 800256a:	f04f 0818 	mov.w	r8, #24
+    ssd1306_WriteString((char*)lati, Font_6x8, White);
+ 800256e:	2301      	movs	r3, #1
+ 8002570:	4668      	mov	r0, sp
     SSD1306.CurrentX = x;
- 8002596:	802b      	strh	r3, [r5, #0]
-    ssd1306_WriteChar(*longi, Font_6x8, White);
- 8002598:	f89d 000c 	ldrb.w	r0, [sp, #12]
- 800259c:	2301      	movs	r3, #1
- 800259e:	f7ff ff45 	bl	800242c <ssd1306_WriteChar>
+ 8002572:	802f      	strh	r7, [r5, #0]
+    ssd1306_WriteString((char*)lati, Font_6x8, White);
+ 8002574:	f7ff ffa2 	bl	80024bc <ssd1306_WriteString>
     ssd1306_SetCursor(2, 2*(4+8));
+    ssd1306_WriteString("Longitude:", Font_6x8, White);
+ 8002578:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 800257c:	2301      	movs	r3, #1
+ 800257e:	4821      	ldr	r0, [pc, #132]	; (8002604 <ssd1306_Print+0x11c>)
+    SSD1306.CurrentX = x;
+ 8002580:	802e      	strh	r6, [r5, #0]
+    SSD1306.CurrentY = y;
+ 8002582:	f8a5 8002 	strh.w	r8, [r5, #2]
+    ssd1306_WriteString("Longitude:", Font_6x8, White);
+ 8002586:	f7ff ff99 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2+60, 2*(4+8));
+    ssd1306_WriteString((char*)longi, Font_6x8, White);
+ 800258a:	e894 0006 	ldmia.w	r4, {r1, r2}
+    SSD1306.CurrentX = x;
+ 800258e:	233e      	movs	r3, #62	; 0x3e
+    SSD1306.CurrentY = y;
+ 8002590:	f8a5 8002 	strh.w	r8, [r5, #2]
+ 8002594:	f04f 0824 	mov.w	r8, #36	; 0x24
+    SSD1306.CurrentX = x;
+ 8002598:	802b      	strh	r3, [r5, #0]
+    ssd1306_WriteString((char*)longi, Font_6x8, White);
+ 800259a:	a803      	add	r0, sp, #12
+ 800259c:	2301      	movs	r3, #1
+ 800259e:	f7ff ff8d 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2, 3*(4+8));
     ssd1306_WriteString("Altitude:", Font_6x8, White);
  80025a2:	e894 0006 	ldmia.w	r4, {r1, r2}
  80025a6:	2301      	movs	r3, #1
- 80025a8:	4817      	ldr	r0, [pc, #92]	; (8002608 <ssd1306_Print+0x110>)
+ 80025a8:	4817      	ldr	r0, [pc, #92]	; (8002608 <ssd1306_Print+0x120>)
     SSD1306.CurrentX = x;
  80025aa:	802e      	strh	r6, [r5, #0]
     SSD1306.CurrentY = y;
  80025ac:	f8a5 8002 	strh.w	r8, [r5, #2]
     ssd1306_WriteString("Altitude:", Font_6x8, White);
- 80025b0:	f7ff ff8c 	bl	80024cc <ssd1306_WriteString>
-    ssd1306_SetCursor(2+54, 2*(4+8));
-    ssd1306_WriteChar(*alti, Font_6x8, White);
+ 80025b0:	f7ff ff84 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2+54, 3*(4+8));
+    ssd1306_WriteString((char*)alti, Font_6x8, White);
  80025b4:	e894 0006 	ldmia.w	r4, {r1, r2}
  80025b8:	2301      	movs	r3, #1
- 80025ba:	f89d 0018 	ldrb.w	r0, [sp, #24]
+ 80025ba:	a806      	add	r0, sp, #24
     SSD1306.CurrentX = x;
- 80025be:	802f      	strh	r7, [r5, #0]
+ 80025bc:	802f      	strh	r7, [r5, #0]
     SSD1306.CurrentY = y;
- 80025c0:	f8a5 8002 	strh.w	r8, [r5, #2]
-    ssd1306_WriteChar(*alti, Font_6x8, White);
- 80025c4:	f7ff ff32 	bl	800242c <ssd1306_WriteChar>
-    ssd1306_SetCursor(2, 3*(4+8));
+ 80025be:	f8a5 8002 	strh.w	r8, [r5, #2]
+    ssd1306_WriteString((char*)alti, Font_6x8, White);
+ 80025c2:	f7ff ff7b 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2, 4*(4+8));
     ssd1306_WriteString("Velocity:", Font_6x8, White);
- 80025c8:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 80025c6:	e894 0006 	ldmia.w	r4, {r1, r2}
     SSD1306.CurrentX = x;
- 80025cc:	802e      	strh	r6, [r5, #0]
+ 80025ca:	802e      	strh	r6, [r5, #0]
     SSD1306.CurrentY = y;
- 80025ce:	2624      	movs	r6, #36	; 0x24
+ 80025cc:	2630      	movs	r6, #48	; 0x30
     ssd1306_WriteString("Velocity:", Font_6x8, White);
- 80025d0:	2301      	movs	r3, #1
- 80025d2:	480e      	ldr	r0, [pc, #56]	; (800260c <ssd1306_Print+0x114>)
+ 80025ce:	2301      	movs	r3, #1
+ 80025d0:	480e      	ldr	r0, [pc, #56]	; (800260c <ssd1306_Print+0x124>)
     SSD1306.CurrentY = y;
- 80025d4:	806e      	strh	r6, [r5, #2]
+ 80025d2:	806e      	strh	r6, [r5, #2]
     ssd1306_WriteString("Velocity:", Font_6x8, White);
- 80025d6:	f7ff ff79 	bl	80024cc <ssd1306_WriteString>
-    ssd1306_SetCursor(2+54, 3*(4+8));
-    ssd1306_WriteChar(*velo, Font_6x8, White);
- 80025da:	e894 0006 	ldmia.w	r4, {r1, r2}
- 80025de:	2301      	movs	r3, #1
- 80025e0:	f89d 0024 	ldrb.w	r0, [sp, #36]	; 0x24
+ 80025d4:	f7ff ff72 	bl	80024bc <ssd1306_WriteString>
+    ssd1306_SetCursor(2+54, 4*(4+8));
+    ssd1306_WriteString((char*)velo, Font_6x8, White);
+ 80025d8:	e894 0006 	ldmia.w	r4, {r1, r2}
+ 80025dc:	2301      	movs	r3, #1
+ 80025de:	eb0d 0008 	add.w	r0, sp, r8
     SSD1306.CurrentX = x;
- 80025e4:	802f      	strh	r7, [r5, #0]
+ 80025e2:	802f      	strh	r7, [r5, #0]
     SSD1306.CurrentY = y;
- 80025e6:	806e      	strh	r6, [r5, #2]
-    ssd1306_WriteChar(*velo, Font_6x8, White);
- 80025e8:	f7ff ff20 	bl	800242c <ssd1306_WriteChar>
+ 80025e4:	806e      	strh	r6, [r5, #2]
+    ssd1306_WriteString((char*)velo, Font_6x8, White);
+ 80025e6:	f7ff ff69 	bl	80024bc <ssd1306_WriteString>
     ssd1306_UpdateScreen();
- 80025ec:	f7ff fe7e 	bl	80022ec <ssd1306_UpdateScreen>
+ 80025ea:	f7ff fe77 	bl	80022dc <ssd1306_UpdateScreen>
 }
- 80025f0:	b00c      	add	sp, #48	; 0x30
- 80025f2:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
- 80025f6:	bf00      	nop
+ 80025ee:	b00c      	add	sp, #48	; 0x30
+ 80025f0:	e8bd 81f0 	ldmia.w	sp!, {r4, r5, r6, r7, r8, pc}
+ 80025f4:	20000200 	.word	0x20000200
  80025f8:	20000008 	.word	0x20000008
- 80025fc:	20000200 	.word	0x20000200
- 8002600:	080051c0 	.word	0x080051c0
- 8002604:	080051ca 	.word	0x080051ca
- 8002608:	080051d5 	.word	0x080051d5
- 800260c:	080051df 	.word	0x080051df
+ 80025fc:	080051c0 	.word	0x080051c0
+ 8002600:	080051c9 	.word	0x080051c9
+ 8002604:	080051d3 	.word	0x080051d3
+ 8002608:	080051de 	.word	0x080051de
+ 800260c:	080051e8 	.word	0x080051e8
 
 08002610 <HAL_MspInit>:
 {
@@ -6041,7 +6043,7 @@ LoopFillZerobss:
   bx lr
  800294a:	4770      	bx	lr
   ldr r3, =_sidata
- 800294c:	08005ac0 	.word	0x08005ac0
+ 800294c:	08005ac8 	.word	0x08005ac8
   ldr r0, =_sdata
  8002950:	20000000 	.word	0x20000000
   ldr r3, =_edata
@@ -6094,10 +6096,10 @@ Infinite_Loop:
  80029a2:	4798      	blx	r3
  80029a4:	3501      	adds	r5, #1
  80029a6:	e7f2      	b.n	800298e <__libc_init_array+0x1e>
- 80029a8:	08005ab8 	.word	0x08005ab8
- 80029ac:	08005ab8 	.word	0x08005ab8
- 80029b0:	08005ab8 	.word	0x08005ab8
- 80029b4:	08005abc 	.word	0x08005abc
+ 80029a8:	08005ac0 	.word	0x08005ac0
+ 80029ac:	08005ac0 	.word	0x08005ac0
+ 80029b0:	08005ac0 	.word	0x08005ac0
+ 80029b4:	08005ac4 	.word	0x08005ac4
 
 080029b8 <memcpy>:
  80029b8:	b510      	push	{r4, lr}
@@ -6547,11 +6549,11 @@ Infinite_Loop:
  8002de8:	930b      	str	r3, [sp, #44]	; 0x2c
  8002dea:	e015      	b.n	8002e18 <_printf_float+0x318>
  8002dec:	7fefffff 	.word	0x7fefffff
- 8002df0:	080057fc 	.word	0x080057fc
- 8002df4:	080057f8 	.word	0x080057f8
- 8002df8:	08005804 	.word	0x08005804
- 8002dfc:	08005800 	.word	0x08005800
- 8002e00:	08005808 	.word	0x08005808
+ 8002df0:	08005804 	.word	0x08005804
+ 8002df4:	08005800 	.word	0x08005800
+ 8002df8:	0800580c 	.word	0x0800580c
+ 8002dfc:	08005808 	.word	0x08005808
+ 8002e00:	08005810 	.word	0x08005810
  8002e04:	2301      	movs	r3, #1
  8002e06:	9a0b      	ldr	r2, [sp, #44]	; 0x2c
  8002e08:	4659      	mov	r1, fp
@@ -7032,8 +7034,8 @@ Infinite_Loop:
  800326a:	f104 0542 	add.w	r5, r4, #66	; 0x42
  800326e:	f884 3042 	strb.w	r3, [r4, #66]	; 0x42
  8003272:	e76c      	b.n	800314e <_printf_i+0xf6>
- 8003274:	0800580a 	.word	0x0800580a
- 8003278:	0800581b 	.word	0x0800581b
+ 8003274:	08005812 	.word	0x08005812
+ 8003278:	08005823 	.word	0x08005823
 
 0800327c <iprintf>:
  800327c:	b40f      	push	{r0, r1, r2, r3}
@@ -7137,9 +7139,9 @@ Infinite_Loop:
  8003352:	7018      	strb	r0, [r3, #0]
  8003354:	e7e5      	b.n	8003322 <_puts_r+0x76>
  8003356:	bf00      	nop
- 8003358:	0800585c 	.word	0x0800585c
- 800335c:	0800587c 	.word	0x0800587c
- 8003360:	0800583c 	.word	0x0800583c
+ 8003358:	08005864 	.word	0x08005864
+ 800335c:	08005884 	.word	0x08005884
+ 8003360:	08005844 	.word	0x08005844
 
 08003364 <puts>:
  8003364:	4b02      	ldr	r3, [pc, #8]	; (8003370 <puts+0xc>)
@@ -7221,9 +7223,9 @@ Infinite_Loop:
  8003406:	4638      	mov	r0, r7
  8003408:	bdf8      	pop	{r3, r4, r5, r6, r7, pc}
  800340a:	bf00      	nop
- 800340c:	0800585c 	.word	0x0800585c
- 8003410:	0800587c 	.word	0x0800587c
- 8003414:	0800583c 	.word	0x0800583c
+ 800340c:	08005864 	.word	0x08005864
+ 8003410:	08005884 	.word	0x08005884
+ 8003414:	08005844 	.word	0x08005844
 
 08003418 <__swsetup_r>:
  8003418:	4b32      	ldr	r3, [pc, #200]	; (80034e4 <__swsetup_r+0xcc>)
@@ -7315,9 +7317,9 @@ Infinite_Loop:
  80034e0:	e7f7      	b.n	80034d2 <__swsetup_r+0xba>
  80034e2:	bf00      	nop
  80034e4:	20000014 	.word	0x20000014
- 80034e8:	0800585c 	.word	0x0800585c
- 80034ec:	0800587c 	.word	0x0800587c
- 80034f0:	0800583c 	.word	0x0800583c
+ 80034e8:	08005864 	.word	0x08005864
+ 80034ec:	08005884 	.word	0x08005884
+ 80034f0:	08005844 	.word	0x08005844
 
 080034f4 <quorem>:
  80034f4:	e92d 4ff7 	stmdb	sp!, {r0, r1, r2, r4, r5, r6, r7, r8, r9, sl, fp, lr}
@@ -7726,12 +7728,12 @@ Infinite_Loop:
  8003920:	509f79fb 	.word	0x509f79fb
  8003924:	3fd34413 	.word	0x3fd34413
  8003928:	7ff00000 	.word	0x7ff00000
- 800392c:	08005835 	.word	0x08005835
- 8003930:	0800582c 	.word	0x0800582c
- 8003934:	08005809 	.word	0x08005809
+ 800392c:	0800583d 	.word	0x0800583d
+ 8003930:	08005834 	.word	0x08005834
+ 8003934:	08005811 	.word	0x08005811
  8003938:	3ff80000 	.word	0x3ff80000
- 800393c:	080058c8 	.word	0x080058c8
- 8003940:	080058a0 	.word	0x080058a0
+ 800393c:	080058d0 	.word	0x080058d0
+ 8003940:	080058a8 	.word	0x080058a8
  8003944:	2301      	movs	r3, #1
  8003946:	9304      	str	r3, [sp, #16]
  8003948:	4698      	mov	r8, r3
@@ -7982,8 +7984,8 @@ Infinite_Loop:
  8003c0e:	f7fc fc63 	bl	80004d8 <__aeabi_dmul>
  8003c12:	e9cd 0102 	strd	r0, r1, [sp, #8]
  8003c16:	e7bd      	b.n	8003b94 <_dtoa_r+0x584>
- 8003c18:	080058c8 	.word	0x080058c8
- 8003c1c:	080058a0 	.word	0x080058a0
+ 8003c18:	080058d0 	.word	0x080058d0
+ 8003c1c:	080058a8 	.word	0x080058a8
  8003c20:	3ff00000 	.word	0x3ff00000
  8003c24:	40240000 	.word	0x40240000
  8003c28:	401c0000 	.word	0x401c0000
@@ -8544,8 +8546,8 @@ Infinite_Loop:
  800416a:	4683      	mov	fp, r0
  800416c:	e7ea      	b.n	8004144 <_dtoa_r+0xb34>
  800416e:	bf00      	nop
- 8004170:	08005808 	.word	0x08005808
- 8004174:	0800582c 	.word	0x0800582c
+ 8004170:	08005810 	.word	0x08005810
+ 8004174:	08005834 	.word	0x08005834
 
 08004178 <__sflush_r>:
  8004178:	898a      	ldrh	r2, [r1, #12]
@@ -8704,9 +8706,9 @@ Infinite_Loop:
  80042c6:	2000      	movs	r0, #0
  80042c8:	bd38      	pop	{r3, r4, r5, pc}
  80042ca:	bf00      	nop
- 80042cc:	0800585c 	.word	0x0800585c
- 80042d0:	0800587c 	.word	0x0800587c
- 80042d4:	0800583c 	.word	0x0800583c
+ 80042cc:	08005864 	.word	0x08005864
+ 80042d0:	08005884 	.word	0x08005884
+ 80042d4:	08005844 	.word	0x08005844
 
 080042d8 <std>:
  80042d8:	2300      	movs	r3, #0
@@ -8802,7 +8804,7 @@ Infinite_Loop:
  80043aa:	2301      	movs	r3, #1
  80043ac:	61a3      	str	r3, [r4, #24]
  80043ae:	bd10      	pop	{r4, pc}
- 80043b0:	080057f4 	.word	0x080057f4
+ 80043b0:	080057fc 	.word	0x080057fc
  80043b4:	08004321 	.word	0x08004321
 
 080043b8 <__sfp>:
@@ -8851,7 +8853,7 @@ Infinite_Loop:
  8004420:	e9c4 5512 	strd	r5, r5, [r4, #72]	; 0x48
  8004424:	e7e9      	b.n	80043fa <__sfp+0x42>
  8004426:	bf00      	nop
- 8004428:	080057f4 	.word	0x080057f4
+ 8004428:	080057fc 	.word	0x080057fc
  800442c:	ffff0001 	.word	0xffff0001
 
 08004430 <_fwalk_reent>:
@@ -9371,7 +9373,7 @@ Infinite_Loop:
  80048f0:	4638      	mov	r0, r7
  80048f2:	e8bd 83f8 	ldmia.w	sp!, {r3, r4, r5, r6, r7, r8, r9, pc}
  80048f6:	bf00      	nop
- 80048f8:	08005990 	.word	0x08005990
+ 80048f8:	08005998 	.word	0x08005998
 
 080048fc <__lshift>:
  80048fc:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -10020,12 +10022,12 @@ Infinite_Loop:
  8004ef0:	f7fe f8b2 	bl	8003058 <_printf_i>
  8004ef4:	e7ec      	b.n	8004ed0 <_vfiprintf_r+0x1e4>
  8004ef6:	bf00      	nop
- 8004ef8:	0800585c 	.word	0x0800585c
- 8004efc:	0800599c 	.word	0x0800599c
- 8004f00:	0800587c 	.word	0x0800587c
- 8004f04:	0800583c 	.word	0x0800583c
- 8004f08:	080059a2 	.word	0x080059a2
- 8004f0c:	080059a6 	.word	0x080059a6
+ 8004ef8:	08005864 	.word	0x08005864
+ 8004efc:	080059a4 	.word	0x080059a4
+ 8004f00:	08005884 	.word	0x08005884
+ 8004f04:	08005844 	.word	0x08005844
+ 8004f08:	080059aa 	.word	0x080059aa
+ 8004f0c:	080059ae 	.word	0x080059ae
  8004f10:	08002b01 	.word	0x08002b01
  8004f14:	08004cc7 	.word	0x08004cc7
 

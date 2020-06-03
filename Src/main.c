@@ -184,7 +184,7 @@ int main(void)
 
 		printf("Test przesylu danych UART: \r\n");
 		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
-		ssd1306_Print((float)51.12, (float)17.12, (float)360.12, (float)150.1);
+		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
 
 		printf("Test LED: \r\n");
 		LED_blink(10, 100);
