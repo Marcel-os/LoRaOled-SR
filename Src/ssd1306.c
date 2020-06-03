@@ -1,6 +1,7 @@
 #include "ssd1306.h"
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #if defined(SSD1306_USE_I2C)
 
@@ -435,22 +436,27 @@ void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD13
 }
 
 void ssd1306_Print(float latitude, float longitude, float altitude, float velocity){
+	char lati[10], longi[10], alti[10], velo[10];
+	sprintf(lati, "%f", latitude);
+	sprintf(longi, "%f", longitude);
+	sprintf(alti, "%f", altitude);
+	sprintf(velo, "%f", velocity);
     ssd1306_Fill(Black);
     ssd1306_SetCursor(2, 0);
     ssd1306_WriteString("Latitude: ", Font_6x8, White);
     ssd1306_SetCursor(2+60, 0);
-    ssd1306_WriteString((char)latitude, Font_6x8, White);
+    ssd1306_WriteChar(*lati, Font_6x8, White);
     ssd1306_SetCursor(2, 4+8);
     ssd1306_WriteString("Longitude: ", Font_6x8, White);
     ssd1306_SetCursor(2+66, 4+8);
-    ssd1306_WriteString((char) longitude, Font_6x8, White);
+    ssd1306_WriteChar(*longi, Font_6x8, White);
     ssd1306_SetCursor(2, 2*(4+8));
     ssd1306_WriteString("Altitude: ", Font_6x8, White);
     ssd1306_SetCursor(2+60, 2*(4+8));
-    ssd1306_WriteString((char) altitude, Font_6x8, White);
+    ssd1306_WriteChar(*alti, Font_6x8, White);
     ssd1306_SetCursor(2, 3*(4+8));
     ssd1306_WriteString("Velocity: ", Font_6x8, White);
     ssd1306_SetCursor(2+60, 3*(4+8));
-    ssd1306_WriteString((char) velocity, Font_6x8, White);
+    ssd1306_WriteChar(*velo, Font_6x8, White);
     ssd1306_UpdateScreen();
 }
