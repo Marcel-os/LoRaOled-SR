@@ -116,7 +116,7 @@ void SX1278_defaultConfig(SX1278_t * module) {
 			module->LoRa_BW);
 }
 
-void SX1278_config(SX1278_t * module, uint8_t frequency, uint8_t power,
+void SX1278_config(SX1278_t * module, uint64_t frequency, uint8_t power,
 		uint8_t LoRa_Rate, uint8_t LoRa_BW) {
 	SX1278_sleep(module); //Change modem mode Must in Sleep mode
 	SX1278_hw_DelayMs(15);
@@ -124,8 +124,15 @@ void SX1278_config(SX1278_t * module, uint8_t frequency, uint8_t power,
 	SX1278_entryLoRa(module);
 	//SX1278_SPIWrite(module, 0x5904); //?? Change digital regulator form 1.6V to 1.47V: see errata note
 
+	uint64_t frf = ((uint64_t)frequency << 19) / 32000000;
+	uint8_t Frequency_to_device[3] = { 0x6C, 0x80, 0x00 }; //434MHz
+
+	Frequency_to_device[0] = (uint8_t)(frf >> 16);
+	Frequency_to_device[1] = (uint8_t)(frf >> 8);
+	Frequency_to_device[2] = (uint8_t)(frf >> 0);
+
 	SX1278_SPIBurstWrite(module, LR_RegFrMsb,
-			(uint8_t*) SX1278_Frequency[frequency], 3); //setting  frequency parameter
+			(uint8_t*) Frequency_to_device, 3); //setting  frequency parameter
 
 	//setting base parameter
 	SX1278_SPIWrite(module, LR_RegPaConfig, SX1278_Power[power]); //Setting output power parameter
@@ -292,7 +299,7 @@ int SX1278_LoRaTxPacket(SX1278_t * module, uint8_t* txBuffer, uint8_t length,
 	}
 }
 
-void SX1278_begin(SX1278_t * module, uint8_t frequency, uint8_t power,
+void SX1278_begin(SX1278_t * module, uint64_t frequency, uint8_t power,
 		uint8_t LoRa_Rate, uint8_t LoRa_BW, uint8_t packetLength) {
 	SX1278_hw_init(module->hw);
 	module->frequency = frequency;

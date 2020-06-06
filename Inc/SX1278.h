@@ -170,10 +170,6 @@
 /**********************************************************
  **Parameter table define
  **********************************************************/
-#define SX1278_433MHZ			0
-
-static const uint8_t SX1278_Frequency[1][3] = { { 0x6C, 0x80, 0x00 }, //434MHz
-		};
 
 #define SX1278_POWER_20DBM		0
 #define SX1278_POWER_17DBM		1
@@ -238,7 +234,7 @@ typedef struct {
 typedef struct {
 	SX1278_hw_t * hw;
 
-	uint8_t frequency;
+	uint64_t frequency;
 	uint8_t power;
 	uint8_t LoRa_Rate;
 	uint8_t LoRa_BW;
@@ -269,7 +265,7 @@ void SX1278_SPIBurstWrite(SX1278_t * module, uint8_t addr, uint8_t *txBuf,
 		uint8_t length);
 void SX1278_DIO0_InterruptHandler(SX1278_t * module);
 
-void SX1278_config(SX1278_t * module, uint8_t frequency, uint8_t power,
+void SX1278_config(SX1278_t * module, uint64_t frequency, uint8_t power,
 		uint8_t LoRa_Rate, uint8_t LoRa_BW);
 void SX1278_defaultConfig(SX1278_t * module);
 
@@ -281,7 +277,7 @@ int SX1278_LoRaEntryTx(SX1278_t * module, uint8_t length, uint32_t timeout);
 int SX1278_LoRaTxPacket(SX1278_t * module, uint8_t *txBuf, uint8_t length,
 		uint32_t timeout);
 
-void SX1278_begin(SX1278_t * module, uint8_t frequency, uint8_t power,
+void SX1278_begin(SX1278_t * module, uint64_t frequency, uint8_t power,
 		uint8_t LoRa_Rate, uint8_t LoRa_BW, uint8_t packetLength);
 
 int SX1278_transmit(SX1278_t * module, uint8_t *txBuf, uint8_t length,
