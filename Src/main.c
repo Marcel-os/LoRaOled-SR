@@ -27,6 +27,8 @@
 #include "stdio.h"
 #include "SX1278.h"
 #include "ssd1306.h"
+#include <stdio.h>
+#include <string.h>
 
 /* USER CODE END Includes */
 
@@ -54,7 +56,7 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-int flaga = 0;
+int flag_new_position = 0;
 int ret;
 char buffer[64];
 SX1278_hw_t SX1278_hw;
@@ -85,6 +87,20 @@ static void MX_NVIC_Init(void);
 		//HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 //	}
 //}
+
+
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == DO_RF_Pin){
+			ret = SX1278_LoRaRxPacket(&SX1278);
+				 	if (ret > 0) {
+				 		SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+					 	//printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
+					 	flag_new_position = 1;
+				 	}
+				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		}
+}
 
 //Funkcja miga diodą blink_times -razy z czasem time
 void LED_blink(int blink_times, int time);
@@ -152,7 +168,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
   //HAL_TIM_Base_Start_IT(&htim1);
   ssd1306_Init();
-	printf("Odbiornik/nadajnik radia LoRa\r\n");
+  HAL_Delay(100);
 
 	//initialize LoRa module
 	SX1278_hw.dio0.port = DO_RF_GPIO_Port;
@@ -166,51 +182,39 @@ int main(void)
 	SX1278.hw = &SX1278_hw;
 
 	//SX1278_begin(&SX1278, SX1278_433MHZ, SX1278_POWER_17DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_20_8KHZ, 10);
-	SX1278_begin(&SX1278, 868E6, SX1278_POWER_17DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_20_8KHZ, 10);
+	SX1278_begin(&SX1278, 868E6, SX1278_POWER_20DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_125KHZ, 10);
 	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
-
-	printf("Konfiguracja zakonczona\r\n");
 
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
+	double lat = 0.0, lon = 0.0, alt = 0.0, vel = 0.0;
+	char* lat_s[8], lon_s[8], alt_s[5], vel_s[5];
 	while (1){
-
-//		if (flaga == 1){
-//			flaga = 0;
-//			ret = SX1278_LoRaRxPacket(&SX1278);
-//			if (ret > 0) {
-//				SX1278_read(&SX1278, (uint8_t *) buffer, ret);
-//			}
-//			printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
-//		}
-
-		HAL_Delay(1000);
-		//printf("Odbieranie danych ...\r\n");
-		ret = SX1278_LoRaRxPacket(&SX1278);
-		//printf("Odebrano %d\r\n", ret);
-
-		if (ret > 0) {
-			SX1278_read(&SX1278, (uint8_t *) buffer, ret);
-			HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		if(flag_new_position){
+			flag_new_position = 0;
 			printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
-		}else{
-			printf(".");
+//			strncpy (lat_s, buffer, 8);
+//			strncpy (lon_s, buffer, 8);
+//			strncpy (alt_s, buffer, 5);
+//			strncpy (vel_s, buffer, 5);
+//			printf("Stringi: %s %s %s %s\r\n", lat_s, lon_s, alt_s, vel_s );
+//			lat = atof (lat_s);
+//			lon = atof (lon_s);
+//			alt = atof (alt_s);
+//			vel = atof (vel_s);
+//			writeUART(51.123456, 17.123456, 360.123456, 150.123456);
+//			ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
+			Beep(2);
 		}
+					writeUART(51.123456, 17.123456, 360.123456, 150.123456);
+					ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
 
 //		printf("Test przesylu danych UART: \r\n");
-//		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
-//		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
-//
-//		printf("Test LED: \r\n");
-//		LED_blink(10, 100);
-//
-//		printf("Test buzzera: \r\n");
-//		//Beep(100);
-//		HAL_Delay(200);
-//		ssd1306_Print((float)56.654321, (float)19.654321, (float)361.5, (float)159.12);
+//		writeUART(lat, lon, alt, vel);
+//		ssd1306_Print(lat, lon, alt, vel);
 //		HAL_Delay(200);
 
 
@@ -471,20 +475,21 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DO_RF_Pin FIRE_Pin */
-  GPIO_InitStruct.Pin = DO_RF_Pin|FIRE_Pin;
+  /*Configure GPIO pin : DO_RF_Pin */
+  GPIO_InitStruct.Pin = DO_RF_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  HAL_GPIO_Init(DO_RF_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : FIRE_Pin */
+  GPIO_InitStruct.Pin = FIRE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  HAL_GPIO_Init(FIRE_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : SCL_OLED_Pin SDA_OLED_Pin */
-  GPIO_InitStruct.Pin = SCL_OLED_Pin|SDA_OLED_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-  /*Configure peripheral I/O remapping */
-  __HAL_AFIO_REMAP_I2C1_ENABLE();
+  /* EXTI interrupt init*/
+  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
 }
 

@@ -229,6 +229,7 @@ uint8_t SX1278_LoRaRxPacket(SX1278_t * module) {
 	unsigned char packet_size;
 
 	if (SX1278_hw_GetDIO0(module->hw)) {
+	//if (1) {
 		memset(module->rxBuffer, 0x00, SX1278_MAX_PACKET);
 
 		addr = SX1278_SPIRead(module, LR_RegFifoRxCurrentaddr); //last packet addr
