@@ -436,12 +436,13 @@ void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD13
   return;
 }
 
-void ssd1306_Print(float latitude, float longitude, float altitude, float velocity){
-	char lati[10], longi[10], alti[10], velo[10];
+void ssd1306_Print(float latitude, float longitude, float altitude, float velocity, float voltage){
+	char lati[10], longi[10], alti[10], velo[10], vol[10];
 	ftoa((double)latitude, lati, 6);
 	ftoa((double)longitude, longi, 6);
 	ftoa((double)altitude, alti, 6);
 	ftoa((double)velocity, velo, 2);
+	ftoa((double)voltage, vol, 3);
     ssd1306_Fill(Black);
     ssd1306_SetCursor(52, 0);
     ssd1306_WriteString("LoRaOLED", Font_6x8, White);
@@ -461,5 +462,8 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     ssd1306_WriteString("Velocity:", Font_6x8, White);
     ssd1306_SetCursor(2+54, 4*(4+8));
     ssd1306_WriteString((char*)velo, Font_6x8, White);
+    ssd1306_WriteString("Battery:", Font_6x8, White);
+    ssd1306_SetCursor(2+48, 5*(4+8));
+    ssd1306_WriteString((char*)vol, Font_6x8, White);
     ssd1306_UpdateScreen();
 }
