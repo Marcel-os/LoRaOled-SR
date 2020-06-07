@@ -54,6 +54,11 @@ SPI_HandleTypeDef hspi1;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+int flaga = 0;
+int ret;
+char buffer[64];
+SX1278_hw_t SX1278_hw;
+SX1278_t SX1278;
 
 /* USER CODE END PV */
 
@@ -64,7 +69,22 @@ static void MX_ADC1_Init(void);
 static void MX_SPI1_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_I2C2_Init(void);
+static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
+
+//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+//	if(htim == &htim1){
+//		ret = SX1278_LoRaRxPacket(&SX1278);
+//			 	if (ret > 0) {
+//			 		SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+//				 	printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
+//				 	flaga = 1;
+//				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+//			 	}
+		//printf("KUPA");
+		//HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+//	}
+//}
 
 //Funkcja miga diodą blink_times -razy z czasem time
 void LED_blink(int blink_times, int time);
@@ -89,16 +109,7 @@ void loop() {
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-SX1278_hw_t SX1278_hw;
-SX1278_t SX1278;
-
-int master;
-int ret;
-
-char buffer[64];
-
-int message;
-int message_length;
+//
 
 /* USER CODE END 0 */
 
@@ -135,7 +146,11 @@ int main(void)
   MX_SPI1_Init();
   MX_USART2_UART_Init();
   MX_I2C2_Init();
+
+  /* Initialize interrupts */
+  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
+  //HAL_TIM_Base_Start_IT(&htim1);
   ssd1306_Init();
 	printf("Odbiornik/nadajnik radia LoRa\r\n");
 
@@ -152,6 +167,7 @@ int main(void)
 
 	//SX1278_begin(&SX1278, SX1278_433MHZ, SX1278_POWER_17DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_20_8KHZ, 10);
 	SX1278_begin(&SX1278, 868E6, SX1278_POWER_17DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_20_8KHZ, 10);
+	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
 
 	printf("Konfiguracja zakonczona\r\n");
 
@@ -161,40 +177,41 @@ int main(void)
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
 	while (1){
-	    loop();
-	    ret = SX1278_LoRaEntryTx(&SX1278, 16, 2000);
-	    printf("Nadawanie danych ...\r\n");
-	    HAL_Delay(100);
-	    message_length = sprintf(buffer, "Wiadomosc testowa nr: %d", message);
-	    ret = SX1278_LoRaEntryTx(&SX1278, message_length, 2000);
 
-	    printf("Wysylanie wiadomosci: %s\r\n", buffer);
-	    ret = SX1278_LoRaTxPacket(&SX1278, (uint8_t *) buffer, message_length, 2000);
-	    message += 1;
+//		if (flaga == 1){
+//			flaga = 0;
+//			ret = SX1278_LoRaRxPacket(&SX1278);
+//			if (ret > 0) {
+//				SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+//			}
+//			printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
+//		}
 
-
-	  	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
-		printf("Odbieranie danych ...\r\n");
+		HAL_Delay(1000);
+		//printf("Odbieranie danych ...\r\n");
 		ret = SX1278_LoRaRxPacket(&SX1278);
-		printf("Odebrano %d\r\n", ret);
+		//printf("Odebrano %d\r\n", ret);
 
 		if (ret > 0) {
 			SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+			HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 			printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
+		}else{
+			printf(".");
 		}
 
-		printf("Test przesylu danych UART: \r\n");
-		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
-		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
-
-		printf("Test LED: \r\n");
-		LED_blink(10, 100);
-
-		printf("Test buzzera: \r\n");
-		//Beep(100);
-		HAL_Delay(200);
-		ssd1306_Print((float)56.654321, (float)19.654321, (float)361.5, (float)159.12);
-		HAL_Delay(200);
+//		printf("Test przesylu danych UART: \r\n");
+//		writeUART(51.123456, 17.123456, 360.123456, 150.123456);
+//		ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
+//
+//		printf("Test LED: \r\n");
+//		LED_blink(10, 100);
+//
+//		printf("Test buzzera: \r\n");
+//		//Beep(100);
+//		HAL_Delay(200);
+//		ssd1306_Print((float)56.654321, (float)19.654321, (float)361.5, (float)159.12);
+//		HAL_Delay(200);
 
 
     /* USER CODE END WHILE */
@@ -246,6 +263,17 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+}
+
+/**
+  * @brief NVIC Configuration.
+  * @retval None
+  */
+static void MX_NVIC_Init(void)
+{
+  /* SPI1_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(SPI1_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(SPI1_IRQn);
 }
 
 /**
@@ -420,7 +448,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, BUZZER_Pin|CS_RF_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RST_RF_Pin|DO_RF_Pin|D_C_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, RST_RF_Pin|D_C_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : LED_Pin */
   GPIO_InitStruct.Pin = LED_Pin;
@@ -436,18 +464,18 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : RST_RF_Pin DO_RF_Pin D_C_Pin */
-  GPIO_InitStruct.Pin = RST_RF_Pin|DO_RF_Pin|D_C_Pin;
+  /*Configure GPIO pins : RST_RF_Pin D_C_Pin */
+  GPIO_InitStruct.Pin = RST_RF_Pin|D_C_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /*Configure GPIO pin : FIRE_Pin */
-  GPIO_InitStruct.Pin = FIRE_Pin;
+  /*Configure GPIO pins : DO_RF_Pin FIRE_Pin */
+  GPIO_InitStruct.Pin = DO_RF_Pin|FIRE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(FIRE_GPIO_Port, &GPIO_InitStruct);
+  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
   /*Configure GPIO pins : SCL_OLED_Pin SDA_OLED_Pin */
   GPIO_InitStruct.Pin = SCL_OLED_Pin|SDA_OLED_Pin;
