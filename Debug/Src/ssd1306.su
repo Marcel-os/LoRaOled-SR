@@ -14,4 +14,4 @@ ssd1306.c:313:6:ssd1306_Polyline	32	static
 ssd1306.c:348:6:ssd1306_DrawArc	80	static
 ssd1306.c:385:6:ssd1306_DrawCircle	48	static
 ssd1306.c:430:6:ssd1306_DrawRectangle	32	static
-ssd1306.c:439:6:ssd1306_Print	88	static
+ssd1306.c:439:6:ssd1306_Print	72	static

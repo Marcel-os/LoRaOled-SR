@@ -29,9 +29,7 @@
 #include "ssd1306.h"
 #include <stdio.h>
 #include <string.h>
-#define CRC_9 0x31
-#define HEADER "X"
-typedef unsigned char byte;
+//#include <iostream>
 
 /* USER CODE END Includes */
 
@@ -66,10 +64,6 @@ int adc_flag;
 int adc_value;
 SX1278_hw_t SX1278_hw;
 SX1278_t SX1278;
-
-uint8_t data[64];
-uint8_t dataToSend[64];
-uint16_t size = 0;
 
 /* USER CODE END PV */
 
@@ -120,9 +114,6 @@ int writeUART(float latitude, float longitude, float altitude, float velocity);
 void loop() {
 	HAL_Delay(100);
 }
-
-byte CRC8_DataArray(byte *pData, byte Len);
-byte CRC8_SingleByte(byte CRC_prev, byte Data);
 
 /* USER CODE END PFP */
 
@@ -190,8 +181,6 @@ int main(void)
 	SX1278_begin(&SX1278, 868E6, SX1278_POWER_20DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_125KHZ, 10);
 	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
 
-	byte CRC8;
-	char pDataFrame[50];
 
   /* USER CODE END 2 */
 
@@ -200,7 +189,6 @@ int main(void)
 //	double lat = 0.0, lon = 0.0, alt = 0.0, vel = 0.0;
 	char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
 	float V_Bat = 0.0;
-	float lat, lon, alt, vel;
 	while (1){
 		if(flag_new_position){
 			flag_new_position = 0;
@@ -245,14 +233,15 @@ int main(void)
 			}
 			str_vel[c] = '\0';
 
+			float lat, lon, alt, vel;
 
 			sscanf(str_lat,"%f",&lat);
 			sscanf(str_lon,"%f",&lon);
 			sscanf(str_alt,"%f",&alt);
 			sscanf(str_vel,"%f",&vel);
 
-			ssd1306_Print(lat, lon, alt, vel, V_Bat);
-			//writeUART(lat, lon, alt, vel);
+			ssd1306_Print(lat, lon, alt, vel);
+			writeUART(lat, lon, alt, vel);
 			Beep(2);
 		}
 
@@ -263,12 +252,6 @@ int main(void)
 			  HAL_ADC_Start_IT(&hadc1);
 		  }
 		HAL_Delay(100);
-
-		sprintf(pDataFrame, "%s %f %f %f %f %f", HEADER, lat, lon, alt, vel, V_Bat);
-		CRC8 = CRC8_DataArray((unsigned char*)pDataFrame, strlen(pDataFrame));
-		size = sprintf((char *)dataToSend, "%s %f %f %f %f %f %x \r\n", HEADER, lat, lon, alt, vel, V_Bat, (int)CRC8);
-		HAL_UART_Transmit_IT(&huart2, dataToSend, size);
-
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -571,26 +554,6 @@ int _write(int file, char *ptr, int len){
 
 int writeUART(float latitude, float longitude, float altitude, float velocity){
     return printf("%f/%f/%f/%f\n\r", latitude, longitude, altitude, velocity);
-}
-
-byte CRC8_DataArray(byte *pData, byte Len){
-    byte CRC_final = 0xff;
-
-    for(int i = 0; i < Len; ++i){
-        CRC_final = CRC8_SingleByte(CRC_final, pData[i]);
-    }
-return CRC_final;
-}
-
-byte CRC8_SingleByte(byte CRC_prev, byte Data){
-    CRC_prev ^= Data;
-    for(int i = 0; i < 8; ++i){
-        if((CRC_prev & 0x80) != 0){
-            CRC_prev = (byte)((CRC_prev << 1) ^ CRC_9);}
-        else{
-            CRC_prev = (byte)(CRC_prev << 1);}
-    }
-    return CRC_prev;
 }
 
 /* USER CODE END 4 */
