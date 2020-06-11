@@ -286,6 +286,7 @@ int SX1278_(SX1278_t * module, uint8_t length, uint32_t timeoutT);
 uint8_t SX1278_available(SX1278_t * module);
 uint8_t SX1278_read(SX1278_t * module, uint8_t *rxBuf, uint8_t length);
 
+uint8_t SX1278_SNR_LoRa(SX1278_t * module) ;
 uint8_t SX1278_RSSI_LoRa(SX1278_t * module);
 uint8_t SX1278_RSSI(SX1278_t * module);
 

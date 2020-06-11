@@ -59,6 +59,8 @@ UART_HandleTypeDef huart2;
 int flag_new_position = 0;
 int ret;
 char buffer[64];
+int adc_flag;
+int adc_value;
 SX1278_hw_t SX1278_hw;
 SX1278_t SX1278;
 
@@ -74,34 +76,10 @@ static void MX_I2C2_Init(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 
-//void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
-//	if(htim == &htim1){
-//		ret = SX1278_LoRaRxPacket(&SX1278);
-//			 	if (ret > 0) {
-//			 		SX1278_read(&SX1278, (uint8_t *) buffer, ret);
-//				 	printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
-//				 	flaga = 1;
-//				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-//			 	}
-		//printf("KUPA");
-		//HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-//	}
-//}
-
-
-void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
-{
-	if(GPIO_Pin == DO_RF_Pin){
-			ret = SX1278_LoRaRxPacket(&SX1278);
-				 	if (ret > 0) {
-				 		SX1278_read(&SX1278, (uint8_t *) buffer, ret);
-					 	//printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
-					 	flag_new_position = 1;
-				 	}
-				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
-		}
-}
-
+//Funkcja obsługi przerwania dla odebania paczki danych z modułu LoRa
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin);
+//Funcja obsługi przerwania ADC
+void HAL_ADC_ConvCpltCallback( ADC_HandleTypeDef *hadc);
 //Funkcja miga diodą blink_times -razy z czasem time
 void LED_blink(int blink_times, int time);
 //Funkcja wlaczajaca buzzer na time_delay milisekund
@@ -114,11 +92,7 @@ int _write(int file, char *ptr, int len);
 /* korzysta z funkcji printf i wysyła dane  */
 /*  w formacie SSSS/DDDD/WWWW/PPPP zwraca   */
 /*  wartosc zwracana przez funkcje pritf.    */
-int writeUART(float latitude, float longitude, float altitude, float velocity);
-
-void loop() {
-	HAL_Delay(100);
-}
+int writeUART(float latitude, float longitude, float altitude, float velocity, int rssi, int snr);
 
 /* USER CODE END PFP */
 
@@ -167,8 +141,10 @@ int main(void)
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   //HAL_TIM_Base_Start_IT(&htim1);
+  HAL_ADC_Start_IT(&hadc1);
   ssd1306_Init();
-  HAL_Delay(100);
+  ssd1306_Print_initial_screen();
+  HAL_Delay(2000);
 
 	//initialize LoRa module
 	SX1278_hw.dio0.port = DO_RF_GPIO_Port;
@@ -181,43 +157,86 @@ int main(void)
 
 	SX1278.hw = &SX1278_hw;
 
-	//SX1278_begin(&SX1278, SX1278_433MHZ, SX1278_POWER_17DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_20_8KHZ, 10);
 	SX1278_begin(&SX1278, 868E6, SX1278_POWER_20DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_125KHZ, 10);
 	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
-
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	double lat = 0.0, lon = 0.0, alt = 0.0, vel = 0.0;
-	char* lat_s[8], lon_s[8], alt_s[5], vel_s[5];
+	char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
+	float V_Bat = 0.0;
+	int watchdog = 0;
+
 	while (1){
 		if(flag_new_position){
 			flag_new_position = 0;
-			printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
-//			strncpy (lat_s, buffer, 8);
-//			strncpy (lon_s, buffer, 8);
-//			strncpy (alt_s, buffer, 5);
-//			strncpy (vel_s, buffer, 5);
-//			printf("Stringi: %s %s %s %s\r\n", lat_s, lon_s, alt_s, vel_s );
-//			lat = atof (lat_s);
-//			lon = atof (lon_s);
-//			alt = atof (alt_s);
-//			vel = atof (vel_s);
-//			writeUART(51.123456, 17.123456, 360.123456, 150.123456);
-//			ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
+			watchdog = 0;
+
+			//str_lat
+			int position = 3;
+			int length = 8;
+			int c = 0;
+			while (c < length) {
+				str_lat[c] = buffer[position + c - 1];
+				c++;
+			}
+			str_lat[c] = '\0';
+
+			//str_lat
+			position = 12;
+			length = 8;
+			c = 0;
+			while (c < length) {
+				str_lon[c] = buffer[position + c - 1];
+				c++;
+			}
+			str_lon[c] = '\0';
+
+			//str_alt
+			position = 21;
+			length = 5;
+			c = 0;
+			while (c < length) {
+				str_alt[c] = buffer[position + c - 1];
+				c++;
+			}
+			str_alt[c] = '\0';
+
+			//str_alt
+			position = 27;
+			length = 4;
+			c = 0;
+			while (c < length) {
+				str_vel[c] = buffer[position + c - 1];
+				c++;
+			}
+			str_vel[c] = '\0';
+
+			float lat, lon, alt, vel;
+
+			sscanf(str_lat,"%f",&lat);
+			sscanf(str_lon,"%f",&lon);
+			sscanf(str_alt,"%f",&alt);
+			sscanf(str_vel,"%f",&vel);
+			int rssi = SX1278_RSSI_LoRa(&SX1278);
+			int snr = SX1278_SNR_LoRa(&SX1278);
+			ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr);
+			writeUART(lat, lon, alt, vel, rssi, snr);
 			Beep(2);
 		}
-					writeUART(51.123456, 17.123456, 360.123456, 150.123456);
-					ssd1306_Print((float)51.123456, (float)17.123456, (float)360.123456, (float)150.12);
 
-//		printf("Test przesylu danych UART: \r\n");
-//		writeUART(lat, lon, alt, vel);
-//		ssd1306_Print(lat, lon, alt, vel);
-//		HAL_Delay(200);
-
-
+		  if (adc_flag == 1 ){
+			  adc_flag=0;
+			  V_Bat = adc_value * (4.2/4096) *1.33;
+			  HAL_ADC_Start_IT(&hadc1);
+		  }
+		watchdog++;
+		HAL_Delay(100);
+		if(watchdog >= 50){
+			ssd1306_Print_No_Signal(V_Bat);
+			Beep(200);
+		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -495,6 +514,26 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+	if(GPIO_Pin == DO_RF_Pin){
+			ret = SX1278_LoRaRxPacket(&SX1278);
+				 	if (ret > 0) {
+				 		SX1278_read(&SX1278, (uint8_t *) buffer, ret);
+					 	//printf("Zawartość pakietu (%d): %s\r\n", ret, buffer);
+					 	flag_new_position = 1;
+				 	}
+				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		}
+}
+
+void HAL_ADC_ConvCpltCallback( ADC_HandleTypeDef *hadc){
+	if(hadc == &hadc1){
+		adc_flag = 1;
+		adc_value = HAL_ADC_GetValue(hadc);
+	}
+}
+
 void LED_blink(int blink_times, int time){
 
     for(int i = 0; i < blink_times; i++){
@@ -518,8 +557,8 @@ int _write(int file, char *ptr, int len){
     return len;
 }
 
-int writeUART(float latitude, float longitude, float altitude, float velocity){
-    return printf("%f/%f/%f/%f\n\r", latitude, longitude, altitude, velocity);
+int writeUART(float latitude, float longitude, float altitude, float velocity, int rssi, int snr){
+    return printf("%f/%f/%f/%f/%d/%d\n\r", latitude, longitude, altitude, velocity, rssi, snr);
 }
 
 /* USER CODE END 4 */

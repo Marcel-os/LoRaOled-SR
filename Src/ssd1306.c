@@ -436,30 +436,130 @@ void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD13
   return;
 }
 
-void ssd1306_Print(float latitude, float longitude, float altitude, float velocity){
-	char lati[10], longi[10], alti[10], velo[10];
+void ssd1306_Print(float latitude, float longitude, float altitude, float velocity, float voltage, int rssi, int snr){
+	char lati[10], longi[10], alti[10], velo[10], rssi_c[10], snr_c[10];
+	//float lines = (voltage - 3.0)/0.0635789;
+	int lines_i = (int)(voltage - 3.0)/0.0635789;
+	if ( lines_i > 19 ) lines_i = 19;
+
 	ftoa((double)latitude, lati, 6);
 	ftoa((double)longitude, longi, 6);
-	ftoa((double)altitude, alti, 6);
-	ftoa((double)velocity, velo, 2);
+	ftoa((double)altitude, alti, 1);
+	ftoa((double)velocity, velo, 1);
+	ftoa((int)-rssi, rssi_c, 0);
+	ftoa((int)snr, snr_c, 0);
     ssd1306_Fill(Black);
-    ssd1306_SetCursor(52, 0);
+
+    //rysowanie wskaźnika baterii
+    ssd1306_DrawRectangle( 0, 0, 20, 8, White);
+    ssd1306_DrawRectangle( 21, 2, 22, 6, White);
+    for(int i = 1; i<=lines_i ;i++){
+    	ssd1306_Line(i,1,i,7,White);
+    }
+
+    //rysowanie wskaźnika sygnału
+    ssd1306_DrawRectangle( 111, 5, 112, 8, White);
+    if( rssi < 100) ssd1306_DrawRectangle( 114, 4, 115, 8, White);
+    if( rssi < 90) ssd1306_DrawRectangle( 117, 3, 118, 8, White);
+    if( rssi < 80) ssd1306_DrawRectangle( 120, 2, 121, 8, White);
+    if( rssi < 70) ssd1306_DrawRectangle( 123, 1, 124, 8, White);
+    if( rssi < 60) ssd1306_DrawRectangle( 126, 0, 127, 8, White);
+
+    ssd1306_SetCursor(45, 0);
     ssd1306_WriteString("LoRaOLED", Font_6x8, White);
-    ssd1306_SetCursor(2, 4+8);
+
+    ssd1306_SetCursor(2, 6+8);
+    ssd1306_WriteString("RSSI:", Font_6x8, White);
+    ssd1306_SetCursor(2+30, 6+8);
+    ssd1306_WriteString((char*)rssi_c, Font_6x8, White);
+    ssd1306_WriteString("dBm", Font_6x8, White);
+
+    ssd1306_SetCursor(75, 6+8);
+    ssd1306_WriteString("SNR:", Font_6x8, White);
+    ssd1306_SetCursor(75+25, 6+8);
+    ssd1306_WriteString((char*)snr_c, Font_6x8, White);
+    ssd1306_WriteString("dB", Font_6x8, White);
+
+    ssd1306_SetCursor(2, 2*(2+8)+4);
     ssd1306_WriteString("Latitude:", Font_6x8, White);
-    ssd1306_SetCursor(2+54, 4+8);
+    ssd1306_SetCursor(2+60, 2*(2+8)+4);
     ssd1306_WriteString((char*)lati, Font_6x8, White);
-    ssd1306_SetCursor(2, 2*(4+8));
+
+    ssd1306_SetCursor(2, 3*(2+8)+4);
     ssd1306_WriteString("Longitude:", Font_6x8, White);
-    ssd1306_SetCursor(2+60, 2*(4+8));
+    ssd1306_SetCursor(2+60, 3*(2+8)+4);
     ssd1306_WriteString((char*)longi, Font_6x8, White);
-    ssd1306_SetCursor(2, 3*(4+8));
+
+    ssd1306_SetCursor(2, 4*(2+8)+4);
     ssd1306_WriteString("Altitude:", Font_6x8, White);
-    ssd1306_SetCursor(2+54, 3*(4+8));
+    ssd1306_SetCursor(2+60, 4*(2+8)+4);
     ssd1306_WriteString((char*)alti, Font_6x8, White);
-    ssd1306_SetCursor(2, 4*(4+8));
+    ssd1306_WriteString(" m", Font_6x8, White);
+
+    ssd1306_SetCursor(2, 5*(2+8)+4);
     ssd1306_WriteString("Velocity:", Font_6x8, White);
-    ssd1306_SetCursor(2+54, 4*(4+8));
+    ssd1306_SetCursor(2+60, 5*(2+8)+4);
     ssd1306_WriteString((char*)velo, Font_6x8, White);
+    ssd1306_WriteString(" km/h", Font_6x8, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_No_Signal(float voltage){
+
+    ssd1306_Fill(Black);
+	int lines_i = (int)(voltage - 3.0)/0.0635789;
+	if ( lines_i > 19 ) lines_i = 19;
+
+    //rysowanie wskaźnika baterii
+    ssd1306_DrawRectangle( 0, 0, 20, 8, White);
+    ssd1306_DrawRectangle( 21, 2, 22, 6, White);
+    for(int i = 1; i<=lines_i ;i++){
+    	ssd1306_Line(i,1,i,7,White);
+    }
+
+    //rysowanie wskaźnika sygnału
+    ssd1306_SetCursor(110, 0);
+    ssd1306_WriteString("???", Font_6x8, White);
+
+    ssd1306_SetCursor(45, 0);
+    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+
+    ssd1306_SetCursor(17, 26);
+    ssd1306_WriteString("!", Font_16x26, White);
+
+    ssd1306_Line(5,50,45,50,White);
+    ssd1306_Line(25,15,45,50,White);
+    ssd1306_Line(25,15,5,50,White);
+
+    ssd1306_SetCursor(65, 12);
+    ssd1306_WriteString("ERROR", Font_7x10, White);
+
+    ssd1306_SetCursor(50, 25);
+    ssd1306_WriteString("Device is not", Font_6x8, White);
+    ssd1306_SetCursor(50, 25 + 10);
+    ssd1306_WriteString("receiving any", Font_6x8, White);
+    ssd1306_SetCursor(50, 25 + 20);
+    ssd1306_WriteString("  packets!", Font_6x8, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_initial_screen(){
+
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(45, 0);
+    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+
+    ssd1306_SetCursor(5, 20);
+    ssd1306_WriteString("Projekt - SR", Font_6x8, White);
+
+    ssd1306_SetCursor(5, 30);
+    ssd1306_WriteString("Marcel Domagala", Font_6x8, White);
+
+    ssd1306_SetCursor(5, 40);
+    ssd1306_WriteString("Maciej Gaik", Font_6x8, White);
+
     ssd1306_UpdateScreen();
 }
