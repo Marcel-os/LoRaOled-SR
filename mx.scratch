@@ -14,7 +14,20 @@
       <ProjectName>LoRaOled</ProjectName>
       <ProjectNature>C</ProjectNature>
       <Secure/>
-      <filestoremove/>
+      <filestoremove>
+        <file>
+          <name>Src\usb.c</name>
+        </file>
+        <file>
+          <name>Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd.c</name>
+        </file>
+        <file>
+          <name>Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_hal_pcd_ex.c</name>
+        </file>
+        <file>
+          <name>Drivers\STM32F1xx_HAL_Driver\Src\stm32f1xx_ll_usb.c</name>
+        </file>
+      </filestoremove>
       <sourceEntriesToRemove>
         <sourceEntry/>
       </sourceEntriesToRemove>

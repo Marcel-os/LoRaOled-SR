@@ -436,18 +436,30 @@ void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD13
   return;
 }
 
-void ssd1306_Print(float latitude, float longitude, float altitude, float velocity, float voltage, int rssi, int snr){
-	char lati[10], longi[10], alti[10], velo[10], rssi_c[10], snr_c[10];
+void ssd1306_Print(float latitude, float longitude, float altitude, float velocity, float voltage, int rssi, int snr, int hours, int minutes, int seconds){
+	char lati[10], longi[10], alti[10], velo[10], rssi_c[10], snr_c[10], hours_c[10], minutes_c[10], seconds_c[10];
 	//float lines = (voltage - 3.0)/0.0635789;
 	int lines_i = (int)(voltage - 3.0)/0.0635789;
 	if ( lines_i > 19 ) lines_i = 19;
 
-	ftoa((double)latitude, lati, 6);
-	ftoa((double)longitude, longi, 6);
-	ftoa((double)altitude, alti, 1);
-	ftoa((double)velocity, velo, 1);
-	ftoa((int)-rssi, rssi_c, 0);
-	ftoa((int)snr, snr_c, 0);
+	ftoa(latitude, lati, 6);
+	ftoa(longitude, longi, 6);
+	ftoa(altitude, alti, 1);
+	ftoa(velocity, velo, 1);
+	itoa(-rssi, rssi_c, 10);
+	itoa(snr, snr_c, 10);
+	itoa(hours, hours_c, 10);
+	itoa(minutes, minutes_c, 10);
+	itoa(seconds, seconds_c, 10);
+
+//	scanf(date, "%d:%d:%d", &hours, &minutes, &seconds);
+//	printf(date);
+
+
+
+
+	//time_t
+
     ssd1306_Fill(Black);
 
     //rysowanie wskaźnika baterii
@@ -465,8 +477,28 @@ void ssd1306_Print(float latitude, float longitude, float altitude, float veloci
     if( rssi < 70) ssd1306_DrawRectangle( 123, 1, 124, 8, White);
     if( rssi < 60) ssd1306_DrawRectangle( 126, 0, 127, 8, White);
 
-    ssd1306_SetCursor(45, 0);
-    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+    //rysowanie czasu
+    ssd1306_SetCursor(43, 0);
+	if(hours >= 10) ssd1306_WriteString((char*)hours_c, Font_6x8, White);
+	else{
+		ssd1306_WriteString("0", Font_6x8, White);
+		ssd1306_WriteString((char*)hours_c, Font_6x8, White);
+	}
+	ssd1306_WriteString(":", Font_6x8, White);
+
+	if(minutes >= 10) ssd1306_WriteString((char*)minutes_c, Font_6x8, White);
+	else{
+		ssd1306_WriteString("0", Font_6x8, White);
+		ssd1306_WriteString((char*)minutes_c, Font_6x8, White);
+	}
+	ssd1306_WriteString(":", Font_6x8, White);
+
+	if(seconds >= 10) ssd1306_WriteString((char*)seconds_c, Font_6x8, White);
+	else{
+		ssd1306_WriteString("0", Font_6x8, White);
+		ssd1306_WriteString((char*)seconds_c, Font_6x8, White);
+	}
+
 
     ssd1306_SetCursor(2, 6+8);
     ssd1306_WriteString("RSSI:", Font_6x8, White);
