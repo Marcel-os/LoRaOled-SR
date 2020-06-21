@@ -34,7 +34,13 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Inc/usb_device.h \
  D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  ../Inc/usbd_conf.h ../Inc/gpio.h ../Inc/SX1278.h ../Inc/ssd1306.h \
- ../Inc/ssd1306_fonts.h
+ ../Inc/ssd1306_fonts.h ../Inc/usbd_cdc_if.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
 
 ../Inc/main.h:
 
@@ -125,3 +131,17 @@ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd
 ../Inc/ssd1306.h:
 
 ../Inc/ssd1306_fonts.h:
+
+../Inc/usbd_cdc_if.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
+
+D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:

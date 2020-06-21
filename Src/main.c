@@ -36,6 +36,7 @@
 #include "ssd1306.h"
 #include <stdio.h>
 #include <string.h>
+#include "usbd_cdc_if.h"
 
 /* USER CODE END Includes */
 
@@ -353,6 +354,7 @@ void Beep(int time_delay){
 
 int _write(int file, char *ptr, int len){
     HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, 50);
+    CDC_Transmit_FS((uint8_t*)ptr, len);
     return len;
 }
 
