@@ -18,6 +18,7 @@ C_SRCS += \
 ../Src/stm32f1xx_it.c \
 ../Src/syscalls.c \
 ../Src/system_stm32f1xx.c \
+../Src/tim.c \
 ../Src/usart.c \
 ../Src/usb_device.c \
 ../Src/usbd_cdc_if.c \
@@ -39,6 +40,7 @@ OBJS += \
 ./Src/stm32f1xx_it.o \
 ./Src/syscalls.o \
 ./Src/system_stm32f1xx.o \
+./Src/tim.o \
 ./Src/usart.o \
 ./Src/usb_device.o \
 ./Src/usbd_cdc_if.o \
@@ -60,6 +62,7 @@ C_DEPS += \
 ./Src/stm32f1xx_it.d \
 ./Src/syscalls.d \
 ./Src/system_stm32f1xx.d \
+./Src/tim.d \
 ./Src/usart.d \
 ./Src/usb_device.d \
 ./Src/usbd_cdc_if.d \
@@ -96,6 +99,8 @@ Src/syscalls.o: ../Src/syscalls.c
 	arm-none-eabi-gcc -c "$<" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc" -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/syscalls.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Src/system_stm32f1xx.o: ../Src/system_stm32f1xx.c
 	arm-none-eabi-gcc -c "$<" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc" -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/system_stm32f1xx.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
+Src/tim.o: ../Src/tim.c
+	arm-none-eabi-gcc -c "$<" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc" -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/tim.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Src/usart.o: ../Src/usart.c
 	arm-none-eabi-gcc -c "$<" -mcpu=cortex-m3 -std=gnu11 -g3 -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc" -I"D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc" -Os -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Src/usart.d" -MT"$@" --specs=nano.specs -mfloat-abi=soft -mthumb -o "$@"
 Src/usb_device.o: ../Src/usb_device.c

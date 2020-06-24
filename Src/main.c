@@ -24,6 +24,7 @@
 #include "i2c.h"
 #include "rtc.h"
 #include "spi.h"
+#include "tim.h"
 #include "usart.h"
 #include "usb_device.h"
 #include "gpio.h"
@@ -64,7 +65,8 @@ int adc_flag;
 int adc_value;
 SX1278_hw_t SX1278_hw;
 SX1278_t SX1278;
-
+volatile uint16_t pulse_count; // Licznik impulsow
+volatile uint16_t positions; // Licznik przekreconych pozycji
 
 RTC_TimeTypeDef RtcTime;
 RTC_DateTypeDef RtcDate;
@@ -86,6 +88,8 @@ void LED_blink(int blink_times, int time);
 void Beep(int time_delay);
 // Przeciazenie funkcji printf, aby wysylala dane po UART
 int _write(int file, char *ptr, int len);
+
+
 
 /*    Funckja przyjmuje jako parametry:     */
 /* szer.geo., dlug.geo., wysokosc, predkosc */
@@ -139,11 +143,13 @@ int main(void)
   MX_I2C2_Init();
   MX_RTC_Init();
   MX_USB_DEVICE_Init();
+  MX_TIM1_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   //HAL_TIM_Base_Start_IT(&htim1);
+  HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
   HAL_ADC_Start_IT(&hadc1);
   ssd1306_Init();
   ssd1306_Print_initial_screen();
@@ -240,6 +246,10 @@ int main(void)
 			  V_Bat = adc_value * (4.2/4096) *1.33;
 			  HAL_ADC_Start_IT(&hadc1);
 		  }
+
+		  pulse_count = TIM1->CNT; // przepisanie wartosci z rejestru timera
+		  positions = pulse_count/4; // zeskalowanie impulsow do liczby stabilnych pozycji walu enkodera
+
 		watchdog++;
 		HAL_Delay(100);
 		if(watchdog >= 50){
@@ -324,6 +334,9 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 					 	flag_new_position = 1;
 				 	}
 				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
+		}
+	if(GPIO_Pin == BUTTON_Pin){
+			printf("BUTTON\r\n");
 		}
 }
 

@@ -39,6 +39,7 @@
 "Src/stm32f1xx_it.o"
 "Src/syscalls.o"
 "Src/system_stm32f1xx.o"
+"Src/tim.o"
 "Src/usart.o"
 "Src/usb_device.o"
 "Src/usbd_cdc_if.o"

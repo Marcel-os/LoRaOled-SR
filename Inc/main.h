@@ -72,6 +72,7 @@ void Error_Handler(void);
 #define RST_RF_GPIO_Port GPIOB
 #define BUTTON_Pin GPIO_PIN_1
 #define BUTTON_GPIO_Port GPIOB
+#define BUTTON_EXTI_IRQn EXTI1_IRQn
 #define DO_RF_Pin GPIO_PIN_12
 #define DO_RF_GPIO_Port GPIOB
 #define DO_RF_EXTI_IRQn EXTI15_10_IRQn
