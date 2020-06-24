@@ -132,6 +132,12 @@ void ssd1306_DrawRectangle(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2, SSD13
 void ssd1306_Print(float latitude, float longitude, float altitude, float velocity, float voltage, int rssi, int snr, int hours, int minutes, int seconds);
 void ssd1306_Print_initial_screen();
 void ssd1306_Print_No_Signal(float voltage);
+void ssd1306_Print_1screen();
+void ssd1306_Print_2screen();
+void ssd1306_Print_3screen();
+void ssd1306_Print_4screen();
+void ssd1306_Print_menu();
+void ssd1306_Print_inmenu();
 // Low-level procedures
 void ssd1306_Reset(void);
 void ssd1306_WriteCommand(uint8_t byte);

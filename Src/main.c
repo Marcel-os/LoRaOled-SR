@@ -59,6 +59,7 @@
 
 /* USER CODE BEGIN PV */
 int flag_new_position = 0;
+int flag_BUTTON_cliked = 0;
 int ret;
 char buffer[64];
 int adc_flag;
@@ -233,9 +234,37 @@ int main(void)
 			int snr = SX1278_SNR_LoRa(&SX1278);
 			HAL_RTC_GetTime(&hrtc, &RtcTime, RTC_FORMAT_BIN);
 			HAL_RTC_GetDate(&hrtc, &RtcDate, RTC_FORMAT_BIN);
-			ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+			//ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			//writeUART(lat, lon, alt, vel, rssi, snr);
 			//writeUART2(lat, lon, name++);
+			switch (positions)
+			{
+				case 0:
+					ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+					break;
+				case 1:
+					ssd1306_Print_1screen();
+					break;
+				case 2:
+					ssd1306_Print_2screen();
+					break;
+				case 3:
+					ssd1306_Print_3screen();
+					break;
+				case 4:
+					ssd1306_Print_menu();
+					if(flag_BUTTON_cliked){
+						flag_BUTTON_cliked = 0;
+						while(!flag_BUTTON_cliked){
+							ssd1306_Print_inmenu();
+						}
+						flag_BUTTON_cliked = 0;
+					}
+					break;
+				default:
+
+					break;
+			}
 
 			printf("Date: %02d.%02d.20%02d Time: %02d:%02d:%02d\n\r", RtcDate.Date, RtcDate.Month, RtcDate.Year, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			Beep(2);
@@ -250,6 +279,10 @@ int main(void)
 		  pulse_count = TIM1->CNT; // przepisanie wartosci z rejestru timera
 		  positions = pulse_count/4; // zeskalowanie impulsow do liczby stabilnych pozycji walu enkodera
 
+//		if(zmiana){
+//			zmiana = false;
+//			update_screen();
+//		}
 		watchdog++;
 		HAL_Delay(100);
 		if(watchdog >= 50){
@@ -336,7 +369,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 		}
 	if(GPIO_Pin == BUTTON_Pin){
-			printf("BUTTON\r\n");
+			printf("Wyswietlany jest ekran: %d\r\n", positions);
+			flag_BUTTON_cliked = 1;
 		}
 }
 

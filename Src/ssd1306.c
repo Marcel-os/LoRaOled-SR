@@ -595,3 +595,65 @@ void ssd1306_Print_initial_screen(){
 
     ssd1306_UpdateScreen();
 }
+
+void ssd1306_Print_1screen(){
+
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(55, 5);
+    ssd1306_WriteString("1", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_2screen(){
+
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(55, 5);
+    ssd1306_WriteString("2", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_3screen(){
+
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(55, 5);
+    ssd1306_WriteString("3", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_4screen(){
+
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(55, 5);
+    ssd1306_WriteString("4", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_menu(){
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(25, 5);
+    ssd1306_WriteString("MENU", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+void ssd1306_Print_inmenu(){
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(5, 5);
+    ssd1306_WriteString("IN MENU", Font_16x26, White);
+
+    ssd1306_UpdateScreen();
+}
+
+
+
+

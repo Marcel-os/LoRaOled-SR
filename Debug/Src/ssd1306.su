@@ -17,3 +17,9 @@ ssd1306.c:430:6:ssd1306_DrawRectangle	32	static
 ssd1306.c:439:6:ssd1306_Print	160	static
 ssd1306.c:540:6:ssd1306_Print_No_Signal	32	static
 ssd1306.c:580:6:ssd1306_Print_initial_screen	16	static
+ssd1306.c:599:6:ssd1306_Print_1screen	8	static
+ssd1306.c:609:6:ssd1306_Print_2screen	8	static
+ssd1306.c:619:6:ssd1306_Print_3screen	8	static
+ssd1306.c:629:6:ssd1306_Print_4screen	8	static
+ssd1306.c:639:6:ssd1306_Print_menu	8	static
+ssd1306.c:648:6:ssd1306_Print_inmenu	8	static
