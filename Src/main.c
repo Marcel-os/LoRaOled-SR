@@ -32,6 +32,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
+#include <stdbool.h>
+#include <ctype.h>
 #include "stdio.h"
 #include "SX1278.h"
 #include "ssd1306.h"
@@ -58,14 +60,16 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-int flag_new_position = 0;
-int flag_BUTTON_cliked = 0;
+uint8_t flag_new_position = 0;
+uint8_t flag_BUTTON_cliked = 0;
 int ret;
 char buffer[64];
 int adc_flag;
 int adc_value;
+enum current_state {INIT, SET_TIME, DEFAULT};
 SX1278_hw_t SX1278_hw;
 SX1278_t SX1278;
+ROCKET_DATA Actual_data;
 volatile uint16_t pulse_count; // Licznik impulsow
 volatile uint16_t positions; // Licznik przekreconych pozycji
 
@@ -226,21 +230,23 @@ int main(void)
 
 			float lat, lon, alt, vel;
 
-			sscanf(str_lat,"%f",&lat);
-			sscanf(str_lon,"%f",&lon);
-			sscanf(str_alt,"%f",&alt);
-			sscanf(str_vel,"%f",&vel);
-			int rssi = SX1278_RSSI_LoRa(&SX1278);
-			int snr = SX1278_SNR_LoRa(&SX1278);
+			sscanf(str_lat,"%f",&Actual_data.latitude);
+			sscanf(str_lon,"%f",&Actual_data.longitude);
+			sscanf(str_alt,"%f",&Actual_data.altitude);
+			sscanf(str_vel,"%f",&Actual_data.velocity);
+			Actual_data.rssi = SX1278_RSSI_LoRa(&SX1278);
+			Actual_data.snr = SX1278_SNR_LoRa(&SX1278);
+
 			HAL_RTC_GetTime(&hrtc, &RtcTime, RTC_FORMAT_BIN);
 			HAL_RTC_GetDate(&hrtc, &RtcDate, RTC_FORMAT_BIN);
+
 			//ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			//writeUART(lat, lon, alt, vel, rssi, snr);
 			//writeUART2(lat, lon, name++);
 			switch (positions)
 			{
 				case 0:
-					ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+					ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 					break;
 				case 1:
 					ssd1306_Print_1screen();
@@ -281,7 +287,7 @@ int main(void)
 
 //		if(zmiana){
 //			zmiana = false;
-//			update_screen();
+//			update_screen(current_state, RtcTime, Actual_data, positions);
 //		}
 		watchdog++;
 		HAL_Delay(100);

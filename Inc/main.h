@@ -32,11 +32,24 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include <stdbool.h>
 
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
 /* USER CODE BEGIN ET */
+typedef struct {
+	float latitude;
+	float longitude;
+	float altitude;
+	float velocity;
+	int rssi;
+	int snr;
+	bool sarm;
+} ROCKET_DATA;
+
+
+float lat, lon, alt, vel;
 
 /* USER CODE END ET */
 
