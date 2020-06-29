@@ -577,79 +577,86 @@ void ssd1306_Print_No_Signal(float voltage){
     ssd1306_UpdateScreen();
 }
 
+//void ssd1306_Print_initial_screen(){
+//
+//    ssd1306_Fill(Black);
+//
+//    ssd1306_SetCursor(45, 0);
+//    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
+//
+//    ssd1306_SetCursor(5, 20);
+//    ssd1306_WriteString("Projekt - SR", Font_6x8, White);
+//
+//    ssd1306_SetCursor(5, 30);
+//    ssd1306_WriteString("Marcel Domagala", Font_6x8, White);
+//
+//    ssd1306_SetCursor(5, 40);
+//    ssd1306_WriteString("Maciej Gaik", Font_6x8, White);
+//
+//    ssd1306_UpdateScreen();
+//}
+
 void ssd1306_Print_initial_screen(){
-
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(45, 0);
-    ssd1306_WriteString("LoRaOLED", Font_6x8, White);
-
-    ssd1306_SetCursor(5, 20);
-    ssd1306_WriteString("Projekt - SR", Font_6x8, White);
-
-    ssd1306_SetCursor(5, 30);
-    ssd1306_WriteString("Marcel Domagala", Font_6x8, White);
-
-    ssd1306_SetCursor(5, 40);
-    ssd1306_WriteString("Maciej Gaik", Font_6x8, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("initial_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_1screen(){
-
+void ssd1306_Print_default_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(55, 5);
-    ssd1306_WriteString("1", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("default_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_2screen(){
-
+void ssd1306_Print_settime_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(55, 5);
-    ssd1306_WriteString("2", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("settime_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_3screen(){
-
+void ssd1306_Print_settings_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(55, 5);
-    ssd1306_WriteString("3", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("settings_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_4screen(){
-
+void ssd1306_Print_arming_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(55, 5);
-    ssd1306_WriteString("4", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("arming_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_menu(){
+void ssd1306_Print_disarming_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(25, 5);
-    ssd1306_WriteString("MENU", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("disarming_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }
-
-void ssd1306_Print_inmenu(){
+void ssd1306_Print_counting_screen(){
     ssd1306_Fill(Black);
 
-    ssd1306_SetCursor(5, 5);
-    ssd1306_WriteString("IN MENU", Font_16x26, White);
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("counting_screen", Font_6x8, White);
+
+    ssd1306_UpdateScreen();
+}
+void ssd1306_Print_launch_screen(){
+    ssd1306_Fill(Black);
+
+    ssd1306_SetCursor(10, 10);
+    ssd1306_WriteString("launch_screen", Font_6x8, White);
 
     ssd1306_UpdateScreen();
 }

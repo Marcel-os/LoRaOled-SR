@@ -1,5 +1,5 @@
 Src/ssd1306_tests.o: ../Src/ssd1306_tests.c ../Inc/ssd1306.h \
- ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
+ ../Inc/main.h ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h \
  ../Inc/stm32f1xx_hal_conf.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_def.h \
@@ -35,6 +35,8 @@ Src/ssd1306_tests.o: ../Src/ssd1306_tests.c ../Inc/ssd1306.h \
  ../Inc/ssd1306_fonts.h ../Inc/ssd1306_tests.h
 
 ../Inc/ssd1306.h:
+
+../Inc/main.h:
 
 ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal.h:
 

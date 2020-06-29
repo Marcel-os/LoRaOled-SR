@@ -32,8 +32,6 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 
-#include <stdbool.h>
-#include <ctype.h>
 #include "stdio.h"
 #include "SX1278.h"
 #include "ssd1306.h"
@@ -60,13 +58,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t flag_new_position = 0;
-uint8_t flag_BUTTON_cliked = 0;
+_Bool flag_new_position = 0;
+_Bool flag_BUTTON_cliked = 0;
+_Bool flag_FIRE_cliked = 0;
 int ret;
 char buffer[64];
 int adc_flag;
 int adc_value;
-enum current_state {INIT, SET_TIME, DEFAULT};
+enum state {INIT, SET_TIME, DEFAULT_SCREEN, SETTINGS, ARMING, DISARMING, COUNTING_DOWN, LAUNCH, NO_PACKETS};
 SX1278_hw_t SX1278_hw;
 SX1278_t SX1278;
 ROCKET_DATA Actual_data;
@@ -157,8 +156,8 @@ int main(void)
   HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
   HAL_ADC_Start_IT(&hadc1);
   ssd1306_Init();
-  ssd1306_Print_initial_screen();
-  HAL_Delay(2000);
+  //ssd1306_Print_initial_screen();
+  //HAL_Delay(2000);
 
 	//initialize LoRa module
 	SX1278_hw.dio0.port = DO_RF_GPIO_Port;
@@ -180,13 +179,88 @@ int main(void)
   /* USER CODE BEGIN WHILE */
 	char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
 	float V_Bat = 0.0;
-	int watchdog = 0;
-	int name = 0;
+	uint8_t current_state = INIT;
+	//int name = 0;
 
 	while (1){
+
+		switch (current_state)
+		{
+			case INIT:
+				ssd1306_Print_initial_screen();
+				if (HAL_GetTick() >= 2000) current_state = SET_TIME;
+				break;
+
+			case SET_TIME:
+				ssd1306_Print_settime_screen();
+				if(flag_BUTTON_cliked){
+					flag_BUTTON_cliked = 0;
+					current_state = DEFAULT_SCREEN;
+				}
+				break;
+
+			case DEFAULT_SCREEN:
+				ssd1306_Print_default_screen();
+				if(flag_BUTTON_cliked){
+					flag_BUTTON_cliked = 0;
+					current_state = SETTINGS;
+				}
+				if(flag_FIRE_cliked && Actual_data.soft_arm){
+					flag_FIRE_cliked = 0;
+					current_state = COUNTING_DOWN;
+				}
+				break;
+
+			case SETTINGS:
+				ssd1306_Print_settings_screen();
+				if(flag_BUTTON_cliked){
+					flag_BUTTON_cliked = 0;
+					int rand_variable = rand();
+					if( (rand_variable % 3) == 0 ) current_state = ARMING;
+					if( (rand_variable % 3) == 1 ) current_state = DISARMING;
+					if( (rand_variable % 3) == 2 ) current_state = DEFAULT_SCREEN;
+				}
+				break;
+
+			case ARMING:
+				ssd1306_Print_arming_screen();
+				if(flag_BUTTON_cliked){
+					flag_BUTTON_cliked = 0;
+					current_state = DEFAULT_SCREEN;
+				}
+				break;
+
+			case DISARMING:
+				ssd1306_Print_disarming_screen();
+				if(flag_BUTTON_cliked){
+					flag_BUTTON_cliked = 0;
+					current_state = DEFAULT_SCREEN;
+				}
+				break;
+
+			case COUNTING_DOWN:
+				ssd1306_Print_counting_screen();
+				//counting 10sek to fire
+				if( (HAL_GPIO_ReadPin(FIRE_GPIO_Port, FIRE_Pin) == 0) && Actual_data.soft_arm){
+					flag_FIRE_cliked = 0;
+					current_state = LAUNCH;
+				}else{
+					flag_FIRE_cliked = 0;
+					current_state = DISARMING;
+				}
+				break;
+
+			case LAUNCH:
+				ssd1306_Print_launch_screen();
+				//delay 1-2sek
+				current_state = DEFAULT_SCREEN;
+				break;
+
+		}
+
+
 		if(flag_new_position){
 			flag_new_position = 0;
-			watchdog = 0;
 
 			//str_lat
 			int position = 3;
@@ -228,7 +302,7 @@ int main(void)
 			}
 			str_vel[c] = '\0';
 
-			float lat, lon, alt, vel;
+			//float lat, lon, alt, vel;
 
 			sscanf(str_lat,"%f",&Actual_data.latitude);
 			sscanf(str_lon,"%f",&Actual_data.longitude);
@@ -240,37 +314,40 @@ int main(void)
 			HAL_RTC_GetTime(&hrtc, &RtcTime, RTC_FORMAT_BIN);
 			HAL_RTC_GetDate(&hrtc, &RtcDate, RTC_FORMAT_BIN);
 
+			Actual_data.soft_arm = 1;
+
 			//ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			//writeUART(lat, lon, alt, vel, rssi, snr);
 			//writeUART2(lat, lon, name++);
-			switch (positions)
-			{
-				case 0:
-					ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
-					break;
-				case 1:
-					ssd1306_Print_1screen();
-					break;
-				case 2:
-					ssd1306_Print_2screen();
-					break;
-				case 3:
-					ssd1306_Print_3screen();
-					break;
-				case 4:
-					ssd1306_Print_menu();
-					if(flag_BUTTON_cliked){
-						flag_BUTTON_cliked = 0;
-						while(!flag_BUTTON_cliked){
-							ssd1306_Print_inmenu();
-						}
-						flag_BUTTON_cliked = 0;
-					}
-					break;
-				default:
-
-					break;
-			}
+			//ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+//			switch (positions)
+//			{
+//				case 0:
+//
+//					break;
+//				case 1:
+//					ssd1306_Print_1screen();
+//					break;
+//				case 2:
+//					ssd1306_Print_2screen();
+//					break;
+//				case 3:
+//					ssd1306_Print_3screen();
+//					break;
+//				case 4:
+//					ssd1306_Print_menu();
+//					if(flag_BUTTON_cliked){
+//						flag_BUTTON_cliked = 0;
+//						while(!flag_BUTTON_cliked){
+//							ssd1306_Print_inmenu();
+//						}
+//						flag_BUTTON_cliked = 0;
+//					}
+//					break;
+//				default:
+//
+//					break;
+//			}
 
 			printf("Date: %02d.%02d.20%02d Time: %02d:%02d:%02d\n\r", RtcDate.Date, RtcDate.Month, RtcDate.Year, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			Beep(2);
@@ -287,14 +364,14 @@ int main(void)
 
 //		if(zmiana){
 //			zmiana = false;
-//			update_screen(current_state, RtcTime, Actual_data, positions);
+//			update_screen(current_state, RtcDate, RtcTime, Actual_data, positions);
 //		}
-		watchdog++;
-		HAL_Delay(100);
-		if(watchdog >= 50){
-			ssd1306_Print_No_Signal(V_Bat);
-			Beep(200);
-		}
+//		watchdog++;
+//		HAL_Delay(100);
+//		if(watchdog >= 50){
+//			ssd1306_Print_No_Signal(V_Bat);
+//			Beep(200);
+//		}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -375,8 +452,10 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
 				 	HAL_GPIO_TogglePin(LED_GPIO_Port, LED_Pin);
 		}
 	if(GPIO_Pin == BUTTON_Pin){
-			printf("Wyswietlany jest ekran: %d\r\n", positions);
 			flag_BUTTON_cliked = 1;
+		}
+	if(GPIO_Pin == FIRE_Pin){
+			flag_FIRE_cliked = 1;
 		}
 }
 

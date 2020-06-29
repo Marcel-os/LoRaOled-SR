@@ -32,8 +32,6 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include <stdbool.h>
-
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -45,11 +43,9 @@ typedef struct {
 	float velocity;
 	int rssi;
 	int snr;
-	bool sarm;
+	_Bool soft_arm;
 } ROCKET_DATA;
 
-
-float lat, lon, alt, vel;
 
 /* USER CODE END ET */
 
@@ -99,6 +95,7 @@ void Error_Handler(void);
 #define MOSI_RF_GPIO_Port GPIOB
 #define FIRE_Pin GPIO_PIN_6
 #define FIRE_GPIO_Port GPIOB
+#define FIRE_EXTI_IRQn EXTI9_5_IRQn
 #define D_C_Pin GPIO_PIN_7
 #define D_C_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
