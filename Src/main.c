@@ -37,7 +37,7 @@
 #include "ssd1306.h"
 #include <stdio.h>
 #include <string.h>
-#include "usbd_cdc_if.h"
+#include <usbd_cdc_if.h>
 
 /* USER CODE END Includes */
 

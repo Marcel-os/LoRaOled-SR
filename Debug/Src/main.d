@@ -34,15 +34,15 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
  ../Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_pcd_ex.h ../Inc/adc.h \
  ../Inc/main.h ../Inc/i2c.h ../Inc/rtc.h ../Inc/spi.h ../Inc/tim.h \
  ../Inc/usart.h ../Inc/usb_device.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
  ../Inc/usbd_conf.h ../Inc/gpio.h ../Inc/SX1278.h ../Inc/ssd1306.h \
  ../Inc/ssd1306_fonts.h ../Inc/usbd_cdc_if.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
- D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h \
+ /Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h
 
 ../Inc/main.h:
 
@@ -128,7 +128,7 @@ Src/main.o: ../Src/main.c ../Inc/main.h \
 
 ../Inc/usb_device.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
 
 ../Inc/usbd_conf.h:
 
@@ -142,14 +142,14 @@ D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd
 
 ../Inc/usbd_cdc_if.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Inc/usbd_cdc.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_core.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ioreq.h:
 
-D:/STM32-projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
+/Users/marceldomagala/Documents/STM32-Projects/LoRaOled/Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_ctlreq.h:
