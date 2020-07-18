@@ -180,7 +180,7 @@ int main(void)
 	char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
 	float V_Bat = 0.0;
 	uint8_t current_state = INIT;
-	//int name = 0;
+	int name = 0;
 
 	while (1){
 
@@ -318,7 +318,7 @@ int main(void)
 
 			//ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			//writeUART(lat, lon, alt, vel, rssi, snr);
-			//writeUART2(lat, lon, name++);
+			writeUART2(Actual_data.latitude, Actual_data.longitude, name++);
 			//ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 //			switch (positions)
 //			{
@@ -349,7 +349,7 @@ int main(void)
 //					break;
 //			}
 
-			printf("Date: %02d.%02d.20%02d Time: %02d:%02d:%02d\n\r", RtcDate.Date, RtcDate.Month, RtcDate.Year, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+			//printf("Date: %02d.%02d.20%02d Time: %02d:%02d:%02d\n\r", RtcDate.Date, RtcDate.Month, RtcDate.Year, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			Beep(2);
 		}
 
@@ -495,10 +495,8 @@ int writeUART(float latitude, float longitude, float altitude, float velocity, i
 }
 
 int writeUART2(float latitude, float longitude, int name){
-    return printf("{\"lat\":\"%f\",\"lon\":\"%f\",\"name\":%d}\n", latitude, longitude, name);
+    return printf("{\"lat\":\"%f\",\"lon\":\"%f\",\"name\":%d}\r\n", latitude, longitude, name);
 }
-
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
