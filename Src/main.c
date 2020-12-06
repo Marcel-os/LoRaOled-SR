@@ -267,59 +267,8 @@ int main(void)
 			flag_new_position = 0;
 			//message_length = sprintf(buffer, "S %f %f %f %d %d %d %f %d %d",GPS.GPGGA.LatitudeDecimal, GPS.GPGGA.LongitudeDecimal, GPS.GPGGA.MSL_Altitude, GPS.GPGGA.UTC_Hour, GPS.GPGGA.UTC_Min, GPS.GPGGA.UTC_Sec, GPS.GPGGA.HDOP, GPS.GPGGA.SatellitesUsed, GPS.GPGGA.PositionFixIndicator);
 			//sscanf(buffer,"%f",&Actual_data.latitude);
-			char header;
-			//uint8_t buffer2[64];
-			//sscanf(buffer, "%s %f %f %f %d %d %d %f %d %d",header, &Actual_data.latitude, &Actual_data.longitude, &Actual_data.altitude, &Actual_data.hours, &Actual_data.minutes, &Actual_data.seconds, &Actual_data.hdop, &Actual_data.satelites, &Actual_data.fix);
-
-			printf(buffer);
-			printf("\r\n");
-
-			//str_lat
-//			int position = 3;
-//			int length = 8;
-//			int c = 0;
-//			while (c < length) {
-//				str_lat[c] = buffer[position + c - 1];
-//				c++;
-//			}
-//			str_lat[c] = '\0';
-//
-//			//str_lat
-//			position = 12;
-//			length = 8;
-//			c = 0;
-//			while (c < length) {
-//				str_lon[c] = buffer[position + c - 1];
-//				c++;
-//			}
-//			str_lon[c] = '\0';
-//
-//			//str_alt
-//			position = 21;
-//			length = 5;
-//			c = 0;
-//			while (c < length) {
-//				str_alt[c] = buffer[position + c - 1];
-//				c++;
-//			}
-//			str_alt[c] = '\0';
-//
-//			//str_alt
-//			position = 27;
-//			length = 4;
-//			c = 0;
-//			while (c < length) {
-//				str_vel[c] = buffer[position + c - 1];
-//				c++;
-//			}
-//			str_vel[c] = '\0';
-//
-//			//float lat, lon, alt, vel;
-//
-//			sscanf(str_lat,"%f",&Actual_data.latitude);
-//			sscanf(str_lon,"%f",&Actual_data.longitude);
-//			sscanf(str_alt,"%f",&Actual_data.altitude);
-//			sscanf(str_vel,"%f",&Actual_data.velocity);
+			char header[1];
+			sscanf(buffer, "%s %f %f %f %d %d %d %f %d %d",header, &Actual_data.latitude, &Actual_data.longitude, &Actual_data.altitude, &Actual_data.hours, &Actual_data.minutes, &Actual_data.seconds, &Actual_data.hdop, &Actual_data.satelites, &Actual_data.fix);
 
 			Actual_data.rssi = SX1278_RSSI_LoRa(&SX1278);
 			Actual_data.snr = SX1278_SNR_LoRa(&SX1278);
