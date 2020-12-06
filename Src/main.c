@@ -62,7 +62,7 @@ _Bool flag_new_position = 0;
 _Bool flag_BUTTON_cliked = 0;
 _Bool flag_FIRE_cliked = 0;
 int ret;
-char buffer[64];
+uint8_t buffer[64];
 int adc_flag;
 int adc_value;
 enum state {INIT, SET_TIME, DEFAULT_SCREEN, SETTINGS, ARMING, DISARMING, COUNTING_DOWN, LAUNCH, NO_PACKETS};
@@ -102,6 +102,8 @@ int _write(int file, char *ptr, int len);
 /*  wartosc zwracana przez funkcje pritf.    */
 int writeUART(float latitude, float longitude, float altitude, float velocity, int rssi, int snr);
 int writeUART2(float latitude, float longitude, int name);
+int writeUART3(float latitude, float longitude, float altitude, float velocity, int rssi, int snr);
+int writeUART4();
 
 /* USER CODE END PFP */
 
@@ -170,144 +172,155 @@ int main(void)
 
 	SX1278.hw = &SX1278_hw;
 
-	SX1278_begin(&SX1278, 868E6, SX1278_POWER_20DBM, SX1278_LORA_SF_8, SX1278_LORA_BW_125KHZ, 10);
+	SX1278_begin(&SX1278, 868E6, SX1278_POWER_20DBM, SX1278_LORA_SF_7, SX1278_LORA_BW_125KHZ, 10); //sf8 default sf7
 	ret = SX1278_LoRaEntryRx(&SX1278, 16, 2000);
+	//deafault
+	//SX1278_LORA_SF_7
 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
-	char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
+	//char str_lat[]="00000000", str_lon[]= "00000000", str_alt[]= "000000", str_vel[]= "0000";
 	float V_Bat = 0.0;
-	uint8_t current_state = INIT;
-	int name = 0;
+	//uint8_t current_state = INIT;
+	//int name = 0;
 
 	while (1){
 
-		switch (current_state)
-		{
-			case INIT:
-				ssd1306_Print_initial_screen();
-				if (HAL_GetTick() >= 2000) current_state = SET_TIME;
-				break;
-
-			case SET_TIME:
-				ssd1306_Print_settime_screen();
-				if(flag_BUTTON_cliked){
-					flag_BUTTON_cliked = 0;
-					current_state = DEFAULT_SCREEN;
-				}
-				break;
-
-			case DEFAULT_SCREEN:
-				ssd1306_Print_default_screen();
-				if(flag_BUTTON_cliked){
-					flag_BUTTON_cliked = 0;
-					current_state = SETTINGS;
-				}
-				if(flag_FIRE_cliked && Actual_data.soft_arm){
-					flag_FIRE_cliked = 0;
-					current_state = COUNTING_DOWN;
-				}
-				break;
-
-			case SETTINGS:
-				ssd1306_Print_settings_screen();
-				if(flag_BUTTON_cliked){
-					flag_BUTTON_cliked = 0;
-					int rand_variable = rand();
-					if( (rand_variable % 3) == 0 ) current_state = ARMING;
-					if( (rand_variable % 3) == 1 ) current_state = DISARMING;
-					if( (rand_variable % 3) == 2 ) current_state = DEFAULT_SCREEN;
-				}
-				break;
-
-			case ARMING:
-				ssd1306_Print_arming_screen();
-				if(flag_BUTTON_cliked){
-					flag_BUTTON_cliked = 0;
-					current_state = DEFAULT_SCREEN;
-				}
-				break;
-
-			case DISARMING:
-				ssd1306_Print_disarming_screen();
-				if(flag_BUTTON_cliked){
-					flag_BUTTON_cliked = 0;
-					current_state = DEFAULT_SCREEN;
-				}
-				break;
-
-			case COUNTING_DOWN:
-				ssd1306_Print_counting_screen();
-				//counting 10sek to fire
-				if( (HAL_GPIO_ReadPin(FIRE_GPIO_Port, FIRE_Pin) == 0) && Actual_data.soft_arm){
-					flag_FIRE_cliked = 0;
-					current_state = LAUNCH;
-				}else{
-					flag_FIRE_cliked = 0;
-					current_state = DISARMING;
-				}
-				break;
-
-			case LAUNCH:
-				ssd1306_Print_launch_screen();
-				//delay 1-2sek
-				current_state = DEFAULT_SCREEN;
-				break;
-
-		}
+//		switch (current_state)
+//		{
+//			case INIT:
+//				ssd1306_Print_initial_screen();
+//				if (HAL_GetTick() >= 2000) current_state = SET_TIME;
+//				break;
+//
+//			case SET_TIME:
+//				ssd1306_Print_settime_screen();
+//				if(flag_BUTTON_cliked){
+//					flag_BUTTON_cliked = 0;
+//					current_state = DEFAULT_SCREEN;
+//				}
+//				break;
+//
+//			case DEFAULT_SCREEN:
+//				ssd1306_Print_default_screen();
+//				if(flag_BUTTON_cliked){
+//					flag_BUTTON_cliked = 0;
+//					current_state = SETTINGS;
+//				}
+//				if(flag_FIRE_cliked && Actual_data.soft_arm){
+//					flag_FIRE_cliked = 0;
+//					current_state = COUNTING_DOWN;
+//				}
+//				break;
+//
+//			case SETTINGS:
+//				ssd1306_Print_settings_screen();
+//				if(flag_BUTTON_cliked){
+//					flag_BUTTON_cliked = 0;
+//					int rand_variable = rand();
+//					if( (rand_variable % 3) == 0 ) current_state = ARMING;
+//					if( (rand_variable % 3) == 1 ) current_state = DISARMING;
+//					if( (rand_variable % 3) == 2 ) current_state = DEFAULT_SCREEN;
+//				}
+//				break;
+//
+//			case ARMING:
+//				ssd1306_Print_arming_screen();
+//				if(flag_BUTTON_cliked){
+//					flag_BUTTON_cliked = 0;
+//					current_state = DEFAULT_SCREEN;
+//				}
+//				break;
+//
+//			case DISARMING:
+//				ssd1306_Print_disarming_screen();
+//				if(flag_BUTTON_cliked){
+//					flag_BUTTON_cliked = 0;
+//					current_state = DEFAULT_SCREEN;
+//				}
+//				break;
+//
+//			case COUNTING_DOWN:
+//				ssd1306_Print_counting_screen();
+//				//counting 10sek to fire
+//				if( (HAL_GPIO_ReadPin(FIRE_GPIO_Port, FIRE_Pin) == 0) && Actual_data.soft_arm){
+//					flag_FIRE_cliked = 0;
+//					current_state = LAUNCH;
+//				}else{
+//					flag_FIRE_cliked = 0;
+//					current_state = DISARMING;
+//				}
+//				break;
+//
+//			case LAUNCH:
+//				ssd1306_Print_launch_screen();
+//				//delay 1-2sek
+//				current_state = DEFAULT_SCREEN;
+//				break;
+//
+//		}
 
 
 		if(flag_new_position){
 			flag_new_position = 0;
+			//message_length = sprintf(buffer, "S %f %f %f %d %d %d %f %d %d",GPS.GPGGA.LatitudeDecimal, GPS.GPGGA.LongitudeDecimal, GPS.GPGGA.MSL_Altitude, GPS.GPGGA.UTC_Hour, GPS.GPGGA.UTC_Min, GPS.GPGGA.UTC_Sec, GPS.GPGGA.HDOP, GPS.GPGGA.SatellitesUsed, GPS.GPGGA.PositionFixIndicator);
+			//sscanf(buffer,"%f",&Actual_data.latitude);
+			char header;
+			//uint8_t buffer2[64];
+			//sscanf(buffer, "%s %f %f %f %d %d %d %f %d %d",header, &Actual_data.latitude, &Actual_data.longitude, &Actual_data.altitude, &Actual_data.hours, &Actual_data.minutes, &Actual_data.seconds, &Actual_data.hdop, &Actual_data.satelites, &Actual_data.fix);
+
+			printf(buffer);
+			printf("\r\n");
 
 			//str_lat
-			int position = 3;
-			int length = 8;
-			int c = 0;
-			while (c < length) {
-				str_lat[c] = buffer[position + c - 1];
-				c++;
-			}
-			str_lat[c] = '\0';
+//			int position = 3;
+//			int length = 8;
+//			int c = 0;
+//			while (c < length) {
+//				str_lat[c] = buffer[position + c - 1];
+//				c++;
+//			}
+//			str_lat[c] = '\0';
+//
+//			//str_lat
+//			position = 12;
+//			length = 8;
+//			c = 0;
+//			while (c < length) {
+//				str_lon[c] = buffer[position + c - 1];
+//				c++;
+//			}
+//			str_lon[c] = '\0';
+//
+//			//str_alt
+//			position = 21;
+//			length = 5;
+//			c = 0;
+//			while (c < length) {
+//				str_alt[c] = buffer[position + c - 1];
+//				c++;
+//			}
+//			str_alt[c] = '\0';
+//
+//			//str_alt
+//			position = 27;
+//			length = 4;
+//			c = 0;
+//			while (c < length) {
+//				str_vel[c] = buffer[position + c - 1];
+//				c++;
+//			}
+//			str_vel[c] = '\0';
+//
+//			//float lat, lon, alt, vel;
+//
+//			sscanf(str_lat,"%f",&Actual_data.latitude);
+//			sscanf(str_lon,"%f",&Actual_data.longitude);
+//			sscanf(str_alt,"%f",&Actual_data.altitude);
+//			sscanf(str_vel,"%f",&Actual_data.velocity);
 
-			//str_lat
-			position = 12;
-			length = 8;
-			c = 0;
-			while (c < length) {
-				str_lon[c] = buffer[position + c - 1];
-				c++;
-			}
-			str_lon[c] = '\0';
-
-			//str_alt
-			position = 21;
-			length = 5;
-			c = 0;
-			while (c < length) {
-				str_alt[c] = buffer[position + c - 1];
-				c++;
-			}
-			str_alt[c] = '\0';
-
-			//str_alt
-			position = 27;
-			length = 4;
-			c = 0;
-			while (c < length) {
-				str_vel[c] = buffer[position + c - 1];
-				c++;
-			}
-			str_vel[c] = '\0';
-
-			//float lat, lon, alt, vel;
-
-			sscanf(str_lat,"%f",&Actual_data.latitude);
-			sscanf(str_lon,"%f",&Actual_data.longitude);
-			sscanf(str_alt,"%f",&Actual_data.altitude);
-			sscanf(str_vel,"%f",&Actual_data.velocity);
 			Actual_data.rssi = SX1278_RSSI_LoRa(&SX1278);
 			Actual_data.snr = SX1278_SNR_LoRa(&SX1278);
 
@@ -318,8 +331,10 @@ int main(void)
 
 			//ssd1306_Print(lat, lon, alt, vel, V_Bat, rssi, snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 			//writeUART(lat, lon, alt, vel, rssi, snr);
-			writeUART2(Actual_data.latitude, Actual_data.longitude, name++);
-			//ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
+			//writeUART2(Actual_data.latitude, Actual_data.longitude, name++);
+			//writeUART3(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.velocity, Actual_data.rssi, Actual_data.snr);
+			writeUART4();
+			ssd1306_Print(Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, 0, V_Bat, Actual_data.rssi, Actual_data.snr, RtcTime.Hours, RtcTime.Minutes, RtcTime.Seconds);
 //			switch (positions)
 //			{
 //				case 0:
@@ -497,6 +512,12 @@ int writeUART(float latitude, float longitude, float altitude, float velocity, i
 int writeUART2(float latitude, float longitude, int name){
     return printf("{\"lat\":\"%f\",\"lon\":\"%f\",\"name\":%d}\r\n", latitude, longitude, name);
 }
+
+int writeUART4(){
+    return printf("{\"lat\":%f,\"lon\":%f,\"alt\":%f,\"hdop\":%f,\"hours\":%d,\"minutes\":%d,\"seconds\":%d,\"satelites\":%d,\"fix\":%d,\"rssi\":%d,\"snr\":%d}\r\n", Actual_data.latitude, Actual_data.longitude, Actual_data.altitude, Actual_data.hdop, Actual_data.hours,Actual_data.minutes, Actual_data.seconds , Actual_data.satelites, Actual_data.fix, Actual_data.rssi, Actual_data.snr);
+}
+
+/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.

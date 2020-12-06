@@ -40,7 +40,12 @@ typedef struct {
 	float latitude;
 	float longitude;
 	float altitude;
-	float velocity;
+	int hours;
+	int minutes;
+	int seconds;
+	float hdop;
+	int satelites;
+	int fix;
 	int rssi;
 	int snr;
 	_Bool soft_arm;
